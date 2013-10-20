@@ -4,25 +4,32 @@ html, body {
 
 $page-width: 960px;
 .column {
-	display: inline-block;
-	vertical-align: top;
+/*	display: inline-block;
+	vertical-align: top;*/
 
 	/*hard-coded for now*/
 	height: 500px;
 }
 
+$left-padding: 40px;
+.header-container {
+    padding-left: $left-padding;
+}
+
+
 .left-column-container {
-	width: 25%;
+/*	width: 25%;*/
 	min-width: 150px;
 	background-color: #eee;
+    padding-left: $left-padding;
 }
 
 .right-column-container {
 
 	/*TODO (Yuxin): ghetto-ass fix for spaceless issue in haml*/
-	width: 70%;
+	/*width: 70%;
 	min-width: $page-width - 150px;
-	padding: 0;
+    */padding: 0;
 }
 
 .item-container {

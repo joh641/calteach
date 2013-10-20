@@ -6,4 +6,11 @@ Feature: Add images
 
 Background:
 
+  Given I am logged in as "admin"
+
+  And I am on the edit page for item with id 1
+
 Scenario: 
+  When I upload the image "features/support/test_image.jpg" to "image_upload"
+  When I press "edit_item_submit"
+  Then I should see "test_image.jpg"

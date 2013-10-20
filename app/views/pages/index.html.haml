@@ -1,1 +1,12 @@
-<div class="test">This text should be RED</div>
+%div{ :id => "container" }
+	%div{ :class => "header-container" }
+	%div{ :class => "content" }
+		%div{ :class => "left-column-container column" }
+		%div{ :class => "right-column-container column container"}
+			%div{ :class => "row" }
+				%div{ :class => "item-container col-md-3" }
+					%div{ :class => "item" }
+					%div{ :class => "subtitle" } Available
+				%div{ :class => "item-container col-md-3" }
+					%div{ :class => "item" }
+					%div{ :class => "subtitle" } Out of Stock

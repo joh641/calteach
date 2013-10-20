@@ -1,8 +1,8 @@
-Feature: Create user accounts
+Feature: Create account
 
-  As a Cal Teach advisor
-  So that I can control and keep track of the reservation system
-  I want to allow for the creation of user accounts
+  As a user
+  So that I can access the CalTeach Site
+  I want to be able to create an account using my email
 
 Background:
 

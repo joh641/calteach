@@ -23,4 +23,4 @@ Background: items have been added to inventory
 
 Scenario:
 
-    Then I should see all items
+    Then I should see all the items

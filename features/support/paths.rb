@@ -15,6 +15,8 @@ module NavigationHelpers
 
     when /^the home\s?page$/
       '/'
+    when /^the create item\s?page$/i then '/item/new'
+    when /^the edit page for item with id\s?$/i then '/item/1/edit'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

@@ -6,4 +6,11 @@ Feature: Admin create user accounts
 
 Background:
 
-Scenario: 
+Scenario:
+
+    When I click "Create account"
+    Then I should see "Name"
+    Then I should see "Email"
+    Then I should see "Password"
+    When I click "Submit"
+    Then I should see "Log out"

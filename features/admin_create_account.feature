@@ -8,9 +8,9 @@ Background:
 
 Scenario:
 
-    When I click "Create account"
+    When I follow "Create account"
     Then I should see "Name"
     Then I should see "Email"
     Then I should see "Password"
-    When I click "Submit"
+    When I press "Submit"
     Then I should see "Log out"

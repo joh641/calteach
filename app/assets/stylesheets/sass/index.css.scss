@@ -1,0 +1,49 @@
+html, body {
+	height: 100%;
+}
+
+$page-width: 960px;
+.column {
+/*	display: inline-block;
+	vertical-align: top;*/
+
+	/*hard-coded for now*/
+	height: 500px;
+}
+
+$left-padding: 40px;
+.header-container {
+    padding-left: $left-padding;
+}
+
+
+.left-column-container {
+/*	width: 25%;*/
+	min-width: 150px;
+	background-color: #eee;
+    padding-left: $left-padding;
+}
+
+.right-column-container {
+
+	/*TODO (Yuxin): ghetto-ass fix for spaceless issue in haml*/
+	/*width: 70%;
+	min-width: $page-width - 150px;
+    */padding: 0;
+}
+
+.item-container {
+	height: 150px;
+}
+
+$item-width: 150px;
+.item {
+	height: $item-width;
+	background-color: #eee;
+	width: $item-width;
+
+	/*TODO (Yuxin): this is temporary just for testing*/
+	background: url("http://www.1worldglobes.com/images/StarterGlobeClear16.jpg") center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}

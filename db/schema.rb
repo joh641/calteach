@@ -11,7 +11,29 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131025050218) do
+ActiveRecord::Schema.define(:version => 20131025051945) do
+
+  create_table "items", :force => true do |t|
+    t.string   "legacy_id"
+    t.string   "name"
+    t.integer  "quantity"
+    t.string   "description"
+    t.string   "category"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "reservations", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "item_id"
+    t.string   "notes"
+    t.datetime "reservation_out"
+    t.datetime "reservation_in"
+    t.datetime "date_out"
+    t.datetime "date_in"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

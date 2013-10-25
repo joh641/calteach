@@ -5,3 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+items = [{:legacy_id => '1234', :name => "Globe", :quantity => 2, :description => 'Description', :category => 'Geography'}]
+
+items.each do |item|
+  Item.create(item)
+end

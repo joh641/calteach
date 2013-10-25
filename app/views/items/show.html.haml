@@ -1,3 +1,5 @@
 = image_tag @item.image.url
 = image_tag @item.image.url(:medium)
 = image_tag @item.image.url(:thumb)
+
+= button_to 'Edit item', edit_item_path(@item), :method => :get

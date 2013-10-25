@@ -1,15 +1,3 @@
 = form_tag items_path do
-
-  = label :item, :name, 'Name'
-  = text_field :item, :name
-  
-  = label :item, :category, 'Category'
-  = text_field :item, :category
-
-  = label :item, :description, 'Description'
-  = text_area :item, :description
-  
-  = label :item, :image, 'Image'
-  = file_field :item, :image
-
+  = render :partial => 'item_form'
   = submit_tag 'Create Item'  

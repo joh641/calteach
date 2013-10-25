@@ -34,3 +34,5 @@ gem 'jquery-rails'
 gem 'haml'
 
 gem 'devise'
+
+gem 'paperclip'

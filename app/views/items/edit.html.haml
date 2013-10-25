@@ -1,0 +1,6 @@
+= form_tag item_path(@item), :method => :put do
+  
+  = label :item, :image, 'Image'
+  = file_field :item, :image
+
+  = submit_tag 'Update Item Info'  

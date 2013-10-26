@@ -12,5 +12,5 @@ class User < ActiveRecord::Base
   has_many :reservations
   has_many :items, :through => :reservations
 
-  validates :name, :presence => true
+  validates :name, :phone, :presence => true
 end

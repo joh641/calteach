@@ -1,11 +1,10 @@
 = label :item, :name, 'Name'
 = text_field :item, :name
-  
+
 = label :item, :category, 'Category'
-= text_field :item, :category
+= select :item, :category, @all_categories
 
 = label :item, :description, 'Description'
 = text_area :item, :description
-  
-= label :item, :image, 'Image'
+
 = file_field :item, :image

@@ -10,6 +10,6 @@ Background:
   And I am on the edit page for item with id 1
 
 Scenario: 
-  When I upload the image "features/support/test_image.jpg" to "image_upload"
-  And I press "edit_item_submit"
+  When I upload the image "features/support/test_image.jpg" to "item[image]"
+  And I press "Update Item"
   Then I should see "test_image.jpg"

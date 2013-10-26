@@ -1,5 +1,12 @@
 !!! 5
 %html
+  - flash.each do |name, msg|
+    .flash
+      - if not msg.nil?
+        - if msg.is_a?(String)
+          %div{:class => "alert alert-#{name == :notice ? "success" : "error"}"}
+            %a.close{"data-dismiss" => "alert"} ×
+            = content_tag :div, msg, :id => "flash_#{name}"
   %head
     %title Calteach
     = stylesheet_link_tag "http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"

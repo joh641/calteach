@@ -14,7 +14,8 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.create(params[:item])
-    redirect_to items_path
+    flash[:notice] = "Item #{@item.name} was successfully created."
+    redirect_to '/'
   end
 
   def edit
@@ -33,7 +34,7 @@ class ItemsController < ApplicationController
     @item = Item.find_by_id(params[:id])
     @item.destroy
     flash[:notice] = "Item #{@item.name} deleted."
-    redirect_to items_path
+    redirect_to '/'
   end
   
 end

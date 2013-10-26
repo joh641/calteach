@@ -1,5 +1,8 @@
-= image_tag @item.image.url(:medium)
+#name= @item.name 
+#category= @item.category
+#image= image_tag @item.image.url(:medium)
+#description= @item.description
 
 = button_to 'Edit item', edit_item_path(@item), :method => :get
 = button_to 'Delete item', item_path(@item), :method => :delete, :confirm => 'Are you sure?'
-= link_to 'Back to Items', items_path
+= link_to 'Back to Items', '/'

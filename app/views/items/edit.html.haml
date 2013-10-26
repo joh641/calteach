@@ -1,3 +1,5 @@
 = form_tag item_path(@item), :method => :put, :multipart => true do
   = render :partial => 'item_form'
   = submit_tag 'Update Item'
+
+= link_to 'Back to Items', '/'

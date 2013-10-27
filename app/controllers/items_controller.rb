@@ -5,7 +5,14 @@ class ItemsController < ApplicationController
   end
 
   def index
-    @items = Item.all
+  	@all_categories = Item.all_categories
+  	if params[:query]
+  		#TODO (Yuxin) Is this even safe?
+  		@query = params[:query]
+  		@items = Item.where("lower(name) = ?", @query.downcase)
+  	elsif
+	    @items = Item.all
+	end
   end
 
   def new
@@ -36,5 +43,5 @@ class ItemsController < ApplicationController
     flash[:notice] = "Item #{@item.name} deleted."
     redirect_to '/'
   end
-  
+
 end

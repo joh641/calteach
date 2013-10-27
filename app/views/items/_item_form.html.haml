@@ -1,0 +1,14 @@
+#name
+  = label :item, :name, 'Name'
+  = text_field :item, :name
+
+#category
+  = label :item, :category, 'Category'
+  = select :item, :category, @all_categories
+
+#description
+  = label :item, :description, 'Description'
+  = text_area :item, :description
+
+#image
+  = file_field :item, :image

@@ -13,7 +13,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'cucumber-rails'
+  gem 'cucumber-rails', :require => false
   gem 'cucumber-rails-training-wheels'
 end
 
@@ -26,6 +26,7 @@ end
 group :assets do
   gem 'therubyracer'
   gem 'sass-rails'
+  gem 'sass', '3.2.10'
   gem 'coffee-rails'
   gem 'uglifier'
 end
@@ -34,3 +35,5 @@ gem 'jquery-rails'
 gem 'haml'
 
 gem 'devise'
+
+gem 'paperclip'

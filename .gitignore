@@ -16,3 +16,7 @@
 
 #Ignore all coverage files.
 /coverage
+
+/config/environment_variables.rb
+
+.DS_Store

@@ -1,7 +1,12 @@
 class Item < ActiveRecord::Base
   attr_accessible :category, :description, :legacy_id, :name, :quantity, :image
 
-  has_attached_file :image, :styles => { :medium => "165x165>", :thumb => "100x100>" }, :default_url => "http://placekitten.com/165/165"
+  has_attached_file :image,
+  :storage => :s3,
+  :s3_credentials => S3_CREDENTIALS,
+  :path => "/items/:style/:id/:filename",
+  :styles => { :medium => "165x165>", :thumb => "100x100>" },
+  :default_url => "http://placekitten.com/165/165"
   has_many :reservations
   has_many :users, :through => :reservations
 

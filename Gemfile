@@ -39,3 +39,4 @@ gem 'haml-rails'
 gem 'devise'
 
 gem 'paperclip'
+gem 'rmagick'

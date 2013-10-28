@@ -2,6 +2,14 @@
   = label :item, :name, 'Name'
   = text_field :item, :name
 
+#id
+  = label :item, :legacy_id, 'ID'
+  = text_field :item, :legacy_id
+
+#quantity
+  = label :item, :quantity, 'Quantity'
+  = text_field :item, :quantity
+
 #category
   = label :item, :category, 'Category'
   = select :item, :category, @all_categories

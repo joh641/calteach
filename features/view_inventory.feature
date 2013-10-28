@@ -23,4 +23,4 @@ Background: items have been added to inventory
 
 Scenario:
 
-    Then I should see all the items
+    Then I should see all the items that are in the database

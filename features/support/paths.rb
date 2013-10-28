@@ -17,8 +17,12 @@ module NavigationHelpers
       '/'
     when /^the create item\s?page$/i
       new_item_path
+    when /^the item info page for item with id (.*)/
+      item_path(Item.find_by_id($1))
     when /^the edit page for item with id (.*)$/i
       edit_item_path(Item.find_by_id($1))
+    when /^the Calteach inventory page/
+      items_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

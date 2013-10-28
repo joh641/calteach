@@ -6,8 +6,7 @@ Feature: Add items
 
 Background:
 
-  Given I am logged in as "admin"
-  And I am on the create item page
+  Given I am on the create item page
 
 Scenario: 
   When I fill in "Name" with "Globe"

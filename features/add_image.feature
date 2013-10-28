@@ -9,7 +9,6 @@ Background:
   Given the following items exist:
   | name                    | quantity  |
   | Globe                   | 5         |
-  Given I am logged in as "admin"
   And I am on the edit page for item with id 1
 
 Scenario: 

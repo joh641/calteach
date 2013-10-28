@@ -10,9 +10,10 @@ Background:
   And I am on the create item page
 
 Scenario: 
-  When I fill in "name" with "Globe"
-  And I fill in "quantity" with "2"
-  And I fill in "category" with "Geography"
-  And I fill in "legacy_id" with "F123"
-  And I press "create_item_submit"
+  When I fill in "Name" with "Globe"
+  And I fill in "Quantity" with "2"
+  And I select "Geography" from "Category"
+  And I fill in "ID" with "F123"
+  And I press "Create Item"
+  Then I should be on the Calteach inventory page
   Then I should see "Globe"

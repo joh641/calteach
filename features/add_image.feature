@@ -6,10 +6,14 @@ Feature: Add images
 
 Background:
 
+  Given the following items exist:
+  | name                    | quantity  |
+  | Globe                   | 5         |
   Given I am logged in as "admin"
   And I am on the edit page for item with id 1
 
 Scenario: 
-  When I upload the image "features/support/test_image.jpg" to "item[image]"
+  When I attach the file "features/support/test_image.jpg" to "item_image"
   And I press "Update Item"
-  Then I should see "test_image.jpg"
+  Then I should be on the item info page for item with id 1
+  And I should see "test_image.jpg"

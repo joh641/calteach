@@ -15,7 +15,7 @@ class ItemsController < ApplicationController
   def create
     @item = Item.create(params[:item])
     flash[:notice] = "Item #{@item.name} was successfully created."
-    redirect_to '/'
+    redirect_to items_path
   end
 
   def edit

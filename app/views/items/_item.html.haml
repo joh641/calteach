@@ -1,0 +1,6 @@
+%tr
+  %td= item.name
+  %td= item.category
+  %td= image_tag item.image.url(:medium)
+  %td= item.quantity
+  %td= link_to "More about #{item.name}", item_path(item)

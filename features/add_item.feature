@@ -7,13 +7,12 @@ Feature: Add items
 Background:
 
   Given I am logged in as "admin"
-
   And I am on the create item page
 
 Scenario: 
   When I fill in "name" with "Globe"
-  When I fill in "quantity" with "2"
-  When I fill in "category" with "Geography"
-  When I fill in "legacy_id" with "F123"
-  When I press "create_item_submit"
+  And I fill in "quantity" with "2"
+  And I fill in "category" with "Geography"
+  And I fill in "legacy_id" with "F123"
+  And I press "create_item_submit"
   Then I should see "Globe"

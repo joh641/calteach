@@ -15,8 +15,10 @@ module NavigationHelpers
 
     when /^the home\s?page$/
       '/'
-    when /^the create item\s?page$/i then '/item/new'
-    when /^the edit page for item with id\s?$/i then '/item/1/edit'
+    when /^the create item\s?page$/i
+      new_item_path
+    when /^the edit page for item with id (.*)$/i
+      edit_item_path(Item.find_by_id($1))
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

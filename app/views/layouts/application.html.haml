@@ -15,4 +15,10 @@
     = csrf_meta_tags
 
   %body
+    #flash
+      - if flash[:notice]
+        #notice.message= flash[:notice]
+      - elsif flash[:warning]
+        #warning.message= flash[:warning]
+
     = yield

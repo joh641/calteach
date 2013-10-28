@@ -19,8 +19,12 @@ ActiveRecord::Schema.define(:version => 20131026084125) do
     t.integer  "quantity"
     t.string   "description"
     t.string   "category"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "reservations", :force => true do |t|

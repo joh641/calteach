@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe ItemsController do
+  before(:each) do
+    Item.all.each do |item|
+      item.destroy
+    end
+  end
   item_hash1 = {"name" => "Globe", "quantity" => "2"}
   describe 'POST #create' do
     it 'should create a new item using the params passed in' do
@@ -46,16 +51,16 @@ describe ItemsController do
   	end
   end
   describe 'searching for items' do
-  	Item.create(
-  		{
-  			name: "Globe",
-  			legacy_id: "1",
-  			quantity: 5,
-  			description: "A round object you can use to view countries of the world!",
-  			category: "Science"
-  		}
-  	)
   	it "shows the results" do
+      Item.create(
+        {
+          name: "Globe",
+          legacy_id: "1",
+          quantity: 5,
+          description: "A round object you can use to view countries of the world!",
+          category: "Science"
+        }
+      )
   		get :index, :query => 'globe'
   		print assigns(:items)
   		assigns(:items).length.should == 1

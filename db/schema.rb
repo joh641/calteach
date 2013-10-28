@@ -12,6 +12,7 @@
 # It's strongly recommended to check this file into your version control system.
 
 ActiveRecord::Schema.define(:version => 20131026084125) do
+enable flash alerts
 
   create_table "items", :force => true do |t|
     t.string   "legacy_id"

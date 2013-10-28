@@ -1,13 +1,13 @@
+@import "utils";
+
 html, body {
 	height: 100%;
+	font-family: 'Open Sans', sans-serif;
 }
 
 $page-width: 960px;
 .column {
-/*	display: inline-block;
-	vertical-align: top;*/
-
-	/*hard-coded for now*/
+	/*TODO (Yuxin) this height should not be hard-coded!*/
 	height: 500px;
 }
 
@@ -16,7 +16,11 @@ $left-padding: 40px;
     padding-left: $left-padding;
 }
 
-
+.search-bar-container {
+	input {
+		width: 200px;
+	}
+}
 .left-column-container {
 /*	width: 25%;*/
 	min-width: 150px;
@@ -24,21 +28,35 @@ $left-padding: 40px;
     padding-left: $left-padding;
 }
 
-.right-column-container {
-
-	/*TODO (Yuxin): ghetto-ass fix for spaceless issue in haml*/
-	/*width: 70%;
-	min-width: $page-width - 150px;
-    */padding: 0;
-}
-
 .item-container {
-	height: 150px;
+
+	@include border-radius(2px, 2px, 2px, 2px);
+	text-align: center;
+	margin-bottom: 20px;
+	border: 1px grey solid;
 }
 
-$item-width: 300px;
-.item {
-	height: $item-width;
-	width: $item-width;
+.item-info {
+	padding: 25px 10px 0px 10px;
+}
+
+.title {
+	@include height(30px, 19px);
+	font-weight: bold;
+	margin-top: 10px;
+	margin-bottom: 15px;
 
 }
+
+.subtitle {
+	@include height(25px, 12px);
+	color: white;
+	&.available {
+		background-color: #57af3e;
+	}
+	&.unavailable {
+		background-color: #d73a40;
+	}
+}
+
+

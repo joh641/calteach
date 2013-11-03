@@ -12,5 +12,10 @@ class User < ActiveRecord::Base
   has_many :reservations
   has_many :items, :through => :reservations
 
-  validates :name, :phone, :presence => true
+  validates :name, :presence => true
+
+  #user types
+  ADMIN = 0
+  FACULTY = 1
+  BASIC = 2
 end

@@ -16,6 +16,9 @@ Calteach::Application.routes.draw do
   #   resources :products
   resources :items
 
+  namespace 'admin' do
+    resources :users
+  end
   # Sample resource route with options:
   #   resources :products do
   #     member do

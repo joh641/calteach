@@ -11,6 +11,7 @@ group :development, :test do
   gem 'launchy'
   gem 'rspec-rails'
   gem 'simplecov'
+  gem 'email_spec'
 end
 
 group :test do
@@ -43,3 +44,5 @@ gem 'cocaine'
 gem 'aws-s3'
 gem 'aws-sdk'
 gem 'rmagick'
+
+

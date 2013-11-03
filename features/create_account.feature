@@ -7,7 +7,6 @@ Background:
     Given I am on the home page
 
 Scenario:
-
     When I follow "Sign up"
     Then I should see "Name"
     And I should see "Email"

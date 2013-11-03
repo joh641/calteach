@@ -24,6 +24,9 @@ module NavigationHelpers
     when /^the Calteach inventory page/
       items_path
 
+    when /^the user dashboard/
+      admin_users_path
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

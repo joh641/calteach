@@ -12,7 +12,6 @@ Background:
   And I am on the admin page
   
 Scenario: 
-  
   When I check "Reservation_1"
   And I press "Checkout"
   Then I should be on the checkout confirmation page

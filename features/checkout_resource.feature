@@ -9,6 +9,7 @@ Background:
   Given the following reservations exist:
   |  id   |  name                    |  items     |  
   |  1    |  User                    |  Globe     |
+
   And I am on the admin page
   
 Scenario: 

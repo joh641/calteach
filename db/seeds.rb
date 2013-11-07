@@ -35,3 +35,33 @@ Item.create([
 		category: "Art"
 	}
 ])
+
+users = User.create([
+	{
+		email: "basic@berkeley.edu",
+		name: "Basic Bob",
+		phone: "123-456-7890",
+		course: "Math",
+		category: User::BASIC,
+		password: "password"
+	},
+	{
+		email: "admin@berkeley.edu",
+		name: "Amy Admin",
+		phone: "123-456-7890",
+		category: User::ADMIN,
+		password: "password"
+	},
+	{
+		email: "Faculty@berkeley.edu",
+		name: "Fabian Faculty",
+		phone: "123-456-7890",
+		category: User::FACULTY,
+		password: "password"
+	}
+])
+
+users.each do |u|
+	u.confirmed_at = Time.now
+	u.save
+end

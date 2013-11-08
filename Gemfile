@@ -36,6 +36,7 @@ end
 gem 'jquery-rails'
 gem 'haml'
 gem 'haml-rails'
+gem 'bootstrap-sass'
 
 gem 'devise'
 

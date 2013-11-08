@@ -1,0 +1,28 @@
+-if @user.errors.any?
+  #error_explanation
+    .error-title
+      %h6= pluralize(@user.errors.count, "Error") + " Prohibited this User from being Created!"
+    .error-list
+      -@user.errors.full_messages.each do |msg|
+        %p=msg
+
+
+= form_for [:admin, @user], :multipart => true do |f|
+  .form-group
+    = f.label :name, 'Name', :class => 'control-label'
+    = f.text_field :name, :class => 'form-control', :placeholder => 'Enter Name'
+
+  %fieldset{disabled: @disabled}
+    .form-group
+      = f.label :email, 'Email'
+      = f.text_field :email, :class => 'form-control', :placeholder => 'Enter Email'
+  .form-group
+    = f.label :phone, 'Phone'
+    = f.text_field :phone, :class => 'form-control', :placeholder => 'Enter Phone'
+
+  .form-group
+    = f.label :category, 'User Type'
+    %br
+    = f.select :category, {"Basic"=> User::BASIC, "Faculty" => User::FACULTY, "Admin" => User::ADMIN}
+
+  = f.submit 'Submit', :class => 'btn btn-primary'

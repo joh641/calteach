@@ -18,4 +18,14 @@ class User < ActiveRecord::Base
   ADMIN = 0
   FACULTY = 1
   BASIC = 2
+
+  def category_str
+    if category == ADMIN
+      "Admin"
+    elsif category == FACULTY
+      "Faculty"
+    else
+      "Basic"
+    end
+  end
 end

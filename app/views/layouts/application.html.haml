@@ -24,7 +24,6 @@
 
   %body
     - flash.each do |name, msg|
-      hi
       .flash
         - if not msg.nil?
           - if msg.is_a?(String)

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Welcome to CalTeach!</h1>
+    
+    <p>
+      Hi <%= @user.name %>,
+    </p>
+    
+    <p>
+      An account has been created for you on the CalTeach resources website. To access it, go to <a href="http://calteach.herokuapp.com/">calteach.herokuapp.com</a> and login. Your temporary credentials are:
+    </p>
+    
+    <p>
+      email: <%= @user.email %><br>
+      password: <%= @password %>
+    </p>
+    
+    <p>
+      Once you're in, please change your password!
+    </p>
+    
+    <p>
+      Cheers!<br>
+      -The CalTeach Team
+    </p>
+  </body>
+</html>

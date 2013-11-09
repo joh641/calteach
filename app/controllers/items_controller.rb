@@ -5,6 +5,9 @@ class ItemsController < ApplicationController
   end
 
   def index
+    #TODO (Aatash) Now that we've moved "all_categories" to
+    # application_controller.rb, we don't really need it here
+    # nor in the other controller actions.
   	@all_categories = Item.all_categories
   	if params[:query]
   		#TODO (Yuxin) Is this even safe?
@@ -12,7 +15,7 @@ class ItemsController < ApplicationController
   		@items = Item.where("lower(name) = ?", @query.downcase)
   	elsif
 	    @items = Item.all
-	end
+	  end
   end
 
   def new

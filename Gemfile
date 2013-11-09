@@ -45,5 +45,6 @@ gem 'cocaine'
 gem 'aws-s3'
 gem 'aws-sdk'
 gem 'rmagick'
+gem 'bootstrap-datepicker-rails'
 
 

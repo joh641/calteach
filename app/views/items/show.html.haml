@@ -1,8 +1,30 @@
-#name= @item.name 
-#category= @item.category
-#image= image_tag @item.image.url(:medium)
-#description= @item.description
+.item-detail
+    .item-left
+        %h2#name= @item.name
+        #image= image_tag @item.image.url(:medium), :class => "img-rounded"
+        .admin
+            %h5 Admin
+            = button_to 'Checkout item', {}, :class => "btn btn-primary btn-xs"
+            = button_to 'Edit item', edit_item_path(@item), {:method => :get, :class => "btn btn-default btn-xs"}
+            = button_to 'Delete item', item_path(@item), {:method => :delete, :confirm => 'Are you sure?', :class => "btn btn-default btn-xs"}
 
-= button_to 'Edit item', edit_item_path(@item), :method => :get
-= button_to 'Delete item', item_path(@item), :method => :delete, :confirm => 'Are you sure?'
-= link_to 'Back to Items', '/'
+    .item-right
+        %h4= "Description"
+        #description= @item.description
+        #category{:class => "label label-info"}= @item.category
+        %br
+
+        %span#reserve
+            %h4 Reserve this item
+            #start-reservation
+                .bold= "Start Date"
+                %div{:class => 'datepicker', 'data-behaviour' => 'datepicker' }
+            #end-reservation
+                .bold= "End Date"
+                %div{:class => 'datepicker', 'data-behaviour' => 'datepicker' }
+            = button_to 'Reserve >>', {}, :class => "btn btn-success btn-xs"
+
+        #backlink= link_to 'Back to Items', '/'
+
+%br
+

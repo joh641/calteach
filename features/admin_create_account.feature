@@ -21,6 +21,7 @@ Scenario: Admin can create other admins
   And I fill in "Email" with "bob@gmail.com"
   And I select "Admin" from "User Type"
   And I press "Submit"
+  Then the created email account should receive a temporary password and confirmation
   Then I should see "User was successfully created."
   Then I should be on the user dashboard
   Then I should see "Bob"
@@ -39,6 +40,7 @@ Scenario: Admin can create faculty users
   And I fill in "Email" with "bob@gmail.com"
   And I select "Faculty" from "User Type"
   And I press "Submit"
+  Then the created email account should receive a temporary password and confirmation
   Then I should see "User was successfully created."
   Then I should be on the user dashboard
   Then I should see "Bob"
@@ -57,6 +59,7 @@ Scenario: Admin can create basic users
   And I fill in "Email" with "bob@gmail.com"
   And I select "Basic" from "User Type"
   And I press "Submit"
+  Then the created email account should receive a temporary password and confirmation
   Then I should see "User was successfully created."
   Then I should be on the user dashboard
   Then I should see "Bob"

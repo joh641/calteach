@@ -22,7 +22,7 @@ class Admin::UsersController < ApplicationController
     @user.password_confirmation = random_password
     @user.admin_created = true
     if @user.save
-      redirect_to admin_users_path, notice: 'User was successful created.'
+      redirect_to admin_users_path, notice: 'User was successfully created.'
     else
       render action: "new"
     end

@@ -19,7 +19,7 @@ Scenario: Admin can create other admins
   Then I should see "User Type"
   And I fill in "Name" with "Bob"
   And I fill in "Email" with "bob@gmail.com"
-  And I choose "Admin"
+  And I select "Admin" from "User Type"
   And I press "Submit"
   Then I should see "User was successfully created."
   Then I should be on the user dashboard
@@ -37,7 +37,7 @@ Scenario: Admin can create faculty users
   Then I should see "User Type"
   And I fill in "Name" with "Bob"
   And I fill in "Email" with "bob@gmail.com"
-  And I choose "Faculty"
+  And I select "Faculty" from "User Type"
   And I press "Submit"
   Then I should see "User was successfully created."
   Then I should be on the user dashboard
@@ -55,7 +55,7 @@ Scenario: Admin can create basic users
   Then I should see "User Type"
   And I fill in "Name" with "Bob"
   And I fill in "Email" with "bob@gmail.com"
-  And I choose "Basic"
+  And I select "Basic" from "User Type"
   And I press "Submit"
   Then I should see "User was successfully created."
   Then I should be on the user dashboard

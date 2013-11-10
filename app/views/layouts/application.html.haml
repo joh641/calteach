@@ -10,6 +10,9 @@
         = link_to 'Edit profile', edit_user_registration_path
         |
         \#{link_to "Logout", destroy_user_session_path, method: :delete}
+        - if current_user.admin?
+          |
+          = link_to "User Dashboard", admin_users_path
       - else
         = link_to "Sign up", new_user_registration_path
         |

@@ -28,4 +28,8 @@ class User < ActiveRecord::Base
       "Basic"
     end
   end
+
+  def admin?
+    return category == ADMIN
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131107024653) do
+ActiveRecord::Schema.define(:version => 20131110000941) do
 
   create_table "items", :force => true do |t|
     t.string   "legacy_id"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20131107024653) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.boolean  "admin_created"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

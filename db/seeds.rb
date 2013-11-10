@@ -44,6 +44,7 @@ users = User.create([
 		course: "Math",
 		category: User::BASIC,
 		password: "password"
+		admin_created: false
 	},
 	{
 		email: "admin@berkeley.edu",
@@ -51,6 +52,7 @@ users = User.create([
 		phone: "123-456-7890",
 		category: User::ADMIN,
 		password: "password"
+		admin_created: false
 	},
 	{
 		email: "Faculty@berkeley.edu",
@@ -58,6 +60,7 @@ users = User.create([
 		phone: "123-456-7890",
 		category: User::FACULTY,
 		password: "password"
+		admin_created: false
 	}
 ])
 

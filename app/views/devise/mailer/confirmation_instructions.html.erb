@@ -3,3 +3,9 @@
 <p>You can confirm your account email through the link below:</p>
 
 <p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+
+<% if @user.admin_created %>
+    <p>After confirming above, use the following login information to change your password:</p>
+    <p>Email: <%= @user.email %></p>
+    <p>Password: <%= @user.password %></p>
+<% end %>

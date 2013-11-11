@@ -19,13 +19,13 @@
             = link_to "Sign up", new_user_registration_path
           %li{:class => "tab account"}>
             %i{:class => "fa fa-book"}
-            = link_to "Inventory", new_user_session_path
+            = link_to "Log In", new_user_session_path
 
         %li{:class => "tab application"}>
           %i{:class => "fa fa-book"}
           = link_to "Inventory", "/"
         / fix this (Michelle)
-        - if current_user
+        - if current_user and current_user.admin?
           %li{:class => "tab application"}>
             %i{:class => "fa fa-users"}
             = link_to "User Dashboard", admin_users_path

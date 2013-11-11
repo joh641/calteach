@@ -33,6 +33,16 @@ And /^I am logged into the admin panel$/ do
   end
 end
 
+And /^I edit "([^"]*)"$/ do |user|
+  user = User.find_by_name(user)
+  click_link("edit#{user.id}")
+end
+
+And /^I destroy "([^"]*)"$/ do |user|
+  user = User.find_by_name(user)
+  click_link("destroy#{user.id}")
+end
+
 And /^I am logged into the user panel$/ do
   visit '/users/sign_in'
   fill_in 'user[email]', :with => @user_email

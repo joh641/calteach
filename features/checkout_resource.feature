@@ -6,15 +6,19 @@ Feature: Checkout resources
 
 Background:
 
-  Given the following reservations exist:
-  |  id   |  name                    |  items     |  
-  |  1    |  User                    |  Globe     |
+  Given the following items exist:
+  | name     | quantity  | 
+  | Globe    | 1         |
 
-  And I am on the admin page
-  
+  And there is a user
+  And I am on the home page
+  And I follow "Globe"
+
 Scenario: 
-  When I check "Reservation_1"
-  And I press "Checkout"
-  Then I should be on the checkout confirmation page
-  And I should see "Check out successful"
-  And I should see "Globe"
+  When I press "Checkout item"
+  Then I should be on the checkout page for Globe
+  And I should see "User's Email"
+  When I fill in "email" with "cucumberuser@gmail.com"
+  And I press "Checkout Item"
+  Then I should see "Item Globe was successfully checked out" 
+    

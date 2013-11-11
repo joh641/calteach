@@ -1,5 +1,7 @@
 class Admin::UsersController < ApplicationController
 
+  before_filter :is_admin
+
   def index
     @users = User.find(:all, :order => "name ASC")
   end
@@ -16,11 +18,13 @@ class Admin::UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    #TODO: Generate random password. Send user email w/ password
-    @user.password = 'password'
+    poss_characters =  [('a'..'z'),('A'..'Z')].map{|i| i.to_a}.flatten
+    random_password  =  (0...8).map{ poss_characters[rand(poss_characters.length)] }.join
+    @user.password = random_password
+    @user.password_confirmation = random_password
+    @user.admin_created = true
     if @user.save
-      redirect_to admin_users_path, notice: 'User was successful created.'
-      puts '*' * 50
+      redirect_to admin_users_path, notice: 'User was successfully created.'
     else
       render action: "new"
     end

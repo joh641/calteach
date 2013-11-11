@@ -1,0 +1,18 @@
+.item-detail
+    .item-left
+        %h2#name= @item.name
+        #image= image_tag @item.image.url(:medium), :class => "img-rounded"
+
+    .item-right
+        = form_tag checkout_reservation_path do
+            = label_tag :email, "User's Email"
+            = text_field_tag :email
+            = hidden_field_tag :item, @item.id
+            = submit_tag 'Checkout Item'
+        #backlink
+            = link_to 'Back to Description', item_path(@item)
+            %br
+            = link_to 'Back to Items', '/'
+
+%br
+

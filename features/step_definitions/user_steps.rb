@@ -1,8 +1,9 @@
 Given /^there is an admin$/ do
+  @admin_email = 'cucumberadmin@gmail.com'
   user = User.new({:name => 'admin',
                 :password => 'password',
-                :email => 'admin@gmail.com',
-
+                :email => @admin_email,
+                :category => User::ADMIN
               })
   user.confirmed_at = Time.now
   user.save(:validate => false)
@@ -10,18 +11,19 @@ Given /^there is an admin$/ do
 end
 
 Given /^there is a user$/ do
+  @user_email = 'cucumberuser@gmail.com'
   user = User.new({:name => 'user',
                 :password => 'password',
-                :email => 'user@gmail.com'
+                :email => @user_email,
+                :category => User::BASIC
               })
   user.confirmed_at = Time.now
   user.save(:validate => false)
 end
 
 And /^I am logged into the admin panel$/ do
-  pending
   visit '/users/sign_in'
-  fill_in 'user[email]', :with => 'admin@gmail.com'
+  fill_in 'user[email]', :with => @admin_email
   fill_in 'user[password]', :with => 'password'
   click_button 'Sign in'
   if page.respond_to? :should
@@ -32,9 +34,8 @@ And /^I am logged into the admin panel$/ do
 end
 
 And /^I am logged into the user panel$/ do
-  pending
   visit '/users/sign_in'
-  fill_in 'user[email]', :with => 'user@gmail.com'
+  fill_in 'user[email]', :with => @user_email
   fill_in 'user[password]', :with => 'password'
   click_button 'Sign in'
   if page.respond_to? :should
@@ -45,15 +46,22 @@ And /^I am logged into the user panel$/ do
 end
 
 
-Then /^the type of "([^"]*)" should be "([^"]*)"$/ do |user_name, user_type|
-  type_constant = 0
-  if user_type == "admin"
-    type_constant = User::ADMIN
-  elsif user_type == "faculty"
-    type_constant = User::FACULTY
-  elsif user_type == "basic"
-    type_constant = User::BASIC
+Then /^the type of "([^"]*)" should be "([^"]*)"$/ do |user_name, user_category|
+  category_constant = 0
+  if user_category == "admin"
+    category_constant = User::ADMIN
+  elsif user_category == "faculty"
+    category_constant = User::FACULTY
+  elsif user_category == "basic"
+    category_constant = User::BASIC
   end
 
-  User.find_by_name(user_name).type == type_constant
+  User.find_by_name(user_name).category == category_constant
 end
+
+Then /^the created email account should receive a temporary password and confirmation$/ do
+  email = ActionMailer::Base.deliveries.first
+  email.body.should include("confirm")
+  email.body.should include("change your password")
+end
+

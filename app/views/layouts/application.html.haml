@@ -9,9 +9,7 @@
             %i{:class => "fa fa-user"}
             %p= current_user.email
             %ul
-              %li Change Password
-              %li Logout
-
+              %li= link_to 'Edit Profile', edit_user_registration_path
           %li{:class => "tab account"}>
             %i{:class => "fa fa-umbrella"}
             \#{link_to "Logout", destroy_user_session_path, method: :delete}
@@ -19,18 +17,29 @@
           %li{:class => "tab account"}>
             %i{:class => "fa fa-user"}
             = link_to "Sign up", new_user_registration_path
-          %li{:class => "account"}>
-            %i{:class => "fa fa-umbrella"}
-            \#{link_to "Login", new_user_session_path}
+          %li{:class => "tab account"}>
+            %i{:class => "fa fa-book"}
+            = link_to "Inventory", new_user_session_path
+
         %li{:class => "tab application"}>
           %i{:class => "fa fa-book"}
-          = link_to "Inventory", new_user_session_path
-        %li{:class => "tab application"}>
-          %i{:class => "fa fa-ticket"}
-          = link_to "See Reservations", new_user_session_path
-        %li{:class => "tab application"}>
-          %i{:class => "fa fa-shopping-cart"}
-          = link_to "See Cart (5)", new_user_session_path, {:class => "underline"}
+          = link_to "Inventory", "/"
+        / fix this (Michelle)
+        - if current_user
+          %li{:class => "tab application"}>
+            %i{:class => "fa fa-users"}
+            = link_to "User Dashboard", admin_users_path
+          %li{:class => "tab application"}>
+            %i{:class => "fa fa-ticket"}
+            = link_to "Reservation Dashboard", reservations_path
+        - else
+          %li{:class => "tab application"}>
+            %i{:class => "fa fa-ticket"}
+            = link_to "See Reservations", new_user_session_path
+          %li{:class => "tab application"}>
+            %i{:class => "fa fa-shopping-cart"}
+            = link_to "See Cart (5)", new_user_session_path, {:class => "underline"}
+
         %li{:class => "tab account"}>
           %i{:class => "fa fa-envelope"}
           = link_to "Contact", new_user_session_path
@@ -46,8 +55,9 @@
       .flash
         - if not msg.nil?
           - if msg.is_a?(String)
-            %div{:class => "alert alert-#{name == :notice ? "success" : "error"}"}
+            %div{:class => "alert alert-#{name == :notice ? "success" : "warning"}"}
               %a.close{"data-dismiss" => "alert"} ×
               = content_tag :div, msg, :id => "flash_#{name}"
 
-    = yield
+    #container
+      = yield

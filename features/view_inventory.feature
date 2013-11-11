@@ -18,7 +18,8 @@ Background: items have been added to inventory
     | The Incredibles         | 5         |
     | Raiders of the Lost Ark | 5         |
     | Chicken Run             | 5         |
-
+    And there is an admin
+    And I am logged into the admin panel
     And I am on the home page
 
 Scenario:

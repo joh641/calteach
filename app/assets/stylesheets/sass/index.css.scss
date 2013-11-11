@@ -1,35 +1,53 @@
-@import "utils";
+@import "base";
 
 html, body {
 	height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6, p, div {
 	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
 }
 
 $page-width: 960px;
-.column {
-	/*TODO (Yuxin) this height should not be hard-coded!*/
-	height: 500px;
+#container {
+	min-width: $page-width;
 }
 
-$left-padding: 40px;
-.header-container {
-    padding-left: $left-padding;
+.column {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.right-column-container {
+	padding: 30px;
+	overflow-y: scroll;
 }
 
 .search-bar-container {
-	input {
+	.search-bar {
+		margin-left: 20px;
 		width: 200px;
+		@include line-height(25px, 15px);
 	}
 }
+
+$left-column-container-width: 270px;
 .left-column-container {
-/*	width: 25%;*/
-	min-width: 150px;
-	background-color: #eee;
-    padding-left: $left-padding;
+	width: $left-column-container-width;
+	background-color: #f0f0f0;
+	.header-text {
+		padding: 20px 0px 0px 20px;
+		@include line-height(50px, 35px);
+	}
+	h2 {
+		margin-top: 0;
+		padding: 20px 0px 0px 20px;
+		@include line-height(30px, 20px);
+	}
 }
 
 .item-container {
-
 	@include border-radius(2px, 2px, 2px, 2px);
 	text-align: center;
 	margin-bottom: 20px;
@@ -41,8 +59,7 @@ $left-padding: 40px;
 }
 
 .title {
-	@include height(30px, 19px);
-	font-weight: bold;
+	@include height(30px, 24px);
 	margin-top: 10px;
 	margin-bottom: 15px;
 
@@ -52,11 +69,34 @@ $left-padding: 40px;
 	@include height(25px, 12px);
 	color: white;
 	&.available {
-		background-color: #57af3e;
+		background-color: $calteach-green;
 	}
 	&.unavailable {
-		background-color: #d73a40;
+		background-color: $calteach-red;
 	}
 }
 
+$grid-units: 3;
+$category-width: $left-column-container-width/$grid-units;
+.category {
+	i {
+		padding-top: 18px;
+		font-size: 35px;
+	}
+	i, .category-name {
+		display: block;
+		text-align: center;
+	}
+	.category-name {
+		@include line-height(25px, 13px);
+	}
+	display: inline-block;
+	vertical-align: top;
+	width: $category-width;
+	height: $category-width;
+
+	color: white;
+	cursor: pointer;
+
+}
 

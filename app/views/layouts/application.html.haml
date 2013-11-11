@@ -2,24 +2,47 @@
 %html
 
   %head
-    #user_nav
-      - if user_signed_in?
-        Logged in as
-        = succeed "." do
-          %strong= current_user.email
-        = link_to 'Edit profile', edit_user_registration_path
-        |
-        \#{link_to "Logout", destroy_user_session_path, method: :delete}
-        - if current_user.admin?
-          |
-          = link_to "User Dashboard", admin_users_path
-          |
-          = link_to "Reservation Dashboard", reservations_path
-      - else
-        = link_to "Sign up", new_user_registration_path
-        |
-        \#{link_to "Login", new_user_session_path}
+    #main-menu
+      %ul{:class => "main-navigation"}
+        - if user_signed_in?
+          %li{:class => "tab account dropdown"}>
+            %i{:class => "fa fa-user"}
+            %p= current_user.email
+            %ul
+              %li= link_to 'Edit Profile', edit_user_registration_path
+          %li{:class => "tab account"}>
+            %i{:class => "fa fa-umbrella"}
+            \#{link_to "Logout", destroy_user_session_path, method: :delete}
+        - else
+          %li{:class => "tab account"}>
+            %i{:class => "fa fa-user"}
+            = link_to "Sign up", new_user_registration_path
+          %li{:class => "tab account"}>
+            %i{:class => "fa fa-book"}
+            = link_to "Log In", new_user_session_path
 
+        %li{:class => "tab application"}>
+          %i{:class => "fa fa-book"}
+          = link_to "Inventory", "/"
+        / fix this (Michelle)
+        - if current_user and current_user.admin?
+          %li{:class => "tab application"}>
+            %i{:class => "fa fa-users"}
+            = link_to "User Dashboard", admin_users_path
+          %li{:class => "tab application"}>
+            %i{:class => "fa fa-ticket"}
+            = link_to "Reservation Dashboard", reservations_path
+        - else
+          %li{:class => "tab application"}>
+            %i{:class => "fa fa-ticket"}
+            = link_to "See Reservations", new_user_session_path
+          %li{:class => "tab application"}>
+            %i{:class => "fa fa-shopping-cart"}
+            = link_to "See Cart (5)", new_user_session_path, {:class => "underline"}
+
+        %li{:class => "tab account"}>
+          %i{:class => "fa fa-envelope"}
+          = link_to "Contact", new_user_session_path
     %title Calteach
     = stylesheet_link_tag "http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
     = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Open+Sans:300italic,400,300,700,600"
@@ -37,18 +60,4 @@
               = content_tag :div, msg, :id => "flash_#{name}"
 
     #container
-      .header-container.row
-        %h1= link_to 'Calteach Inventory', '/'
-      .content.row
-        .left-column-container.column.col-md-3
-          %h2 Search
-          .search-bar-container
-            = form_tag items_path, :method => :get, :id => 'search_form' do
-              %input{:class => 'search-bar', :type => 'text', :placeholder => 'Search for an Item...', :name => 'query', :value => @query}
-              = submit_tag 'Search', :id => 'search_submit'
-          %h2 Categories
-          %ul
-            - @all_categories.each do |category|
-              %li= category
-        .right-column-container.column.container.col-md-9
-          = yield
+      = yield

@@ -13,6 +13,8 @@
         - if current_user.admin?
           |
           = link_to "User Dashboard", admin_users_path
+          |
+          = link_to "Reservation Dashboard", reservations_path
       - else
         = link_to "Sign up", new_user_registration_path
         |
@@ -30,13 +32,13 @@
       .flash
         - if not msg.nil?
           - if msg.is_a?(String)
-            %div{:class => "alert alert-#{name == :notice ? "success" : "error"}"}
+            %div{:class => "alert alert-#{name == :notice ? "success" : "warning"}"}
               %a.close{"data-dismiss" => "alert"} ×
               = content_tag :div, msg, :id => "flash_#{name}"
 
     #container
       .header-container.row
-        %h1 Calteach Inventory
+        %h1= link_to 'Calteach Inventory', '/'
       .content.row
         .left-column-container.column.col-md-3
           %h2 Categories

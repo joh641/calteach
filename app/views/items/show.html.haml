@@ -1,25 +1,29 @@
-.item-detail
-    .item-left
-        %h2#name= @item.name
-        #image= image_tag @item.image.url(:medium), :class => "img-rounded"
-        .admin
+#container
+  .content
+    = render partial: 'left_column'
+    .right-column-container.column
+      .item-detail
+        .item-left
+          %h2#name= @item.name
+          #image= image_tag @item.image.url(:medium), :class => "img-rounded"
+          .admin
             %h5 Admin
             - if @item.quantity > 0
-                = button_to 'Checkout item', checkout_item_path(@item), :method => :get, :class => "btn btn-primary btn-xs"
+              = button_to 'Checkout item', checkout_item_path(@item), :method => :get, :class => "btn btn-primary btn-xs"
             - else
-                Checked out to:
-                %br= @item.reservations[0].user.name
-                = button_to 'Check in item', checkin_reservation_path(@item.reservations[0]), :method => :put, :class => "btn btn-primary btn-xs"
+              Checked out to:
+              %br= @item.reservations[0].user.name
+              = button_to 'Check in item', checkin_reservation_path(@item.reservations[0]), :method => :put, :class => "btn btn-primary btn-xs"
             = button_to 'Edit item', edit_item_path(@item), {:method => :get, :class => "btn btn-default btn-xs"}
             = button_to 'Delete item', item_path(@item), {:method => :delete, :confirm => 'Are you sure?', :class => "btn btn-default btn-xs"}
 
-    .item-right
-        %h4= "Description"
-        #description= @item.description
-        #category{:class => "label label-info"}= @item.category
-        %br
+        .item-right
+          %h4= "Description"
+          #description= @item.description
+          #category{:class => "label label-info"}= @item.category
+          %br
 
-        = render :partial => 'reserve_item_form'
+          = render :partial => 'reserve_item_form'
 
 -#            %h4 Reserve this item
 -#            #start-reservation
@@ -29,6 +33,6 @@
 -#                .bold= "End Date"
 -#                %div{:class => 'datepicker', 'data-behaviour' => 'datepicker' }
 -#            = button_to 'Reserve >>', {}, :class => "btn btn-success btn-xs"
-        #backlink= link_to 'Back to Items', '/'
-%br
+          #backlink= link_to 'Back to Items', '/'
+      %br
 

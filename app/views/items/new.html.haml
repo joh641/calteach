@@ -1,5 +1,7 @@
-= form_tag items_path, :multipart => true do
-  = render :partial => 'item_form'
-  = submit_tag 'Create Item'
-
-= link_to 'Back to Items', items_path
+#container
+  .content
+    = render partial: 'left_column'
+    .right-column-container.column
+      = form_tag items_path, :multipart => true do
+        = render partial: 'item_form'
+        = submit_tag 'Create Item'

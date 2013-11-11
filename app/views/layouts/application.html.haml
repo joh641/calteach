@@ -13,6 +13,8 @@
         - if current_user.admin?
           |
           = link_to "User Dashboard", admin_users_path
+          |
+          = link_to "Reservation Dashboard", reservations_path
       - else
         = link_to "Sign up", new_user_registration_path
         |
@@ -36,7 +38,7 @@
 
     #container
       .header-container.row
-        %h1 Calteach Inventory
+        %h1= link_to 'Calteach Inventory', '/'
       .content.row
         .left-column-container.column.col-md-3
           %h2 Categories

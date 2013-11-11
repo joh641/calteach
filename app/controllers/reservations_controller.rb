@@ -1,25 +1,42 @@
 class ReservationsController < ApplicationController
+  def index
+    @reservations = Reservation.all
+  end
+
   def checkout
     item = Item.find_by_id(params[:item])
     user = User.find_by_email(params[:email])
     if user
       reservation = Reservation.new
+      reservation.status = "Checked Out"
+      reservation.save
       item.quantity -= 1
-      item.reservations << reservation
       item.save
+      item.reservations << reservation
+      user.reservations << reservation
       flash[:notice] = "Item #{item.name} was successfully checked out to #{user.name}"
     else
       flash[:warning] = "User does not exist"
     end
-    redirect_to item_path(item)
+    if params[:dashboard]
+      redirect_to reservations_path
+    else
+      redirect_to item_path(item)
+    end
   end
   
   def checkin
     reservation = Reservation.find_by_id(params[:id])
+    reservation.status = "Checked In"
+    reservation.save
     item = reservation.item
     item.quantity += 1
     item.save
     flash[:notice] = "Item #{item.name} was successfully checked in"
-    redirect_to item_path(item)
+    if params[:dashboard]
+      redirect_to reservations_path
+    else
+      redirect_to item_path(item)
+    end
   end
 end

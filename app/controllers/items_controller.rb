@@ -43,8 +43,11 @@ class ItemsController < ApplicationController
   def destroy
     @item = Item.find_by_id(params[:id])
     @item.destroy
-    flash[:notice] = "Item #{@item.name} deleted."
+    flash[:notice] = "Item #{@item.name} was successfully deleted."
     redirect_to '/'
   end
 
+  def checkout
+    @item = Item.find_by_id(params[:id])
+  end
 end

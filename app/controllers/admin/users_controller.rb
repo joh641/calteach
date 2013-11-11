@@ -32,13 +32,9 @@ class Admin::UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    puts @user.id
     if @user.update_attributes(params[:user])
-      puts '***successful'
-      puts params[:user]
       redirect_to admin_users_path, notice: 'User was successfully updated.'
     else
-      puts '***unsuccessful'
       flash[:error] = "User couldn't be updated"
       render action: "edit"
     end

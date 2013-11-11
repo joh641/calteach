@@ -1,5 +1,12 @@
 require 'spec_helper'
 
 describe Reservation do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "hiding archived reservations" do
+    it "should hide reservations that have been archived" do
+      Reservation.create(:status => 'Archived')
+      Reservation.create(:status => 'Reserved')
+      Reservation.create(:status => 'Checked Out')
+      Reservation.hide_archived.length.should == 2
+    end
+  end
 end

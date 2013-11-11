@@ -21,4 +21,5 @@ Scenario:
   When I fill in "email" with "cucumberuser@gmail.com"
   And I press "Checkout Item"
   Then I should see "Item Globe was successfully checked out" 
-    
+  When I press "Check in item"
+  Then I should see "Item Globe was successfully checked in"    

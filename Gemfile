@@ -37,6 +37,7 @@ gem 'jquery-rails'
 gem 'haml'
 gem 'haml-rails'
 gem 'bootstrap-sass'
+gem 'font-awesome-sass'
 
 gem 'devise'
 

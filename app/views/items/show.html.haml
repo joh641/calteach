@@ -20,16 +20,16 @@
         %br
 
         %span#reserve
-            %h4 Reserve this item
-            #start-reservation
-                .bold= "Start Date"
-                %div{:class => 'datepicker', 'data-behaviour' => 'datepicker' }
-            #end-reservation
-                .bold= "End Date"
-                %div{:class => 'datepicker', 'data-behaviour' => 'datepicker' }
-            = button_to 'Reserve >>', {}, :class => "btn btn-success btn-xs"
+            = render :partial => 'reserve_item_form'
 
+-#            %h4 Reserve this item
+-#            #start-reservation
+-#                .bold= "Start Date"
+-#                %div{:class => 'datepicker', 'data-behaviour' => 'datepicker' }
+-#            #end-reservation
+-#                .bold= "End Date"
+-#                %div{:class => 'datepicker', 'data-behaviour' => 'datepicker' }
+-#            = button_to 'Reserve >>', {}, :class => "btn btn-success btn-xs"
         #backlink= link_to 'Back to Items', '/'
-
 %br
 

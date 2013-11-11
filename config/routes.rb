@@ -2,6 +2,7 @@ Calteach::Application.routes.draw do
   devise_for :users
 
   resources :items do
+  	get  :reserve, :on => :member, :as => :reserve
     member do
       get 'checkout'
     end

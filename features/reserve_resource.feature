@@ -10,13 +10,10 @@ Background:
   | name                    | quantity  |
   | Globe                   | 5         |
 
-  And I am on the home page
+  And I am on the item info page for item with id 1
   
 Scenario: 
-  When I check "Globe"
+  When I fill in "reservation_start_date" with "11/11/2013"
+  And I fill in "reservation_end_date" with "11/12/2013"
   And I press "Reserve"
-  Then I should be on the Reserve Cart page
-  And I should see "Globe"
-  When I press "Confirm"
-  Then I should see "You have successfully reserved"
-  And I should see "Globe"  
+  Then I should be on the item info page for item with id 1

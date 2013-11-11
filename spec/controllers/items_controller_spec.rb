@@ -103,4 +103,11 @@ describe ItemsController do
       expect(Reservation.all.length) == reservations_num + 1
     end
   end
+  describe 'checkout item' do
+    it 'should render the checkout view' do
+      Item.create(item_hash1)
+      get :checkout, :id => 1
+      response.should render_template('checkout')
+    end 
+  end
 end

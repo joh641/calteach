@@ -6,4 +6,12 @@ class ApplicationController < ActionController::Base
   def all_categories
     @all_categories = Item.all_categories
   end
+
+  def is_admin
+    if !current_user || !current_user.admin?
+      flash[:error] = "Error: Not an admin"
+      redirect_to root_path
+      return
+    end
+  end
 end

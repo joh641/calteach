@@ -9,8 +9,10 @@ Background:
   Given the following items exist:
   | name                    | quantity  |
   | Globe                   | 5         |
-
+  And there is an admin
+  And I am logged into the admin panel
   And I am on the item info page for item with id 1
+
   
 Scenario: 
   When I fill in "reservation_start_date" with "11/11/2013"

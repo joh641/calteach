@@ -9,28 +9,28 @@ Item.create([
 	{
 		name: "Globe",
 		legacy_id: "1",
-		quantity: 5,
+		quantity: 1,
 		description: "A round object you can use to view countries of the world!",
 		category: "Science"
 	},
 	{
 		name: "Crayon",
 		legacy_id: "2",
-		quantity: 43,
+		quantity: 1,
 		description: "A piece of oil on a stick you can color with",
 		category: "Art"
 	},
 	{
 		name: "Pencil",
 		legacy_id: "3",
-		quantity: 56,
+		quantity: 1,
 		description: "A stick of carbon",
 		category: "Art"
 	},
 	{
 		name: "Gold",
 		legacy_id: "4",
-		quantity: 0,
+		quantity: 1,
 		description: "Something really valuable that everyone stole",
 		category: "Art"
 	}
@@ -43,7 +43,7 @@ users = User.create([
 		phone: "123-456-7890",
 		course: "Math",
 		category: User::BASIC,
-		password: "password",
+		password: "password"
 		#admin_created: false
 	},
 	{
@@ -51,7 +51,7 @@ users = User.create([
 		name: "Amy Admin",
 		phone: "123-456-7890",
 		category: User::ADMIN,
-		password: "password",
+		password: "password"
 		#admin_created: false
 	},
 	{
@@ -59,7 +59,7 @@ users = User.create([
 		name: "Fabian Faculty",
 		phone: "123-456-7890",
 		category: User::FACULTY,
-		password: "password",
+		password: "password"
 		#admin_created: false
 	}
 ])

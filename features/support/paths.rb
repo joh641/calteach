@@ -27,6 +27,9 @@ module NavigationHelpers
     when /^the user dashboard/
       admin_users_path
 
+    when /^the checkout page for (.*)/
+      checkout_item_path(Item.find_by_name($1))
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

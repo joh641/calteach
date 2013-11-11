@@ -64,6 +64,15 @@ Scenario: Admin can create basic users
   Then I should be on the user dashboard
   Then I should see "Bob"
   Then the type of "Bob" should be "basic"
+  When I edit "Bob"
+  Then I should see "Name"
+  And I fill in "Name" with "Bobby"
+  And I press "Submit"
+  Then I should see "Bobby"
+  Then I should be on the user dashboard
+  When I destroy "Bobby"
+  Then I should not see "Bobby"
+  Then I should be on the user dashboard
 
 
 Scenario: Non-admin cannot create users

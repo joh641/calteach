@@ -11,6 +11,7 @@ Calteach::Application.routes.draw do
   resources :reservations do
     member do
       post 'checkout'
+      put 'checkout'
       put 'checkin'
       put 'archive'
     end

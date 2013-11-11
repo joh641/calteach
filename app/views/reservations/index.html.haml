@@ -22,7 +22,7 @@
           %td= reservation.status
           %td
             - if reservation.status == "Reserved"
-              = link_to 'Check Out', checkout_reservation_path(reservation, :reserved => true, :dashboard => true), :class => 'btn btn-default btn-sm'
+              = link_to 'Check Out', checkout_reservation_path(reservation, :reserved => true, :dashboard => true), :method => :put, :class => 'btn btn-default btn-sm'
             - if reservation.status == "Checked Out"
               = link_to 'Check In', checkin_reservation_path(reservation, :dashboard => true), :method => :put, :class => 'btn btn-default btn-sm'
             - if reservation.status == "Checked In"

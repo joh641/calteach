@@ -1,13 +1,22 @@
 class ReservationsController < ApplicationController
   def index
-    @reservations = Reservation.all
+    if params[:archived]
+      @reservations = Reservation.all
+      @archived = true
+    else
+      @reservations = Reservation.hide_archived
+    end
   end
 
   def checkout
     item = Item.find_by_id(params[:item])
     user = User.find_by_email(params[:email])
     if user
-      reservation = Reservation.new
+      if params[:reserved]
+        reservation = Reservation.find_by_id(params[:id])
+      else
+        reservation = Reservation.new
+      end
       reservation.status = "Checked Out"
       reservation.save
       item.quantity -= 1
@@ -38,5 +47,12 @@ class ReservationsController < ApplicationController
     else
       redirect_to item_path(item)
     end
+  end
+
+  def archive
+    reservation = Reservation.find_by_id(params[:id])
+    reservation.status = "Archived"
+    reservation.save
+    redirect_to reservations_path
   end
 end

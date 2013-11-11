@@ -11,6 +11,7 @@ Calteach::Application.routes.draw do
     member do
       post 'checkout'
       put 'checkin'
+      put 'archive'
     end
   end
 

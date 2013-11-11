@@ -1,5 +1,10 @@
 .container
   %h1 Reservations
+  .new-btn
+    -if @archived
+      = link_to 'Hide Archived', reservations_path(), :class => 'btn btn-primary'
+    -else
+      = link_to 'Show Archived', reservations_path(:archived => true), :class => 'btn btn-primary'
   %table.table.table-striped
     %thead
       %tr
@@ -16,7 +21,9 @@
           %td= reservation.item.name
           %td= reservation.status
           %td
+            - if reservation.status == "Reserved"
+              = link_to 'Check Out', checkout_reservation_path(reservation, :reserved => true, :dashboard => true), :class => 'btn btn-default btn-sm'
             - if reservation.status == "Checked Out"
               = link_to 'Check In', checkin_reservation_path(reservation, :dashboard => true), :method => :put, :class => 'btn btn-default btn-sm'
-            - if reservation.status == "Reserved"
-              = link_to 'Check Out', checkout_reservation_path(reservation, :dashboard => true), :class => 'btn btn-default btn-sm'
+            - if reservation.status == "Checked In"
+              = link_to 'Archive', archive_reservation_path(reservation), :method => :put, :class => 'btn btn-default btn-sm'

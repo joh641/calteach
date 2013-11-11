@@ -12,6 +12,10 @@
         %th Email
         %th Item
         %th Status
+        %th Reservation Start
+        %th Reservation End
+        %th Checkout Date
+        %th Check In Date
         %th Actions
     .body
       - @reservations.each do |reservation|
@@ -20,6 +24,10 @@
           %td= reservation.user.email
           %td= reservation.item.name
           %td= reservation.status
+          %td= reservation.reservation_out
+          %td= reservation.reservation_in
+          %td= reservation.date_out
+          %td= reservation.date_in
           %td
             - if reservation.status == "Reserved"
               = link_to 'Check Out', checkout_reservation_path(reservation, :reserved => true, :dashboard => true), :method => :put, :class => 'btn btn-default btn-sm'

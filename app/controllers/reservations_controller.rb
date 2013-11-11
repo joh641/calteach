@@ -57,6 +57,7 @@ class ReservationsController < ApplicationController
     reservation = Reservation.find_by_id(params[:id])
     reservation.status = "Archived"
     reservation.save
+    flash[:notice] = "Reservation was successfully archived"
     redirect_to reservations_path
   end
 end

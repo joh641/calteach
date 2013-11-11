@@ -42,3 +42,7 @@ Scenario:
     And I press "Search"
     Then there should be no results
 
+Scenario:
+    When I follow "Globe"
+    Then I should see "Reserve this item"
+

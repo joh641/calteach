@@ -1,5 +1,7 @@
 class Admin::UsersController < ApplicationController
 
+  before_filter :is_admin
+
   def index
     @users = User.find(:all, :order => "name ASC")
   end

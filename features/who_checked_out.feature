@@ -6,4 +6,7 @@ Feature: See who has checked out a resource
 
 Background:
 
+  Given I am an admin
+  And I am on the Reservation Dashboard
+
 Scenario: 

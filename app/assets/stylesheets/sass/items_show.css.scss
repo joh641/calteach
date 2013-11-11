@@ -1,0 +1,71 @@
+#image {
+    margin-right:10px;
+}
+
+.item-left {
+    float: left;
+    width: 165px;
+}
+
+.item-left h2 {
+    margin-top: 0;
+}
+
+.item-right {
+    margin-left: 165px;
+    padding: 40px 10px 10px 10px;
+    width: 70%;
+}
+
+.admin {
+    width: 165px;
+    padding: 5px;
+    margin-top: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.admin h5 {
+    background-color: #CCCCCC;
+    margin: -5px;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px 5px 0 0;
+}
+
+.admin .button_to {
+    margin-top: 5px;
+}
+
+.tag {
+    color: white
+}
+
+#backlink {
+    margin-top: 10px
+}
+
+#reserve {
+    margin-top: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    display: inline-block;
+}
+
+#reserve h4 {
+    background-color: #CCCCCC;
+    margin: -10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px 5px 0 0;
+}
+
+#start-reservation, #end-reservation {
+    display: inline-block;
+}
+
+.bold {
+    font-weight: bold;
+}

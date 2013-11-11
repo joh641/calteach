@@ -3,4 +3,8 @@ class Reservation < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :item
+
+  def self.hide_archived
+    Reservation.find(:all, :conditions => [ "status != 'Archived'" ])
+  end
 end

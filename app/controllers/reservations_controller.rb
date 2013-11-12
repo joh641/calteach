@@ -28,7 +28,7 @@ class ReservationsController < ApplicationController
       item.save
       flash[:notice] = "Item #{item.name} was successfully checked out to #{user.name}"
     else
-      flash[:warning] = "User does not exist"
+      flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out."
     end																		
     if params[:dashboard]
       redirect_to reservations_path
@@ -36,7 +36,7 @@ class ReservationsController < ApplicationController
       redirect_to item_path(item)
     end
   end
-  
+
   def checkin
     reservation = Reservation.find_by_id(params[:id])
     reservation.status = "Checked In"

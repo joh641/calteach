@@ -24,6 +24,5 @@ set :environment, 'development'
 
 # If you change the frequency of this, you must also change 
 every 1.day, at: "11:38 PM" do
-    puts "running"
     runner "Reservation.email_reminders"
 end

@@ -7,23 +7,12 @@
           %h2#name= @item.name
           #image= image_tag @item.image.url(:medium), :class => "img-rounded"
           - if current_user and current_user.admin?
-            .admin
-              %h5 Admin
-              - if @item.quantity > 0
-                = button_to 'Checkout item', checkout_item_path(@item), :method => :get, :class => "btn btn-primary btn-xs"
-              - else
-                Checked out to:
-                %br= @item.reservations[0].user.name
-                = button_to 'Check in item', checkin_reservation_path(@item.reservations[0]), :method => :put, :class => "btn btn-primary btn-xs"
-              = button_to 'Edit item', edit_item_path(@item), {:method => :get, :class => "btn btn-default btn-xs"}
-              = button_to 'Delete item', item_path(@item), {:method => :delete, :confirm => 'Are you sure?', :class => "btn btn-default btn-xs"}
-
+            = render partial: 'admin'
         .item-right
           %h4= "Description"
           #description= @item.description
           #category{:class => "label label-info"}= @item.category
           %br
-
           = render :partial => 'reserve_item_form'
 
 -#            %h4 Reserve this item

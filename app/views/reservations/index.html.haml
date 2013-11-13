@@ -22,7 +22,7 @@
         %tr
           %td= reservation.user.name
           %td= reservation.user.email
-          %td= reservation.item.name
+          %td= link_to "#{reservation.item.name}", item_path(reservation.item)
           %td= reservation.status
           %td= reservation.reservation_out
           %td= reservation.reservation_in

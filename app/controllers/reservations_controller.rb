@@ -22,7 +22,7 @@ class ReservationsController < ApplicationController
     end
     if user
       reservation.status = "Checked Out"
-      reservation.date_out = DateTime.now
+      reservation.date_out = Time.zone.now
       reservation.save
       item.quantity -= 1
       item.save
@@ -40,7 +40,7 @@ class ReservationsController < ApplicationController
   def checkin
     reservation = Reservation.find_by_id(params[:id])
     reservation.status = "Checked In"
-    reservation.date_in = DateTime.now
+    reservation.date_in = Time.zone.now
     reservation.save
     item = reservation.item
     item.quantity += 1

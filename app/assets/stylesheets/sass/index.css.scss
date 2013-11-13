@@ -89,6 +89,9 @@ $category-width: $left-column-container-width/$grid-units;
 	}
 	.category-name {
 		@include line-height(25px, 13px);
+		a {
+			color: white;
+		}
 	}
 	display: inline-block;
 	vertical-align: top;

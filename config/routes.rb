@@ -1,10 +1,12 @@
 Calteach::Application.routes.draw do
   devise_for :users
 
+  get 'users/reservations'
+
   resources :items do
-  	get  :reserve, :on => :member, :as => :reserve
     member do
       get 'checkout'
+      get 'reserve'
     end
   end
 
@@ -14,6 +16,7 @@ Calteach::Application.routes.draw do
       put 'checkout'
       put 'checkin'
       put 'archive'
+      put 'cancel'
     end
   end
 

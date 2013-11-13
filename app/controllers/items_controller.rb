@@ -88,4 +88,5 @@ class ItemsController < ApplicationController
   def checkout
     @item = Item.find_by_id(params[:id])
   end
+
 end

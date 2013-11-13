@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+
   protect_from_forgery
 
   before_filter :all_categories
@@ -15,4 +16,5 @@ class ApplicationController < ActionController::Base
     end
     return false
   end
+
 end

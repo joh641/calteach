@@ -1,19 +1,19 @@
 #container
-    .content
-        = render partial: 'right_column'
-        .right-column-container.column
-            - if @items.length > 0
-                - @items.in_groups_of(4, false).each_with_index do |group, index|
-                    .row
-                        - group.each do |item|
-                            .col-md-3
-                                .item-container{:data => {:item_id => item.id}}
-                                    .item-info
-                                        .image=link_to image_tag(item.image.url(:medium)), item_path(item), :id => "#{item.name}"
-                                        .title=item.name
-                                    - if item.quantity == 0
-                                        .subtitle.unavailable Unavailable
-                                    - else
-                                        .subtitle.available Available
-            - else
-                No Results! Try searching "Globe"
+  .content
+    = render partial: 'left_column'
+    .right-column-container.column
+      - if @items.length > 0
+        - @items.in_groups_of(4, false).each_with_index do |group, index|
+          .row
+            - group.each do |item|
+              .col-md-3
+                .item-container{:data => {:item_id => item.id}}
+                  .item-info
+                    .image=link_to image_tag(item.image.url(:medium)), item_path(item), :id => "#{item.name}"
+                    .title=item.name
+                  - if item.quantity == 0
+                    .subtitle.unavailable Unavailable
+                  - else
+                    .subtitle.available Available
+      - else
+        No Results! Try searching "Globe"

@@ -1,4 +1,5 @@
 class Item < ActiveRecord::Base
+
   attr_accessible :category, :description, :legacy_id, :name, :quantity, :image
 
   has_attached_file :image,
@@ -13,4 +14,5 @@ class Item < ActiveRecord::Base
   def self.all_categories
     ["Geography", "Math", "Science", "Social Studies"]
   end
+
 end

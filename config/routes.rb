@@ -19,6 +19,7 @@ Calteach::Application.routes.draw do
 
   namespace 'admin' do
     resources :users
+    resources :items
   end
 
   root :to => 'items#index'

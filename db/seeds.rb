@@ -65,6 +65,6 @@ users = User.create([
 ])
 
 users.each do |u|
-	u.confirmed_at = Time.now
+	u.confirmed_at = Time.zone.now
 	u.save
 end

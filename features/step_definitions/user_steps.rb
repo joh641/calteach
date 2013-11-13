@@ -5,7 +5,7 @@ Given /^there is an admin$/ do
                 :email => @admin_email,
                 :category => User::ADMIN
               })
-  user.confirmed_at = Time.now
+  user.confirmed_at = Time.zone.now
   user.save(:validate => false)
 
 end
@@ -17,7 +17,7 @@ Given /^there is a user$/ do
                 :email => @user_email,
                 :category => User::BASIC
               })
-  user.confirmed_at = Time.now
+  user.confirmed_at = Time.zone.now
   user.save(:validate => false)
 end
 

@@ -33,5 +33,5 @@
               = link_to 'Check Out', checkout_reservation_path(reservation, :reserved => true, :dashboard => true), :method => :put, :class => 'btn btn-default btn-sm'
             - if reservation.status == "Checked Out"
               = link_to 'Check In', checkin_reservation_path(reservation, :dashboard => true), :method => :put, :class => 'btn btn-default btn-sm'
-            - if reservation.status == "Checked In"
+            - if reservation.status == "Checked In" || reservation.status == "Canceled"
               = link_to 'Archive', archive_reservation_path(reservation), :method => :put, :class => 'btn btn-default btn-sm'

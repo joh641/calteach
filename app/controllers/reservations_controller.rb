@@ -1,4 +1,5 @@
 class ReservationsController < ApplicationController
+
   def index
     if params[:archived]
       @reservations = Reservation.all
@@ -60,4 +61,13 @@ class ReservationsController < ApplicationController
     flash[:notice] = "Reservation was successfully archived"
     redirect_to reservations_path
   end
+
+  def cancel
+    reservation = Reservation.find_by_id(params[:id])
+    reservation.status = "Canceled"
+    reservation.save
+    flash[:notice] = "Reservation was successfully canceled"
+    redirect_to users_reservations_path
+  end
+
 end

@@ -38,7 +38,8 @@ end
 gem 'jquery-rails'
 gem 'haml'
 gem 'haml-rails'
-gem 'bootstrap-sass'
+# gem 'bootstrap-sass'
+gem 'bootstrap-sass-rails'
 gem 'font-awesome-sass'
 
 gem 'devise'

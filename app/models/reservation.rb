@@ -1,6 +1,6 @@
 class Reservation < ActiveRecord::Base
 
-  attr_accessible :date_in, :date_out, :item_id, :notes, :reservation_in, :reservation_out, :user_id, :status
+  attr_accessible :date_in, :date_out, :item_id, :notes, :reservation_in, :reservation_out, :user_id, :status, :user
 
   belongs_to :user
   belongs_to :item
@@ -13,7 +13,7 @@ class Reservation < ActiveRecord::Base
     puts "cron job run"
     current_time = Time.zone.now
     reminder_time = 60 * 60 * 24 # Time in seconds before due date
-    checked_out = Reservation.find(:all, 
+    checked_out = Reservation.find(:all,
       :conditions => [ "status == 'Checked Out'"])
     checked_out.each do |current_reservation|
       if (current_reservation.reservation_in  \

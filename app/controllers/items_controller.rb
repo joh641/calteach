@@ -59,7 +59,7 @@ class ItemsController < ApplicationController
       #Existing checkout record of an item that has been returned (No conflict)
       if (reservation.date_in != nil)
         next
-      #Attempted reservation happens before existing reservation. (No conflict) 
+      #Attempted reservation happens before existing reservation. (No conflict)
       elsif (reservation.reservation_out != nil and end_date < reservation.reservation_out)
         next
       #Attempted reservation happens after existing reservation. (No conflict)
@@ -78,8 +78,8 @@ class ItemsController < ApplicationController
     end
 
     if item_number_available != 0
-      Reservation.create({:user_id => 1, :item_id => @item.id, :reservation_out => start_date, :reservation_in => end_date, :status => 'Reserved'})
-      flash[:notice] = "Item #{@item.name} was successfully reserved." 
+      Reservation.create({:user => current_user, :item_id => @item.id, :reservation_out => start_date, :reservation_in => end_date, :status => 'Reserved'})
+      flash[:notice] = "Item #{@item.name} was successfully reserved."
     end
 
     redirect_to item_path(@item)

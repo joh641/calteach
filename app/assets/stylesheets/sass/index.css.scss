@@ -53,10 +53,11 @@ $left-column-container-width: 270px;
 
 .item-wrapper {
 
-	@include make-xs-column(6);
+/*	@include make-xs-column(6);*/
 	@include make-sm-column(4);
 	@include make-md-column(3);
 	padding: 10px;
+	max-width: 300px;
 
 	.item-container {
 		@include border-radius(2px, 2px, 2px, 2px);

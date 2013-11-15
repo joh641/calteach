@@ -2,6 +2,11 @@ class Reservation < ActiveRecord::Base
 
   attr_accessible :date_in, :date_out, :item_id, :notes, :reservation_in, :reservation_out, :user_id, :status, :user
 
+  validates_date :date_in, :allow_nil => true
+  validates_date :date_out, :allow_nil => true
+  validates_date :reservation_in, :allow_nil => true
+  validates_date :reservation_out, :allow_nil => true
+
   belongs_to :user
   belongs_to :item
 

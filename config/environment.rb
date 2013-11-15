@@ -16,7 +16,3 @@ ActionMailer::Base.smtp_settings = {
   :domain         => 'heroku.com',
   :enable_starttls_auto => true
 }
-
-# Date::DATE_FORMATS.merge!(
-#   :default => "%m/%d/%Y"
-# )

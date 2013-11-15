@@ -8,6 +8,7 @@ Calteach::Application.routes.draw do
       get 'checkout'
       get 'reserve'
     end
+    collection { post :import }
   end
 
   resources :reservations do

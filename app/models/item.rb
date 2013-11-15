@@ -15,4 +15,10 @@ class Item < ActiveRecord::Base
     ["Geography", "Math", "Science", "Social Studies"]
   end
 
+  def self.import(file)
+    CSV.foreach(file.path, headers: true) do |row|
+      Item.create! row.to_hash
+    end
+  end
+
 end

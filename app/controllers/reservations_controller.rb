@@ -1,5 +1,5 @@
 class ReservationsController < ApplicationController
-
+  respond_to :html, :json
   def index
     if params[:archived]
       @reservations = Reservation.all
@@ -8,6 +8,12 @@ class ReservationsController < ApplicationController
       @reservations = Reservation.hide_archived
     end
   end
+
+  def update
+    @reservation = Reservation.find(params[:id])
+    @reservation.update_attributes(params[:reservation])
+    respond_with @reservation
+  end  
 
   def checkout
     if params[:reserved]

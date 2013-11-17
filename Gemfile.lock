@@ -40,6 +40,9 @@ GEM
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
     bcrypt-ruby (3.1.1)
+    best_in_place (2.1.0)
+      jquery-rails
+      rails (~> 3.1)
     bootstrap-datepicker-rails (1.1.1.9)
       railties (>= 3.0)
     bootstrap-sass-rails (3.0.0.3)
@@ -203,6 +206,7 @@ GEM
       ref
     thor (0.18.1)
     tilt (1.4.1)
+    timeliness (0.3.7)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -211,6 +215,8 @@ GEM
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
     uuidtools (2.1.4)
+    validates_timeliness (3.0.14)
+      timeliness (~> 0.3.6)
     warden (1.2.3)
       rack (>= 1.0)
     whenever (0.8.4)
@@ -226,6 +232,7 @@ PLATFORMS
 DEPENDENCIES
   aws-s3
   aws-sdk
+  best_in_place
   bootstrap-datepicker-rails
   bootstrap-sass-rails
   capybara
@@ -254,4 +261,5 @@ DEPENDENCIES
   sqlite3
   therubyracer
   uglifier
+  validates_timeliness (~> 3.0)
   whenever

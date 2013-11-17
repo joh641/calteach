@@ -19,31 +19,49 @@ Background: items have been added to inventory
     | Raiders of the Lost Ark | 5         |
     | Chicken Run             | 5         |
     And there is an admin
-    And I am logged into the admin panel
+    And there is a user
     And I am on the home page
 
-Scenario:
-
+Scenario: Admin can see all items and their availabilities
+    Given I am logged into the admin panel
     Then I should see all the items
-
-Scenario:
-
     Then "Gold" should be unavailable
     And "Globe" should be available
 
-Scenario:
+Scenario: User can see all items and their availabilities
+    Given I am logged into the user panel
+    Then I should see all the items
+    Then "Gold" should be unavailable
+    And "Globe" should be available
 
+Scenario: User can search for items
+    Given I am logged into the user panel
     When I search for "Globe"
     And I press "Search"
     Then I should see "Globe"
     And I should not see "Gold"
 
-Scenario:
+Scenario: User can search for items and see no results
+    Given I am logged into the user panel
     When I search for "Silver"
     And I press "Search"
     Then there should be no results
 
-Scenario:
+Scenario: User can reserve item on item's individual page
+    Given I am logged into the user panel
     When I follow "Globe"
     Then I should see "Reserve this item"
 
+Scenario: Admin can delete, edit and checkout items from inventory page
+  Given I am logged into the admin panel
+  And I press "List View"
+  Then I should see "Delete"
+  Then I should see "Edit"
+  Then I should see "Checkout"
+
+Scenario: User can delete, edit and checkout items from inventory page
+  Given I am logged into the user panel
+  And I press "List View"
+  Then I should not see "Delete"
+  Then I should not see "Edit"
+  Then I should not see "Checkout"

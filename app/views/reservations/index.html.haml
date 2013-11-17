@@ -18,12 +18,12 @@
         %th Check In Date
         %th Actions
     .body
-      - @reservations.each do |reservation|
+      - @reservations.to_a.each do |reservation|
         %tr
           %td= reservation.user.name
           %td= reservation.user.email
           %td= link_to "#{reservation.item.name}", item_path(reservation.item)
-          %td= best_in_place(reservation, :status, type: :select, collection: [["Checked In", "Checked In"], ["Checked Out", "Checked Out"], ["Canceled", "Canceled"], ["Archived", "Archived"]])
+          %td= reservation.status
           %td= best_in_place(reservation, :reservation_out, type: :date)
           %td= best_in_place(reservation, :reservation_in, type: :date)
           %td= best_in_place(reservation, :date_out, type: :date)

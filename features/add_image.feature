@@ -14,5 +14,5 @@ Background:
 Scenario: 
   When I attach the file "features/support/test_image.jpg" to "item[image]"
   And I press "Update Item"
-  Then I should be on the item info page for item with id 1
+  Then I should be on the item info page for "Globe"
   And I should see "successfully updated"

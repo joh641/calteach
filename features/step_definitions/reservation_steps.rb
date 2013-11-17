@@ -8,3 +8,7 @@ Given /user has reserved "(.*?)"/ do |item|
   step %Q{I press "Reserve"}
   page.driver.submit :delete, "/users/sign_out", {}
 end
+
+Then /the reservation should be for (.*?) days/ do |days|
+  flunk "Unimplemented"
+end

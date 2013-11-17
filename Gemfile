@@ -13,6 +13,8 @@ group :development, :test do
   gem 'simplecov'
   gem 'email_spec'
   gem 'whenever', require: false
+  gem 'best_in_place'
+  gem 'validates_timeliness', '~> 3.0'
 end
 
 group :test do

@@ -17,16 +17,14 @@ module NavigationHelpers
       '/'
     when /^the create item\s?page$/i
       new_item_path
-    when /^the item info page for item with id (.*)/
-      item_path(Item.find_by_id($1))
+    when /^the item info page for "(.*)"/
+      item_path(Item.find_by_name($1))
     when /^the edit page for item with id (.*)$/i
       edit_item_path(Item.find_by_id($1))
     when /^the Calteach inventory page/
       items_path
-
     when /^the user dashboard/
       admin_users_path
-
     when /^the checkout page for (.*)/
       checkout_item_path(Item.find_by_name($1))
 
@@ -35,7 +33,7 @@ module NavigationHelpers
     #
     #   when /^(.*)'s profile page$/i
     #     user_profile_path(User.find_by_login($1))
-
+ 
     else
       begin
         page_name =~ /^the (.*) page$/

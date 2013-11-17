@@ -17,7 +17,9 @@ class Item < ActiveRecord::Base
 
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
-      Item.create! row.to_hash
+      item = find_by_legacy_id(row["legacy_id"]) || new
+      item.attributes = row.to_hash.slice(*accessible_attributes)
+      item.save!
     end
   end
 

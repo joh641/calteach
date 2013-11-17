@@ -252,3 +252,15 @@ end
 Then /^show me the page$/ do
   save_and_open_page
 end
+
+Then /^I should see the "([^"]*)" button/ do |name|
+  find_button(name).should_not be_nil
+end
+
+Then /^I should not see the "([^"]*)" button/ do |name|
+  begin
+    find_button(name)
+    flunk "the #{$1} button exists"
+  rescue Capybara::ElementNotFound
+  end
+end

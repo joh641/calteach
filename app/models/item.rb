@@ -15,4 +15,12 @@ class Item < ActiveRecord::Base
     ["Geography", "Math", "Science", "Social Studies"]
   end
 
+  def self.import(file)
+    CSV.foreach(file.path, headers: true) do |row|
+      item = find_by_legacy_id(row["legacy_id"]) || new
+      item.attributes = row.to_hash.slice(*accessible_attributes)
+      item.save!
+    end
+  end
+
 end

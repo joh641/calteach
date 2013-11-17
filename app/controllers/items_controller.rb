@@ -18,6 +18,11 @@ class ItemsController < ApplicationController
 	  end
   end
 
+  def import
+    Item.import(params[:file])
+    redirect_to items_path, notice: "Items imported!"
+  end
+
   def new
     @all_categories = Item.all_categories
   end

@@ -13,6 +13,10 @@ Then /the reservation should be for (.*?) days/ do |days|
   flunk "Unimplemented"
 end
 
+Given(/^there is a reservation that is due in (\d+) days? exists under "(.*?)"$/) do |days, user_name|
+  flunk "Unimplemented"
+end
+
 When /I reserve (.*) from (.*) to (.*)/ do |item_name, reservation_out, reservation_in|
   step 'I am on the item info page for ' + item_name
   step 'I fill in "reservation_start_date" with "' + reservation_out + '"'
@@ -38,5 +42,4 @@ Then /there should (not )?be a reservation for (.*) from (.*) to (.*)/ do |not_e
   else
     assert(reservation != nil)
   end
-
 end

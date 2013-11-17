@@ -6,4 +6,34 @@ Feature: Limit checkout length based on category
 
 Background:
 
-Scenario: 
+  Given the following items exist:
+  | name   | quantity | category        |
+  | Globe  | 1        | Other           |
+  | Book   | 1        | Book            |
+  | Camera | 1        | Video Equipment |
+
+  And there is a user
+  And there is an admin
+  And I am logged into the admin panel
+  And I am on the home page
+
+Scenario: Video Equipment can only be checked out for 2 days
+  When I follow "Globe"
+  And I press "Checkout item"
+  And I fill in "email" with "cucumberuser@gmail.com"
+  And I press "Checkout Item"
+  Then the reservation should be for 2 days
+
+Scenario: Books can only be checked out for 10 days
+  When I follow "Book"
+  And I press "Checkout item"
+  And I fill in "email" with "cucumberuser@gmail.com"
+  And I press "Checkout Item"
+  Then the reservation should be for 10 days
+  
+Scenario: Other items can only be checked out for 5 days
+  When I follow "Camera"
+  And I press "Checkout item"
+  And I fill in "email" with "cucumberuser@gmail.com"
+  And I press "Checkout Item"
+  Then the reservation should be for 5 days

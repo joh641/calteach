@@ -56,8 +56,8 @@ class ItemsController < ApplicationController
     @item = Item.find_by_id(params[:id])
     flash[:notice] = "Your reservation attempt was unsuccessful."
     @reservation_successful = false
-    start_date = DateTime.strptime(params[:reservation][:start_date], "%m/%d/%Y")
-    end_date = DateTime.strptime(params[:reservation][:end_date], "%m/%d/%Y")
+    start_date = Date.strptime(params[:reservation][:start_date], "%m/%d/%Y")
+    end_date = Date.strptime(params[:reservation][:end_date], "%m/%d/%Y")
     item_number_available = @item.quantity
 
     @item.reservations.each do |reservation|

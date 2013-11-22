@@ -27,8 +27,8 @@ end
 Then /there should (not )?be a reservation for (.*) from (.*) to (.*)/ do |not_exist, item_name, reservation_out, reservation_in|
   item = Item.find_by_name(item_name)
 
-  start_date = DateTime.strptime(reservation_out, "%m/%d/%Y")
-  end_date = DateTime.strptime(reservation_in, "%m/%d/%Y")
+  start_date = Date.strptime(reservation_out, "%m/%d/%Y")
+  end_date = Date.strptime(reservation_in, "%m/%d/%Y")
 
   reservation = nil
   item.reservations.each do |r|

@@ -31,14 +31,14 @@
             = link_to "User Dashboard", admin_users_path
           %li{:class => "tab application"}>
             %i{:class => "fa fa-ticket"}
-            = link_to "Reservation Dashboard", reservations_path
+            = link_to "Reservation Dashboard", admin_reservations_path
         - else
           %li{:class => "tab application"}>
             %i{:class => "fa fa-ticket"}
             - if user_signed_in?
-              = link_to "See Reservations", users_reservations_path
+              = link_to "My Reservations",reservations_path
             - else
-              = link_to "See Reservations", new_user_session_path
+              = link_to "My Reservations", new_user_session_path
           %li{:class => "tab application"}>
             %i{:class => "fa fa-shopping-cart"}
             = link_to "See Cart (5)", new_user_session_path, {:class => "underline"}

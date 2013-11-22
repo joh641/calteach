@@ -3,7 +3,7 @@ class Admin::UsersController < ApplicationController
   before_filter :is_admin
 
   def index
-    @users = User.find(:all, :order => "name ASC")
+    @users = User.active.find(:all, :order => "name ASC")
   end
 
   def new
@@ -42,7 +42,7 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    @user.destroy
+    @user.soft_delete
     redirect_to admin_users_path
   end
 

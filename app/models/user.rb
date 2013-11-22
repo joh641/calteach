@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  scope :active, -> { where(inactive: false) }
+  scope :inactive, -> { where(inactive: true) }
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :course, :email, :name, :phone, :category

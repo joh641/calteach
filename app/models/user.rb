@@ -33,4 +33,7 @@ class User < ActiveRecord::Base
     return category == ADMIN
   end
 
+  def soft_delete
+    update_attribute(:inactive, true)
+  end
 end

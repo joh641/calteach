@@ -3,7 +3,12 @@ class Admin::UsersController < ApplicationController
   before_filter :is_admin
 
   def index
-    @users = User.active.find(:all, :order => "name ASC")
+    if params[:inactive]
+      @users = User.inactive.find(:all, :order => "name ASC")
+      @inactive = true
+    else
+      @users = User.active.find(:all, :order => "name ASC")
+    end
   end
 
   def new

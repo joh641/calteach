@@ -3,7 +3,12 @@ class Admin::UsersController < ApplicationController
   before_filter :is_admin
 
   def index
-    @users = User.find(:all, :order => "name ASC")
+    if params[:inactive]
+      @users = User.inactive.find(:all, :order => "name ASC")
+      @inactive = true
+    else
+      @users = User.active.find(:all, :order => "name ASC")
+    end
   end
 
   def new
@@ -42,7 +47,7 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    @user.destroy
+    @user.soft_delete
     redirect_to admin_users_path
   end
 

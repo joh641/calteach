@@ -29,6 +29,8 @@ class Admin::ReservationsController < ApplicationController
       user = User.find_by_email(params[:email])
       item.reservations << reservation if user
       user.reservations << reservation if user
+      reservation.reservation_out = Date.today
+      reservation.reservation_in = Date.today + item.get_due_date
     end
     if user
       reservation.date_out = Date.today

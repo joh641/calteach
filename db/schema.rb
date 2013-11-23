@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131122212321) do
+ActiveRecord::Schema.define(:version => 20131122214731) do
 
   create_table "items", :force => true do |t|
     t.string   "legacy_id"
@@ -19,12 +19,13 @@ ActiveRecord::Schema.define(:version => 20131122212321) do
     t.integer  "quantity"
     t.string   "description"
     t.string   "category"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.boolean  "inactive",           :default => false
   end
 
   create_table "reservations", :force => true do |t|
@@ -46,10 +47,10 @@ ActiveRecord::Schema.define(:version => 20131122212321) do
     t.string   "phone"
     t.integer  "category"
     t.string   "course"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.string   "email",                  :default => "",    :null => false
+    t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -63,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20131122212321) do
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
     t.boolean  "admin_created"
+    t.boolean  "inactive",               :default => false
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

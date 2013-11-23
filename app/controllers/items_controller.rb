@@ -12,9 +12,9 @@ class ItemsController < ApplicationController
   	if params[:query]
   		#TODO (Yuxin) Is this even safe?
   		@query = params[:query]
-  		@items = Item.where("lower(name) = ?", @query.downcase)
+  		@items = Item.active.where("lower(name) = ?", @query.downcase)
   	elsif
-	    @items = Item.all
+	    @items = Item.active.all
 	  end
   end
 
@@ -47,7 +47,7 @@ class ItemsController < ApplicationController
 
   def destroy
     @item = Item.find_by_id(params[:id])
-    @item.destroy
+    @item.soft_delete
     flash[:notice] = "Item #{@item.name} was successfully deleted."
     redirect_to '/'
   end
@@ -56,8 +56,8 @@ class ItemsController < ApplicationController
     @item = Item.find_by_id(params[:id])
     flash[:notice] = "Your reservation attempt was unsuccessful."
     @reservation_successful = false
-    start_date = DateTime.strptime(params[:reservation][:start_date], "%m/%d/%Y")
-    end_date = DateTime.strptime(params[:reservation][:end_date], "%m/%d/%Y")
+    start_date = Date.strptime(params[:reservation][:start_date], "%m/%d/%Y")
+    end_date = Date.strptime(params[:reservation][:end_date], "%m/%d/%Y")
     item_number_available = @item.quantity
 
     @item.reservations.each do |reservation|

@@ -1,19 +1,15 @@
 class ReservationsController < ApplicationController
   respond_to :html, :json
+
   def index
-    if params[:archived]
-      @reservations = Reservation.all
-      @archived = true
-    else
-      @reservations = Reservation.hide_archived
-    end
+    @reservations = current_user.reservations
   end
 
   def update
     @reservation = Reservation.find(params[:id])
     @reservation.update_attributes(params[:reservation])
     respond_with @reservation
-  end  
+  end
 
   def checkout
     if params[:reserved]
@@ -35,7 +31,7 @@ class ReservationsController < ApplicationController
       flash[:notice] = "Item #{item.name} was successfully checked out to #{user.name}"
     else
       flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out."
-    end																		
+    end
     if params[:dashboard]
       redirect_to reservations_path
     else

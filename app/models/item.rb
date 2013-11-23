@@ -1,5 +1,7 @@
 class Item < ActiveRecord::Base
 
+  scope :active, -> { where(inactive: false) }
+  scope :inactive, -> { where(inactive: true) }
   attr_accessible :category, :description, :legacy_id, :name, :quantity, :image
 
   has_attached_file :image,
@@ -21,6 +23,10 @@ class Item < ActiveRecord::Base
       item.attributes = row.to_hash.slice(*accessible_attributes)
       item.save!
     end
+  end
+
+  def soft_delete
+    update_attribute(:inactive, true)
   end
 
 end

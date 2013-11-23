@@ -83,7 +83,7 @@ class ItemsController < ApplicationController
     end
 
     if item_number_available != 0
-      Reservation.create({:user => current_user, :item_id => @item.id, :reservation_out => start_date, :reservation_in => end_date, :status => 'Reserved'})
+      Reservation.create({:user => current_user, :item_id => @item.id, :reservation_out => start_date, :reservation_in => end_date})
       flash[:notice] = "Item #{@item.name} was successfully reserved."
     end
 

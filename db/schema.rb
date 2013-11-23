@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131115092752) do
+ActiveRecord::Schema.define(:version => 20131122212321) do
 
   create_table "items", :force => true do |t|
     t.string   "legacy_id"
@@ -37,7 +37,8 @@ ActiveRecord::Schema.define(:version => 20131115092752) do
     t.date     "date_in"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.string   "status"
+    t.boolean  "archived"
+    t.boolean  "canceled"
   end
 
   create_table "users", :force => true do |t|

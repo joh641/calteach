@@ -28,8 +28,7 @@ class ReservationsController < ApplicationController
       user.reservations << reservation if user
     end
     if user
-      reservation.status = "Checked Out"
-      reservation.date_out = Time.zone.now
+      reservation.date_out = Date.today
       reservation.save
       item.quantity -= 1
       item.save
@@ -46,8 +45,7 @@ class ReservationsController < ApplicationController
 
   def checkin
     reservation = Reservation.find_by_id(params[:id])
-    reservation.status = "Checked In"
-    reservation.date_in = Time.zone.now
+    reservation.date_in = Date.today
     reservation.save
     item = reservation.item
     item.quantity += 1
@@ -62,7 +60,7 @@ class ReservationsController < ApplicationController
 
   def archive
     reservation = Reservation.find_by_id(params[:id])
-    reservation.status = "Archived"
+    reservation.archived = true
     reservation.save
     flash[:notice] = "Reservation was successfully archived"
     redirect_to reservations_path
@@ -70,7 +68,7 @@ class ReservationsController < ApplicationController
 
   def cancel
     reservation = Reservation.find_by_id(params[:id])
-    reservation.status = "Canceled"
+    reservation.canceled = true
     reservation.save
     flash[:notice] = "Reservation was successfully canceled"
     redirect_to users_reservations_path

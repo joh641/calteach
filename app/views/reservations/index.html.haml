@@ -23,15 +23,15 @@
           %td= reservation.user.name
           %td= reservation.user.email
           %td= link_to "#{reservation.item.name}", item_path(reservation.item)
-          %td= reservation.status
+          %td= reservation.get_status
           %td= best_in_place(reservation, :reservation_out, type: :date)
           %td= best_in_place(reservation, :reservation_in, type: :date)
           %td= best_in_place(reservation, :date_out, type: :date)
           %td= best_in_place(reservation, :date_in, type: :date)
           %td
-            - if reservation.status == "Reserved"
+            - if reservation.get_status == "Reserved"
               = link_to 'Check Out', checkout_reservation_path(reservation, :reserved => true, :dashboard => true), :method => :put, :class => 'btn btn-default btn-sm'
-            - if reservation.status == "Checked Out"
+            - if reservation.get_status == "Checked Out"
               = link_to 'Check In', checkin_reservation_path(reservation, :dashboard => true), :method => :put, :class => 'btn btn-default btn-sm'
-            - if reservation.status == "Checked In" || reservation.status == "Canceled"
+            - if reservation.get_status == "Checked In" || reservation.get_status == "Canceled"
               = link_to 'Archive', archive_reservation_path(reservation), :method => :put, :class => 'btn btn-default btn-sm'

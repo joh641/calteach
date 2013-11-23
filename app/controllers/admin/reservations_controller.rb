@@ -30,7 +30,7 @@ class Admin::ReservationsController < ApplicationController
       item.reservations << reservation if user
       user.reservations << reservation if user
       reservation.reservation_out = Date.today
-      reservation.reservation_in = Date.today + item.get_due_date
+      reservation.reservation_in = item.get_due_date.business_days.after(Time.now)
     end
     if user
       reservation.date_out = Date.today

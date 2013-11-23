@@ -2,8 +2,8 @@ class Reservation < ActiveRecord::Base
 
   attr_accessible :date_in, :date_out, :item_id, :notes, :reservation_in, :reservation_out, :user_id, :user
 
-  validates_date :date_in, :after => lambda{|m| m.date_out}, :allow_nil => true
-  validates_date :date_out, :before => lambda{|m| m.date_in}, :allow_nil => true
+#  validates_date :date_in, :after => lambda{|m| m.date_out}, :allow_nil => true
+#  validates_date :date_out, :before => lambda{|m| m.date_in}, :allow_nil => true
   validates_date :reservation_in, :after => lambda{|m| m.reservation_out}, :allow_nil => true
   validates_date :reservation_out, :before => lambda{|m| m.reservation_in}, :allow_nil => true
 

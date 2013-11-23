@@ -5,10 +5,10 @@ class Admin::ReservationsController < ApplicationController
 
   def index
     if params[:archived]
-      @reservation = Reservation.all
+      @reservations = Reservation.all
       @archived = true
     else
-      @reservation = Reservation.hide_archived
+      @reservations = Reservation.hide_archived
     end
   end
 

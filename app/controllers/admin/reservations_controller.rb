@@ -29,13 +29,14 @@ class Admin::ReservationsController < ApplicationController
       user = User.find_by_email(params[:email])
       item.reservations << reservation if user
       user.reservations << reservation if user
+      reservation.quantity = params[:quantity]
       reservation.reservation_out = Date.today
-      reservation.reservation_in = item.get_due_date.business_days.after(Time.now)
+      reservation.reservation_in = item.get_due_date.business_days.after(DateTime.now)
     end
     if user
       reservation.date_out = Date.today
       reservation.save
-      item.quantity -= 1
+      item.quantity -= reservation.quantity
       item.save
       flash[:notice] = "Item #{item.name} was successfully checked out to #{user.name}"
     else
@@ -53,7 +54,7 @@ class Admin::ReservationsController < ApplicationController
     reservation.date_in = Date.today
     reservation.save
     item = reservation.item
-    item.quantity += 1
+    item.quantity += reservation.quantity
     item.save
     flash[:notice] = "Item #{item.name} was successfully checked in"
     if params[:dashboard]

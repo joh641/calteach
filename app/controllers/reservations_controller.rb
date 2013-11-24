@@ -8,6 +8,12 @@ class ReservationsController < ApplicationController
     @reservations = current_user.reservations
   end
 
+  def update
+    @reservation = Reservation.find(params[:id])
+    @reservation.update_attributes(params[:reservation])
+    respond_with @reservation
+  end
+  
   def cancel
     reservation = Reservation.find_by_id(params[:id])
     reservation.canceled = true

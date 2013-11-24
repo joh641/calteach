@@ -11,9 +11,6 @@ h1, h2, h3, h4, h5, h6, p, div {
 }
 
 $page-width: 960px;
-#container {
-/*	min-width: $page-width;
-*/}
 
 .column {
 	display: inline-block;
@@ -22,8 +19,6 @@ $page-width: 960px;
 
 .right-column-container {
 	padding: 30px;
-/*	left: 270px;
-	position: absolute;*/
 	width: calc(100% - 274px);
 	overflow-y: scroll;
 }
@@ -52,7 +47,6 @@ $left-column-container-width: 270px;
 }
 
 .item-wrapper {
-
 /*	@include make-xs-column(6);*/
 	@include make-xs-column(12);
 	@include make-sm-column(4);
@@ -85,7 +79,58 @@ $left-column-container-width: 270px;
 	}
 }
 
+.list-item-wrapper {
+	padding-top: 10px;
+	.item-container {
+		padding: 7px;
+		border: 1px grey solid;
+		.image-wrapper {
+			display: inline-block;
+			position: relative;
+			img {
+				// width: 50px;
+				margin-top: -20px;
+				margin-right: 5px;
+				height: 50px;
+			}
+		}
+		.content {
+			display: inline-block;
+			// margin-top: -10px;
+			.title {
+				// padding-top: 10px;
+				// display: inline-block;
+				font-size: 16px;
+				font-weight: bold;
+			}
+		}
+		.subtitle {
 
+			float:right;
+			margin-top: 10px;
+			display: inline-block;
+
+
+
+			color: white;
+			font-size: 12px;
+			padding: 2px 8px 4px;
+
+			border-radius: 7px;
+			width: 80px;
+			text-align: center;
+			&.available { background-color: $calteach-green; }
+			&.unavailable { background-color: $calteach-red; }
+		}
+		.actions {
+			margin-top: 3px;
+			.button_to {
+				margin-right: 5px;
+				display: inline-block;
+			}
+		}
+	}
+}
 
 $grid-units: 3;
 $category-width: $left-column-container-width/$grid-units;
@@ -111,6 +156,23 @@ $category-width: $left-column-container-width/$grid-units;
 
 	color: white;
 	cursor: pointer;
+}
 
+
+.active-btn {
+	display: inline-block;
+	float: left;
+}
+#toolbar {
+	float: right;
+	.view-txt {
+		display: inline-block;
+		margin-left: 5px;
+		font-weight: bold;
+	}
+}
+
+#item-cards {
+	clear: both;
 }
 

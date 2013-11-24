@@ -1,0 +1,7 @@
+.item-wrapper
+  .item-container{:data => {:item_id => item.id}}
+    .item-info
+      =link_to image_tag(item.image.url(:medium)), item_path(item), :id => "#{item.name}"
+      .title=item.name
+      .wrapper
+        .subtitle{:class => (item.is_available ? "available" : "unavailable")}= item.available

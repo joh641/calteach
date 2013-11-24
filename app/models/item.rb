@@ -16,6 +16,18 @@ class Item < ActiveRecord::Base
   @@due_dates = {"video equipment" => 2, "books" => 10, "other" => 5}
   @@due_dates.default = 5
 
+  def is_available
+    quantity > 0
+  end
+
+  def available
+    if is_available
+      "Available"
+    else
+      "Unavailable"
+    end
+  end
+
   def self.all_categories
     ["Geography", "Math", "Science", "Social Studies"]
   end

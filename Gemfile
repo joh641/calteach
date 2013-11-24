@@ -6,7 +6,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'ruby-debug19'
   gem 'database_cleaner'
-  gem 'capybara'
+  gem 'capybara-webkit'
   gem 'launchy'
   gem 'rspec-rails'
   gem 'simplecov'

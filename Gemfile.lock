@@ -58,6 +58,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-webkit (1.0.0)
+      capybara (~> 2.0, >= 2.0.2)
+      json
     chronic (0.10.2)
     climate_control (0.0.3)
       activesupport (>= 3.0)
@@ -238,6 +241,7 @@ DEPENDENCIES
   best_in_place
   bootstrap-datepicker-rails
   bootstrap-sass-rails
+  capybara-webkit
   business_time
   capybara
   cocaine

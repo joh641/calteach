@@ -13,8 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.purr
-//= require moment
 //= require best_in_place
+//= require moment
 //= require twitter/bootstrap
 //= require_tree .
 //= require bootstrap-datepicker/core

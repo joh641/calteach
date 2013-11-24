@@ -29,11 +29,11 @@
           %td= link_to "#{reservation.item.name}", item_path(reservation.item)
           %td= reservation.quantity
           %td= reservation.get_status
-          %td= best_in_place(reservation, :reservation_out, type: :date)
-          %td= best_in_place(reservation, :reservation_in, type: :date)
-          %td= best_in_place(reservation, :date_out, type: :date)
-          %td= best_in_place(reservation, :date_in, type: :date)
-          %td= reservation.notes
+          %td= reservation.reservation_out
+          %td= reservation.reservation_in
+          %td= reservation.date_out
+          %td= reservation.date_in
+          %td= best_in_place(reservation, :notes, type: :textarea)
           %td
             - if reservation.get_status == "Reserved"
               = link_to 'Check Out', checkout_admin_reservation_path(reservation, :reserved => true, :dashboard => true), :method => :put, :class => 'btn btn-default btn-sm'

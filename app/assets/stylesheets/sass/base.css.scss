@@ -1,5 +1,7 @@
 @import "utils";
 
+@import "utils";
+
 $calteach-blue: #32ccfe;
 $calteach-red: #dd4b39;
 $calteach-green: #5bab48;
@@ -12,7 +14,7 @@ $main-font: 'Open Sans', sans-serif;
     margin: 0px 20px;
     margin-top: 20px;
     font-family: $main-font;
-    width: 100px;
+    padding: 0 20px;
     background-color: $calteach-blue;
     color: white;
     text-align: center;
@@ -25,16 +27,34 @@ $main-font: 'Open Sans', sans-serif;
     cursor: pointer;
 }
 
+.button-blue {
+    background-color: $calteach-blue;
+    &:hover {
+            background-color: darken($calteach-blue, 20%);
+    }
+}
+
+.button-green {
+    background-color: $calteach-green;
+    &:hover {
+            background-color: darken($calteach-green, 20%);
+    }
+}
+
+.input-group .calteach-button {
+    margin-left: 0;
+}
+
 textarea:focus, input:focus{
     outline: 0;
 }
 
 ul {
-	padding: 0; //override bootstrap
-	margin: 0; //override bootstrap
+    padding: 0; //override bootstrap
+    margin: 0; //override bootstrap
 }
 
 p {
-	padding: 0;
-	margin: 0;
+    padding: 0;
+    margin: 0;
 }

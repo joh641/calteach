@@ -6,7 +6,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'ruby-debug19'
   gem 'database_cleaner'
-  gem 'capybara'
+  gem 'capybara-webkit'
   gem 'launchy'
   gem 'rspec-rails'
   gem 'simplecov'
@@ -42,6 +42,7 @@ gem 'font-awesome-sass'
 
 gem 'devise'
 
+gem "momentjs-rails", "~> 2.4.0"
 gem 'paperclip'
 gem 'cocaine'
 gem 'aws-s3'

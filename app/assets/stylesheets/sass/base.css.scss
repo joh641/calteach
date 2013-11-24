@@ -1,9 +1,12 @@
+@import "twitter/bootstrap/mixins";
+@import "twitter/bootstrap/variables";
 @import "utils";
 
 $calteach-blue: #32ccfe;
 $calteach-red: #dd4b39;
 $calteach-green: #5bab48;
 $calteach-yellow: #f5cd38;
+$calteach-dark-blue: #0076b7;
 $main-font: 'Open Sans', sans-serif;
 
 .calteach-button {

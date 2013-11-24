@@ -2,52 +2,52 @@
 %html
 
   %head
-    #main-menu
-      %ul{:class => "main-navigation"}
-        - if user_signed_in?
-          %li{:class => "tab account dropdown"}>
-            %i{:class => "fa fa-user"}
-            %p{:style => "margin-bottom: 0;"}= current_user.email
-            %ul
-              %li= link_to 'Edit Profile', edit_user_registration_path
-          %li{:class => "tab account"}>
-            %i{:class => "fa fa-umbrella"}
-            \#{link_to "Logout", destroy_user_session_path, method: :delete}
-        - else
-          %li{:class => "tab account"}>
-            %i{:class => "fa fa-user"}
-            = link_to "Sign up", new_user_registration_path
-          %li{:class => "tab account"}>
+    #main-menu.navbar
+      .navbar-header
+        = link_to "/", {:class => "underline"} do
+          =image_tag "calteach-logo-white.png"
+      .navbar-collapse.collapse
+        %ul{:class => "nav navbar-nav nav-right main-navigation"}
+          - if user_signed_in?
+            %li{:class => "tab account dropdown"}>
+              %i{:class => "fa fa-user"}
+              %p{:style => "margin-bottom: 0;"}= current_user.email
+          - else
+            %li{:class => "tab account"}>
+              = link_to new_user_registration_path do
+                %i{:class => "fa fa-user"}
+                %div Sign up
+            %li{:class => "tab account"}>
+              = link_to new_user_session_path do
+                %i{:class => "fa fa-book"}
+                %div Log In
+          %li{:class => "tab application"}>
             %i{:class => "fa fa-book"}
-            = link_to "Log In", new_user_session_path
-
-        %li{:class => "tab application"}>
-          %i{:class => "fa fa-book"}
-          = link_to "Inventory", "/"
-        / fix this (Michelle)
-        - if current_user and current_user.admin?
-          %li{:class => "tab application"}>
-            %i{:class => "fa fa-users"}
-            = link_to "User Dashboard", admin_users_path
-          %li{:class => "tab application"}>
-            %i{:class => "fa fa-ticket"}
-            = link_to "Reservation Dashboard", admin_reservations_path
-        - else
-          %li{:class => "tab application"}>
-            %i{:class => "fa fa-ticket"}
-            - if user_signed_in?
-              = link_to "My Reservations",reservations_path
-            - else
-              = link_to "My Reservations", new_user_session_path
-          %li{:class => "tab application"}>
-            %i{:class => "fa fa-shopping-cart"}
-            = link_to "See Cart (5)", new_user_session_path, {:class => "underline"}
-
-        %li{:class => "tab account"}>
-          %i{:class => "fa fa-envelope"}
-          = link_to "Contact", new_user_session_path
+            = link_to "Inventory", "/"
+          - if current_user and current_user.admin?
+            %li{:class => "tab application"}>
+              = link_to admin_users_path do
+                %i{:class => "fa fa-users"}
+                %div "User Dashboard"
+            %li{:class => "tab application"}>
+              = link_to admin_reservations_path do
+                %i{:class => "fa fa-ticket"}
+                %div "Reservation Dashboard"
+          - else
+            %li{:class => "tab application"}>
+              %i{:class => "fa fa-ticket"}
+              - if user_signed_in?
+                = link_to "My Reservations",reservations_path
+              - else
+                = link_to "My Reservations", new_user_session_path
+            %li{:class => "tab application"}>
+              = link_to new_user_session_path, {:class => "underline"} do
+                %i{:class => "fa fa-shopping-cart"}
+                "See Cart (5)"
+          %li{:class => "tab account"}>
+            %i{:class => "fa fa-envelope"}
+            = link_to "Contact", new_user_session_path
     %title Calteach
-    = stylesheet_link_tag "http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
     = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Open+Sans:300italic,400,300,700,600"
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"

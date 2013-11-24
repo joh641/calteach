@@ -4,6 +4,7 @@
     %thead
       %tr
         %th Item
+        %th Quantity
         %th Status
         %th Reservation Start
         %th Reservation End
@@ -14,6 +15,7 @@
       - @reservations.each do |reservation|
         %tr
           %td= link_to "#{reservation.item.name}", item_path(reservation.item)
+          %td= reservation.quantity
           %td= reservation.get_status
           %td= reservation.reservation_out
           %td= reservation.reservation_in

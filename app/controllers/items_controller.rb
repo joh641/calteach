@@ -69,8 +69,11 @@ class ItemsController < ApplicationController
     item_number_available = @item.quantity
 
     @item.reservations.each do |reservation|
+      #Canceled reservation (No conflict)
+      if (reservation.canceled)
+        next
       #Existing checkout record of an item that has been returned (No conflict)
-      if (reservation.date_in != nil)
+      elsif (reservation.date_in != nil)
         next
       #Attempted reservation happens before existing reservation. (No conflict)
       elsif (reservation.reservation_out != nil and end_date < reservation.reservation_out)
@@ -91,7 +94,7 @@ class ItemsController < ApplicationController
     end
 
     if item_number_available != 0 and end_date <= @item.get_due_date.business_days.after(start_date)
-      Reservation.create({:user => current_user, :item_id => @item.id, :reservation_out => start_date, :reservation_in => end_date})
+      Reservation.create({:user => current_user, :item_id => @item.id, :reservation_out => start_date, :reservation_in => end_date, :quantity => 1})
       flash[:notice] = "Item #{@item.name} was successfully reserved."
     end
 

@@ -11,6 +11,7 @@
         %th Name
         %th Email
         %th Item
+        %th Quantity
         %th Status
         %th Reservation Start
         %th Reservation End
@@ -23,6 +24,7 @@
           %td= reservation.user.name
           %td= reservation.user.email
           %td= link_to "#{reservation.item.name}", item_path(reservation.item)
+          %td= reservation.quantity
           %td= reservation.get_status
           %td= best_in_place(reservation, :reservation_out, type: :date)
           %td= best_in_place(reservation, :reservation_in, type: :date)

@@ -1,15 +1,20 @@
 -if current_user
-  %span#reserve
+  %span#reservation.item-box.form-horizontal
     %h4 Reserve this item
-    = form_tag reserve_item_path(@item), :method => :get do
-      = label :reservation, :start_date, 'Start Date'
-      = text_field :reservation, :start_date, "data-behaviour" => "datepicker"
+    = form_tag reserve_item_path(@item), :method => :get, :avail_hash => @availability.to_json do
 
-      = label :reservation, :end_date, 'End Date'
-      = text_field :reservation, :end_date, "data-behaviour" => "datepicker"
+      %p
+        = label :reservation, :quantity, 'Quantity'
+        = select :reservation, :quantity, options_for_select(1..@item.quantity), {}, :class => "form-control"
+      %br
 
-      = label :reservation, :quantity, 'Quantity'
-      = select :reservation, :quantity, options_for_select(1..@item.quantity)
+      .input-daterange
+        = label :reservation, :start_date, 'Start Date'
+        = text_field :reservation, :start_date, :class => "form-control"
+        %br
+        = label :reservation, :end_date, 'End Date'
+        = text_field :reservation, :end_date, :class => "form-control"
 
-      = submit_tag 'Reserve Item', :class => "btn btn-success btn-xs"
+      .input-group
+        = submit_tag 'Reserve Item', :class => "calteach-button button-green"
 

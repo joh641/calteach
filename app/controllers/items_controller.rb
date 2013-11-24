@@ -2,6 +2,14 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find_by_id(params[:id])
+
+    @availability = {}
+    d = Date.today
+    60.times do
+      @availability[d] = @item.quantity_available(d, d)
+      d = d + 1
+    end
+
   end
 
   def index

@@ -1,0 +1,31 @@
+.item-box.col-sm-12.form-horizontal
+  %h4 Reservations on this item
+
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Name
+        %th Quantity
+        %th Status
+        %th Reservation Start
+        %th Reservation End
+        %th Checkout Date
+        %th Check In Date
+        %th Actions
+    .body
+      - @reservations.to_a.reverse_each do |reservation|
+        %tr
+          %td= reservation.user.name
+          %td= reservation.quantity
+          %td= reservation.get_status
+          %td= best_in_place(reservation, :reservation_out, type: :date)
+          %td= best_in_place(reservation, :reservation_in, type: :date)
+          %td= best_in_place(reservation, :date_out, type: :date)
+          %td= best_in_place(reservation, :date_in, type: :date)
+          %td
+            - if reservation.get_status == "Reserved"
+              = link_to 'Check Out', checkout_admin_reservation_path(reservation, :reserved => true, :dashboard => true), :method => :put, :class => 'btn btn-default btn-sm'
+            - if reservation.get_status == "Checked Out"
+              = link_to 'Check In', checkin_admin_reservation_path(reservation, :dashboard => true), :method => :put, :class => 'btn btn-default btn-sm'
+            - if reservation.get_status == "Checked In" || reservation.get_status == "Canceled"
+              = link_to 'Archive', archive_admin_reservation_path(reservation), :method => :put, :class => 'btn btn-default btn-sm'

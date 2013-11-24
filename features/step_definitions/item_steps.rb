@@ -1,5 +1,5 @@
 Then /I should see all the items that are in the database/ do
-  Item.all.each do |item|
+  Item.active.each do |item|
   	assert page.body.index(item.name) != nil
   end
 end

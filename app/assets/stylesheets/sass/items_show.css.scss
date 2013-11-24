@@ -1,3 +1,5 @@
+@import "base";
+
 #image {
     margin-right:10px;
 }
@@ -15,6 +17,15 @@
     margin-left: 165px;
     padding: 40px 10px 10px 10px;
     width: 70%;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.crossed {
+    text-decoration: line-through;
+    font-style: italic;
 }
 
 .admin {
@@ -46,20 +57,18 @@
     margin-top: 10px
 }
 
-#reserve {
+.item-box {
     margin-top: 10px;
     border: 1px solid black;
-    border-radius: 5px;
     padding: 10px;
     display: inline-block;
 }
 
-#reserve h4 {
+.item-box h4 {
     background-color: #CCCCCC;
     margin: -10px;
     padding: 10px;
     margin-bottom: 10px;
-    border-radius: 5px 5px 0 0;
 }
 
 #start-reservation, #end-reservation {

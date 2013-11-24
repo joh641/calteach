@@ -27,6 +27,8 @@ module NavigationHelpers
       admin_users_path
     when /^the checkout page for (.*)/
       checkout_item_path(Item.find_by_name($1))
+    when /^the edit user page for "(.*)"/
+      edit_user_registration_path(User.find_by_name($1))
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

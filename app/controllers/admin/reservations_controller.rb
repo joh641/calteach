@@ -28,38 +28,35 @@ class Admin::ReservationsController < ApplicationController
       item = Item.find_by_id(params[:item])
       user = User.find_by_email(params[:email])
     end
-
-    number_available = item.quantity
-    
+   
     if user
       checkout_date = Date.today
+      number_available = item.quantity_available
 
       if !params[:reserved]
         due_date = item.get_due_date.business_days.after(DateTime.now).to_date
-        item.reservations.each do |reservation|
-          if reservation.get_status == "Reserved" and reservation.overlaps?(checkout_date, due_date)
-            number_available -= 1
-          end
-        end
-
-        if number_available > 0
+        desired_quantity = params[:quantity].to_i
+        if number_available >= desired_quantity
           item.reservations << reservation
           user.reservations << reservation
-          reservation.quantity = params[:quantity]
+          reservation.quantity = desired_quantity
           reservation.reservation_out = checkout_date
           reservation.reservation_in = due_date
         else
           flash[:warning] = "Item #{item.name} could not be checked out due to an existing reservation"
+          redirect_to item_path(item) and return
+        end
+      else
+        if number_available < reservation.quantity
+          flash[:warning] = "Item #{item.name} could not be checked out due to an existing reservation"
+          redirect_to admin_reservations_path and return
         end
       end
   
-      if number_available > 0
         reservation.date_out = checkout_date
         reservation.save
-        item.quantity -= reservation.quantity
         item.save
         flash[:notice] = "Item #{item.name} was successfully checked out to #{user.name}"
-      end
   
     else
       flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out."
@@ -78,7 +75,6 @@ class Admin::ReservationsController < ApplicationController
     reservation.date_in = Date.today
     reservation.save
     item = reservation.item
-    item.quantity += reservation.quantity
     item.save
     flash[:notice] = "Item #{item.name} was successfully checked in"
     if params[:dashboard]

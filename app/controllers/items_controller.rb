@@ -62,40 +62,16 @@ class ItemsController < ApplicationController
 
   def reserve
     @item = Item.find_by_id(params[:id])
-    flash[:warning] = "Your reservation attempt was unsuccessful."
-    @reservation_successful = false
-    start_date = Date.strptime(params[:reservation][:start_date], "%m/%d/%Y")
+    start_date = DateTime.strptime(params[:reservation][:start_date], "%m/%d/%Y")
     end_date = Date.strptime(params[:reservation][:end_date], "%m/%d/%Y")
-    item_number_available = @item.quantity
+    quantity_desired = params[:reservation][:quantity].to_i
+    item_number_available = @item.quantity_available(start_date,end_date)
 
-    @item.reservations.each do |reservation|
-      #Canceled reservation (No conflict)
-      if (reservation.canceled)
-        next
-      #Existing checkout record of an item that has been returned (No conflict)
-      elsif (reservation.date_in != nil)
-        next
-      #Attempted reservation happens before existing reservation. (No conflict)
-      elsif (reservation.reservation_out != nil and end_date < reservation.reservation_out)
-        next
-      #Attempted reservation happens after existing reservation. (No conflict)
-      elsif (reservation.reservation_in != nil and end_date > reservation.reservation_in)
-        next
-      #Attempts to reserve an item after it would have been already checked out. (Conflict -- Invalid start date)
-      elsif reservation.reservation_out != nil and reservation.reservation_in != nil and start_date > reservation.reservation_out and start_date < reservation.reservation_in
-        item_number_available = item_number_available - 1
-      #Attempts to reserve an item for too long that its conflict with pre-existing reservation. (Conflict -- Invalid end date)
-      elsif reservation.reservation_out != nil and reservation.reservation_in != nil and end_date > reservation.reservation_out and end_date < reservation.reservation_in
-        item_number_available = item_number_available - 1
-      #Item is being held by VIP, no due date (Conflict)
-      elsif reservation.date_out != nil and reservation.date_out == nil and nilreservation.reservation_in == nil
-        item_number_available = item_number_available - 1
-      end
-    end
-
-    if item_number_available != 0 and end_date <= @item.get_due_date.business_days.after(start_date)
-      Reservation.create({:user => current_user, :item_id => @item.id, :reservation_out => start_date, :reservation_in => end_date, :quantity => 1})
+    if item_number_available >= quantity_desired and end_date <= @item.get_due_date.business_days.after(start_date).to_date
+      Reservation.create({:user => current_user, :item_id => @item.id, :reservation_out => start_date.to_date, :reservation_in => end_date, :quantity => quantity_desired})
       flash[:notice] = "Item #{@item.name} was successfully reserved."
+    else
+      flash[:warning] = "Your reservation attempt was unsuccessful."
     end
 
     redirect_to item_path(@item)

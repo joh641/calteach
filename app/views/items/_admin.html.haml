@@ -1,5 +1,6 @@
 .admin
     %h5 Admin
+    = "#{@item.quantity_available}" + " / " + "#{@item.quantity} available"
     - if @item.quantity > 0
         = button_to 'Checkout item', checkout_item_path(@item), :method => :get, :class => "btn btn-primary btn-xs"
     - else

@@ -17,7 +17,7 @@ class Item < ActiveRecord::Base
   @@due_dates.default = 5
 
   def is_available
-    quantity > 0
+    self.quantity_available > 0
   end
 
   def available
@@ -46,6 +46,18 @@ class Item < ActiveRecord::Base
 
   def soft_delete
     update_attribute(:inactive, true)
+  end
+
+  def quantity_available(start_date= Date.today, end_date= Date.today)
+    number_available = self.quantity
+    self.reservations.each do |reservation|
+      if reservation.get_status == "Reserved" and reservation.overlaps?(start_date, end_date)
+        number_available -= reservation.quantity
+      elsif reservation.get_status == "Checked Out" and reservation.overlaps?(start_date, end_date)
+        number_available -= reservation.quantity
+      end
+    end
+    number_available
   end
 
 end

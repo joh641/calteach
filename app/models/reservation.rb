@@ -45,8 +45,14 @@ class Reservation < ActiveRecord::Base
   end
 
   def overlaps?(start_date, end_date)
-    (self.reservation_out >= start_date and self.reservation_out <= end_date) or 
-    (self.reservation_in >= start_date and self.reservation_in <= end_date)
+    if (self.reservation_out >= start_date and self.reservation_out <= end_date) or
+       (self.reservation_in >= start_date and self.reservation_in <= end_date)
+      true
+    elsif (self.date_out and self.date_out >= start_date and self.date_out <= end_date)
+      true
+    else
+      false
+    end
   end
 
 end

@@ -52,7 +52,9 @@ class Admin::ReservationsController < ApplicationController
       end
   
       reservation.reservation_out = checkout_date
-      reservation.reservation_in = due_date
+      if !reservation.reservation_in or (reservation.reservation_in and reservation.reservation_in > due_date)
+        reservation.reservation_in = due_date
+      end
       reservation.date_out = checkout_date
       reservation.save
       item.save

@@ -55,11 +55,11 @@ end
 # end
 
 When /^(.*) within Card View$/ do |step|
-  within("#card-view") { step }
+  within("#card-view") { step(step) }
 end
 
 When /^(.*) within List View$/ do |step|
-  within("#list-view") { step }
+  within("#list-view") { step(step) }
 end
 
 # Multi-line step scoper
@@ -81,6 +81,18 @@ end
 
 When /^(?:|I )follow "([^"]*)"$/ do |link|
   click_link(link)
+end
+
+When /^(?:|I )click "([^"]*)"$/ do |link|
+  click_link(link)
+end
+
+When /^(?:|I )click "([^"]*)"$/ do |link|
+  click_link(link)
+end
+
+When /^(?:|I )switch to List View$/ do
+  find('#list-view-link').click
 end
 
 When /^(?:|I )fill in "([^"]*)" with "([^"]*)"$/ do |field, value|

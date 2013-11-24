@@ -25,7 +25,7 @@ Background: items have been added to inventory
 Scenario: Admin can see all items and their availabilities
     Given I am logged into the admin panel
     Then I should see all the items
-    Then within "Gold" should be unavailable within Card View
+    Then "Gold" should be unavailable within Card View
     And "Globe" should be available within Card View
 
 Scenario: User can see all items and their availabilities
@@ -49,19 +49,19 @@ Scenario: User can search for items and see no results
 
 Scenario: User can reserve item on item's individual page
     Given I am logged into the user panel
-    When I follow "Globe"
+    When I follow "Globe" within Card View
     Then I should see "Reserve this item"
 
 Scenario: Admin can delete, edit and checkout items from inventory page
   Given I am logged into the admin panel
-  And I press "List View"
+  And I switch to List View
   Then I should see "Delete"
   Then I should see "Edit"
   Then I should see "Checkout"
 
 Scenario: User can delete, edit and checkout items from inventory page
   Given I am logged into the user panel
-  And I press "List View"
+  And I follow "List View"
   Then I should not see "Delete"
   Then I should not see "Edit"
   Then I should not see "Checkout"

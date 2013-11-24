@@ -62,7 +62,7 @@ class Reservation < ActiveRecord::Base
       false
     elsif item.quantity_available(start_date, end_date) < quantity_desired
       false
-    elsif end_date > item.get_due_date.business_days.after(start_date).to_date
+    elsif end_date > item.get_due_date.business_days.after(start_date.to_datetime).to_date
       false
     else
       true

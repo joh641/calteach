@@ -25,21 +25,21 @@ Background: items have been added to inventory
 Scenario: Admin can see all items and their availabilities
     Given I am logged into the admin panel
     Then I should see all the items
-    Then "Gold" should be unavailable
-    And "Globe" should be available
+    Then within "Gold" should be unavailable within Card View
+    And "Globe" should be available within Card View
 
 Scenario: User can see all items and their availabilities
     Given I am logged into the user panel
     Then I should see all the items
-    Then "Gold" should be unavailable
-    And "Globe" should be available
+    Then "Gold" should be unavailable within Card View
+    And "Globe" should be available within Card View
 
 Scenario: User can search for items
     Given I am logged into the user panel
     When I search for "Globe"
     And I press "Search"
-    Then I should see "Globe"
-    And I should not see "Gold"
+    Then I should see "Globe" within Card View
+    And I should not see "Gold" within Card View
 
 Scenario: User can search for items and see no results
     Given I am logged into the user panel

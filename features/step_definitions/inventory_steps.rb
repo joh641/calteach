@@ -8,10 +8,10 @@ end
 
 Then /I should see all the items/ do
   # Make sure that all the items in the app are visible in the table
-  expect(page).to have_selector('.item-container', count: Item.all.length)
+  expect(page).to have_selector('.item-wrapper .item-container', count: Item.all.length)
 end
 
-Then /"(.*)" should be (un)?available/ do |item, unavailable|
+Then /"(.*)" should be (un)?available$/ do |item, unavailable|
   # not page.find(:xpath, '//.item-container[@data-item_id="%s"' % Item.find_by_name(item).id).find(".subtitle.unavailable")
   # not page.find('.item-container'[item-id="4"]).find(".subtitle.available")
   elem = page.find(".item-container[data-item-id='%s']" % Item.find_by_name(item).id)

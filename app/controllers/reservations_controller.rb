@@ -2,6 +2,10 @@ class ReservationsController < ApplicationController
   respond_to :html, :json
 
   def index
+    if current_user == nil
+      redirect_to "/"
+      return
+    end
     @reservations = current_user.reservations
   end
 

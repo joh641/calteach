@@ -8,6 +8,7 @@
   %table.table.table-striped
     %thead
       %tr
+        %th Reservation Id
         %th Name
         %th Email
         %th Item
@@ -17,10 +18,12 @@
         %th Reservation End
         %th Checkout Date
         %th Check In Date
+        %th Notes
         %th Actions
     .body
       - @reservations.to_a.each do |reservation|
         %tr
+          %td= link_to "#{reservation.id}", edit_reservation_path(reservation.id)
           %td= reservation.user.name
           %td= reservation.user.email
           %td= link_to "#{reservation.item.name}", item_path(reservation.item)
@@ -30,6 +33,7 @@
           %td= best_in_place(reservation, :reservation_in, type: :date)
           %td= best_in_place(reservation, :date_out, type: :date)
           %td= best_in_place(reservation, :date_in, type: :date)
+          %td= reservation.notes
           %td
             - if reservation.get_status == "Reserved"
               = link_to 'Check Out', checkout_admin_reservation_path(reservation, :reserved => true, :dashboard => true), :method => :put, :class => 'btn btn-default btn-sm'

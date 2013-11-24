@@ -17,7 +17,7 @@ module NavigationHelpers
       '/'
     when /^the create item\s?page$/i
       new_item_path
-    when /^the item info page for "(.*)"/
+    when /^the item info page for (.*)/
       item_path(Item.find_by_name($1))
     when /^the edit page for item with id (.*)$/i
       edit_item_path(Item.find_by_id($1))

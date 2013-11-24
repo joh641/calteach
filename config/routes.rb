@@ -4,7 +4,6 @@ Calteach::Application.routes.draw do
   resources :items do
     member do
       get 'checkout'
-      get 'reserve'
     end
     collection { post :import }
   end

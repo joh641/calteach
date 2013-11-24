@@ -1,3 +1,11 @@
+Given /the following reservations exist/ do |reservations_table|
+  reservations_table.hashes.each do |reservation|
+    reservation_out = Date.today + reservation[:reservation_out].split("+")[1].to_i if reservation[:reservation_out].split("+").length > 1
+    reservation_in = Date.today + reservation[:reservation_in].split("+")[1].to_i if reservation[:reservation_out].split("+").length > 1
+    Reservation.create(reservation)
+  end
+end
+
 Given /user has reserved "(.*?)"/ do |item|
   page.driver.submit :delete, "/users/sign_out", {}
   step %Q{I am logged into the user panel}
@@ -18,21 +26,23 @@ Given(/^there is a reservation that is due in (\d+) days? exists under "(.*?)"$/
 end
 
 When /I reserve (.*) from (.*) to (.*)/ do |item_name, reservation_out, reservation_in|
-  step 'I am on the item info page for ' + item_name
-  step 'I fill in "reservation_start_date" with "' + reservation_out + '"'
-  step 'I fill in "reservation_end_date" with "' + reservation_in + '"'
-  step 'I press "Reserve"'
+  reservation_out = Date.today + reservation_out.split("+")[1].to_i if reservation_out.split("+").length > 1
+  reservation_in = Date.today + reservation_in.split("+")[1].to_i if reservation_in.split("+").length > 1
+  step %Q{I am on the item info page for #{item_name}}
+  step %Q{I fill in "reservation_start_date" with "#{reservation_out}"}
+  step %Q{I fill in "reservation_end_date" with "#{reservation_in}"}
+  step %Q{I press "Reserve"}
 end
 
 Then /there should (not )?be a reservation for (.*) from (.*) to (.*)/ do |not_exist, item_name, reservation_out, reservation_in|
   item = Item.find_by_name(item_name)
 
-  start_date = Date.strptime(reservation_out, "%m/%d/%Y")
-  end_date = Date.strptime(reservation_in, "%m/%d/%Y")
+  start_date = reservation_out.split("+").length ? Date.today + reservation_out.split("+")[1].to_i : Date.strptime(reservation_out, "%m/%d/%Y")
+  end_date = reservation_in.split("+").length ? Date.today + reservation_in.split("+")[1].to_i : Date.strptime(reservation_in, "%m/%d/%Y")
 
   reservation = nil
   item.reservations.each do |r|
-    if r.reservation_out.to_date  + 1 == start_date.to_date and r.reservation_in.to_date + 1 == end_date.to_date
+    if r.reservation_out.to_date == start_date.to_date and r.reservation_in.to_date == end_date.to_date
       reservation = r
     end
   end

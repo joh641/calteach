@@ -1,0 +1,11 @@
+.container
+  %h3= "Reservation for #{@reservation.item.name}"
+  %h5= "Quantity: #{@reservation.quantity}"  
+  %h5= "By: #{@reservation.user.name}."
+  = form_tag reservation_path(@reservation), :method => :put, :multipart => true do
+    =label :reservation, :notes, "Notes:"
+    %br
+    =text_area :reservation, :notes, :cols => 40, :rows => 5, :value => nil
+    %br
+    %br
+    = submit_tag 'Update Reservation'

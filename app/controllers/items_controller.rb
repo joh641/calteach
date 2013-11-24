@@ -60,23 +60,6 @@ class ItemsController < ApplicationController
     redirect_to '/'
   end
 
-  def reserve
-    @item = Item.find_by_id(params[:id])
-    start_date = DateTime.strptime(params[:reservation][:start_date], "%m/%d/%Y")
-    end_date = Date.strptime(params[:reservation][:end_date], "%m/%d/%Y")
-    quantity_desired = params[:reservation][:quantity].to_i
-    item_number_available = @item.quantity_available(start_date,end_date)
-
-    if item_number_available >= quantity_desired and end_date <= @item.get_due_date.business_days.after(start_date).to_date
-      Reservation.create({:user => current_user, :item_id => @item.id, :reservation_out => start_date.to_date, :reservation_in => end_date, :quantity => quantity_desired})
-      flash[:notice] = "Item #{@item.name} was successfully reserved."
-    else
-      flash[:warning] = "Your reservation attempt was unsuccessful."
-    end
-
-    redirect_to item_path(@item)
-  end
-
   def checkout
     @item = Item.find_by_id(params[:id])
   end

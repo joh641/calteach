@@ -55,4 +55,16 @@ class Reservation < ActiveRecord::Base
     end
   end
 
+  #Performs basic sanity checks on the start and end dates.
+  def self.valid_reservation?(start_date, end_date, item, quantity_desired)
+    if start_date != nil and end_date != nil and start_date >= Date.today and end_date >= start_date
+      if end_date <= item.get_due_date.business_days.after(start_date.to_datetime).to_date
+        if quantity_desired > 0 and item.quantity_available(start_date,end_date) >= quantity_desired
+          return true
+        end
+      end
+    end
+    return false
+  end
+
 end

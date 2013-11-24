@@ -9,12 +9,20 @@ class ItemsController < ApplicationController
     # application_controller.rb, we don't really need it here
     # nor in the other controller actions.
   	@all_categories = Item.all_categories
+
+
+    if params[:inactive]
+      @items = Item.inactive.find(:all, :order => "name ASC")
+      @inactive = true
+    else
+      @items = Item.active.find(:all, :order => "name ASC")
+    end
+
+
   	if params[:query]
   		#TODO (Yuxin) Is this even safe?
   		@query = params[:query]
-  		@items = Item.active.where("lower(name) = ?", @query.downcase)
-  	elsif
-	    @items = Item.active.all
+  		@items = @items.where("lower(name) = ?", @query.downcase)
 	  end
   end
 

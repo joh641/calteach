@@ -13,6 +13,18 @@ class Item < ActiveRecord::Base
   has_many :reservations
   has_many :users, :through => :reservations
 
+  def is_available
+    quantity > 0
+  end
+
+  def available
+    if is_available
+      "Available"
+    else
+      "Unavailable"
+    end
+  end
+
   def self.all_categories
     ["Geography", "Math", "Science", "Social Studies"]
   end

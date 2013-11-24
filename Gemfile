@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.14'
 
-# for Heroku deployment
 group :development, :test do
   gem 'sqlite3'
   gem 'ruby-debug19'
@@ -12,9 +11,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'simplecov'
   gem 'email_spec'
-  gem 'whenever', require: false
-  gem 'best_in_place'
-  gem 'validates_timeliness', '~> 3.0'
 end
 
 group :test do
@@ -52,5 +48,7 @@ gem 'aws-s3'
 gem 'aws-sdk'
 gem 'rmagick'
 gem 'bootstrap-datepicker-rails'
-
-
+gem 'best_in_place'
+gem 'validates_timeliness', '~> 3.0'
+gem 'whenever', require: false
+gem 'business_time'

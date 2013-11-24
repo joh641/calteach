@@ -8,7 +8,10 @@
           #image= image_tag @item.image.url(:medium), :class => "img-rounded"
 
         .item-right
-          = form_tag checkout_reservation_path do
+          = form_tag checkout_admin_reservation_path do
+            = label_tag :quantity, "Quantity"
+            = select_tag :quantity, options_for_select(0..@item.quantity_available)
+            %br
             = label_tag :email, "User's Email"
             = text_field_tag :email
             = hidden_field_tag :item, @item.id

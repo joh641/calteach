@@ -6,7 +6,7 @@
         .item-left
           %h2#name= @item.name
           #image= image_tag @item.image.url(:medium), :class => "img-rounded"
-          - if current_user and current_user.admin?
+          - if is_admin?
             = render partial: 'admin'
         .item-right
           %h4= "Description"

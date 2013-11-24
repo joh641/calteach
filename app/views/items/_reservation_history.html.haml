@@ -11,6 +11,7 @@
         %th Reservation End
         %th Checkout Date
         %th Check In Date
+        %th Notes
         %th Actions
     .body
       - @reservations.to_a.reverse_each do |reservation|
@@ -22,6 +23,7 @@
           %td= best_in_place(reservation, :reservation_in, type: :date)
           %td= best_in_place(reservation, :date_out, type: :date)
           %td= best_in_place(reservation, :date_in, type: :date)
+          %td= reservation.notes
           %td
             - if reservation.get_status == "Reserved"
               = link_to 'Check Out', checkout_admin_reservation_path(reservation, :reserved => true), :method => :put, :class => 'btn btn-default btn-sm'

@@ -87,10 +87,6 @@ When /^(?:|I )click "([^"]*)"$/ do |link|
   click_link(link)
 end
 
-When /^(?:|I )click "([^"]*)"$/ do |link|
-  click_link(link)
-end
-
 When /^(?:|I )switch to List View$/ do
   find('#list-view-link').click
 end

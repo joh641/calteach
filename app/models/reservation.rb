@@ -60,6 +60,8 @@ class Reservation < ActiveRecord::Base
   def self.valid_reservation?(start_date, end_date, item, quantity_desired)
     if !start_date or !end_date
       false
+    elsif quantity_desired == 0
+      false
     elsif item.quantity_available(start_date, end_date) < quantity_desired
       false
     elsif end_date > item.get_due_date.business_days.after(start_date.to_datetime).to_date

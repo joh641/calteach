@@ -21,10 +21,10 @@ class ItemsController < ApplicationController
 
 
     if params[:inactive]
-      @items = Item.inactive.find(:all, :order => "name ASC")
+      @items = Item.inactive.order(name: :asc)
       @inactive = true
     else
-      @items = Item.active.find(:all, :order => "name ASC")
+      @items = Item.active.order(name: :asc)
     end
 
 

@@ -9,7 +9,7 @@
       = text_field :reservation, :end_date, "data-behaviour" => "datepicker"
 
       = label :reservation, :quantity, 'Quantity'
-      = select :reservation, :quantity, options_for_select(0..@item.quantity)
+      = select :reservation, :quantity, options_for_select(1..@item.quantity)
 
       = submit_tag 'Reserve Item', :class => "btn btn-success btn-xs"
 

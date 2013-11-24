@@ -1,11 +1,14 @@
 .admin
-    %h5 Admin
-    = "#{@item.quantity_available}" + " / " + "#{@item.quantity} available"
-    - if @item.quantity > 0
-        = button_to 'Checkout item', checkout_item_path(@item), :method => :get, :class => "btn btn-primary btn-xs"
-    - else
-        Checked out to:
-        %br= @item.reservations[0].user.name
-        = button_to 'Check in item', checkin_admin_reservation_path(@item.reservations[0]), :method => :put, :class => "btn btn-primary btn-xs"
-    = button_to 'Edit item', edit_item_path(@item), {:method => :get, :class => "btn btn-default btn-xs"}
-    = button_to 'Delete item', item_path(@item), {:method => :delete, :confirm => 'Are you sure?', :class => "btn btn-default btn-xs"}
+  %h5 Admin
+  = "#{@item.quantity_available}" + " / " + "#{@item.quantity} available"
+  - if @item.quantity_available > 0
+    = button_to 'Checkout item', checkout_item_path(@item), :method => :get, :class => "btn btn-primary btn-xs"
+  - if @item.quantity_available < @item.quantity
+    %br
+    Checked out to:
+    - @item.reservations.each do |reservation|
+      - if reservation.get_status == "Checked Out"
+        %br= reservation.user.name 
+        = button_to 'Check in item', checkin_admin_reservation_path(reservation), :method => :put, :class => "btn btn-primary btn-xs"
+  = button_to 'Edit item', edit_item_path(@item), {:method => :get, :class => "btn btn-default btn-xs"}
+  = button_to 'Delete item', item_path(@item), {:method => :delete, :confirm => 'Are you sure?', :class => "btn btn-default btn-xs"}

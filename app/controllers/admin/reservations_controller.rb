@@ -31,17 +31,15 @@ class Admin::ReservationsController < ApplicationController
    
     if user
       checkout_date = Date.today
+      due_date = item.get_due_date.business_days.after(DateTime.now).to_date
       number_available = item.quantity_available
 
       if !params[:reserved]
-        due_date = item.get_due_date.business_days.after(DateTime.now).to_date
         desired_quantity = params[:quantity].to_i
         if number_available >= desired_quantity
           item.reservations << reservation
           user.reservations << reservation
           reservation.quantity = desired_quantity
-          reservation.reservation_out = checkout_date
-          reservation.reservation_in = due_date
         else
           flash[:warning] = "Item #{item.name} could not be checked out due to an existing reservation"
           redirect_to item_path(item) and return
@@ -53,10 +51,12 @@ class Admin::ReservationsController < ApplicationController
         end
       end
   
-        reservation.date_out = checkout_date
-        reservation.save
-        item.save
-        flash[:notice] = "Item #{item.name} was successfully checked out to #{user.name}"
+      reservation.reservation_out = checkout_date
+      reservation.reservation_in = due_date
+      reservation.date_out = checkout_date
+      reservation.save
+      item.save
+      flash[:notice] = "Item #{item.name} was successfully checked out to #{user.name}"
   
     else
       flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out."

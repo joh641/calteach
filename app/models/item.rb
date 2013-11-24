@@ -2,7 +2,7 @@ class Item < ActiveRecord::Base
 
   scope :active, -> { where(inactive: false) }
   scope :inactive, -> { where(inactive: true) }
-  attr_accessible :category, :description, :legacy_id, :name, :quantity, :image
+  attr_accessible :category, :description, :legacy_id, :name, :quantity, :image, :due_date_category
 
   has_attached_file :image,
   :storage => :s3,
@@ -13,8 +13,11 @@ class Item < ActiveRecord::Base
   has_many :reservations
   has_many :users, :through => :reservations
 
+  @@due_dates = {"video equipment" => 2, "books" => 10, "other" => 5}
+  @@due_dates.default = 5
+
   def is_available
-    quantity > 0
+    self.quantity_available > 0
   end
 
   def available
@@ -37,8 +40,24 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def get_due_date
+    @@due_dates[self.due_date_category]
+  end
+
   def soft_delete
     update_attribute(:inactive, true)
+  end
+
+  def quantity_available(start_date= Date.today, end_date= Date.today)
+    number_available = self.quantity
+    self.reservations.each do |reservation|
+      if reservation.get_status == "Reserved" and reservation.overlaps?(start_date, end_date)
+        number_available -= reservation.quantity
+      elsif reservation.get_status == "Checked Out" and reservation.overlaps?(start_date, end_date)
+        number_available -= reservation.quantity
+      end
+    end
+    number_available
   end
 
 end

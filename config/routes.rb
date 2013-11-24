@@ -11,17 +11,20 @@ Calteach::Application.routes.draw do
 
   resources :reservations do
     member do
-      post 'checkout'
-      put 'checkout'
-      put 'checkin'
-      put 'archive'
       put 'cancel'
     end
   end
 
   namespace 'admin' do
     resources :users
-    resources :reservations
+    resources :reservations do
+      member do
+        post 'checkout'
+        put 'checkout'
+        put 'checkin'
+        put 'archive'
+      end
+    end
   end
 
   root :to => 'items#index'

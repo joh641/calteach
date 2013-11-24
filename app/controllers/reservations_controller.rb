@@ -4,9 +4,9 @@ class ReservationsController < ApplicationController
   def index
     if current_user == nil
       redirect_to "/"
-      return
+    else
+      @reservations = current_user.reservations
     end
-    @reservations = current_user.reservations
   end
 
   def update

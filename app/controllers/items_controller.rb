@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find_by_id(params[:id])
+    @reservations = @item.reservations
   end
 
   def index

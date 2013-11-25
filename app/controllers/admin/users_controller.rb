@@ -40,7 +40,7 @@ class Admin::UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       redirect_to admin_users_path, notice: 'User was successfully updated.'
     else
-      flash[:error] = "User couldn't be updated"
+      flash[:warning] = "User could not be updated."
       render action: "edit"
     end
   end

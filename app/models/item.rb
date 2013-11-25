@@ -13,6 +13,9 @@ class Item < ActiveRecord::Base
   has_many :reservations
   has_many :users, :through => :reservations
 
+  validates :name, :presence => true
+  validates :quantity, :presence => true
+
   @@due_dates = {"video equipment" => 2, "books" => 10, "other" => 5}
   @@due_dates.default = 5
 

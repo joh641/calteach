@@ -16,7 +16,6 @@ class ItemsController < ApplicationController
   end
 
   def index
-
     if params[:inactive]
       @items = Item.inactive#.order(name: :asc)
       @inactive = true
@@ -41,9 +40,14 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.create(params[:item])
-    flash[:notice] = "Item #{@item.name} was successfully created."
-    redirect_to items_path
+    item = Item.create(params[:item])
+    if item
+      flash[:notice] = "Item #{item.name} was successfully created."
+      redirect_to items_path
+    else
+      flash[:warning] = "Item creation was unsuccessful."
+      render action: "new"
+    end
   end
 
   def edit
@@ -52,15 +56,20 @@ class ItemsController < ApplicationController
   end
 
   def update
-    @item = Item.find_by_id(params[:id])
-    @item.update_attributes(params[:item])
-    flash[:notice] = "Item #{@item.name} was successfully updated."
-    redirect_to item_path(@item)
+    item = Item.find_by_id(params[:id])
+    item.update_attributes(params[:item])
+    if item
+      flash[:notice] = "Item #{@item.name} was successfully updated."
+      redirect_to item_path(@item)
+    else
+      flash[:warning] = "Item update was unsuccessful."
+      render action: "edit"
+    end
   end
 
   def destroy
-    @item = Item.find_by_id(params[:id])
-    @item.soft_delete
+    item = Item.find_by_id(params[:id])
+    item.soft_delete
     flash[:notice] = "Item #{@item.name} was successfully deleted."
     redirect_to '/'
   end

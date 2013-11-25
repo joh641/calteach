@@ -39,9 +39,9 @@ class Admin::ReservationsController < ApplicationController
 
   def checkout_helper(reservation, user)
     if user and Reservation.checkout(reservation)
-      flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}"
+      flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}."
     else  
-      flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation"
+      flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation."
       flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out." if !user
     end
   end
@@ -51,7 +51,7 @@ class Admin::ReservationsController < ApplicationController
     reservation.date_in = Date.today
     reservation.save
     item = reservation.item
-    flash[:notice] = "Item #{item.name} was successfully checked in"
+    flash[:notice] = "Item #{item.name} was successfully checked in."
     redirection(params[:dashboard], item)
   end
 
@@ -60,7 +60,7 @@ class Admin::ReservationsController < ApplicationController
     reservation.archived = true
     reservation.save
     item = reservation.item
-    flash[:notice] = "Reservation was successfully archived"
+    flash[:notice] = "Reservation was successfully archived."
     redirection(params[:dashboard], item)
   end
 

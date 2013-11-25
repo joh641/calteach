@@ -88,7 +88,7 @@ When /^(?:|I )click "([^"]*)"$/ do |link|
 end
 
 When /^(?:|I )switch to List View$/ do
-  find('#list-view-link').click
+  click_link('list-view-link')
 end
 
 When /^(?:|I )fill in "([^"]*)" with "([^"]*)"$/ do |field, value|

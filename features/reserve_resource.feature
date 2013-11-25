@@ -30,8 +30,8 @@ Scenario: I should not be able to reserve an item if not in stock.
 Scenario: I should be able to reserve an item if there is a preexisting and non-conflicting reservation in the future.
   When I am logged into the user panel
   And the following reservations exist:
-  | user_id  | item_id   | reservation_out | reservation_in |
-  | 1        | 2         | today+3         | today+4        |
+  | user_id  | item_id   | reservation_out | reservation_in | quantity |
+  | 1        | 2         | today+3         | today+4        |        1 |
   And I reserve Book from today+0 to today+1
   Then I should be on the item info page for Book
   And there should be a reservation for Book from today+0 to today+1
@@ -39,8 +39,8 @@ Scenario: I should be able to reserve an item if there is a preexisting and non-
 Scenario: I should be not able to reserve an item if there is a conflicting reservation.
   When I am logged into the user panel
   And the following reservations exist:
-  | user_id  | item_id   | reservation_out | reservation_in |
-  | 1        | 2         | today+0         | today+3        |
+  | user_id  | item_id   | reservation_out | reservation_in | quantity |
+  | 1        | 2         | today+0         | today+3        |        1 |
   And I reserve Book from today+1 to today+2
   Then there should not be a reservation for Globe from today+1 to today+2
   And I should be on the item info page for Book

@@ -10,8 +10,7 @@ Background:
 
 Scenario: Admin can create other admins
   Given I am logged into the admin panel
-  Then I should see "User Dashboard"
-  When I follow "User Dashboard"
+  When I visit the User Dashboard
   Then I should see "Create New User"
   When I follow "Create New User"
   Then I should see "Name"
@@ -29,8 +28,7 @@ Scenario: Admin can create other admins
 
 Scenario: Admin can create faculty users
   Given I am logged into the admin panel
-  Then I should see "User Dashboard"
-  When I follow "User Dashboard"
+  When I visit the User Dashboard
   Then I should see "Create New User"
   When I follow "Create New User"
   Then I should see "Name"
@@ -48,8 +46,7 @@ Scenario: Admin can create faculty users
 
 Scenario: Admin can create basic users
   Given I am logged into the admin panel
-  Then I should see "User Dashboard"
-  When I follow "User Dashboard"
+  When I visit the User Dashboard
   Then I should see "Create New User"
   When I follow "Create New User"
   Then I should see "Name"

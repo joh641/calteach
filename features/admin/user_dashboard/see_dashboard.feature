@@ -9,12 +9,8 @@ Feature: Admin sees user dashboard
 
   Scenario: Non-admin cannot see the dashboard
     Given I am logged into the user panel
-    Then I should not see "User Dashboard"
-    When I am on the user dashboard
-    Then I should see "Error: Not an admin"
+    Then I should not see "Admin"
 
   Scenario: Admin can see the dashboard
     Given I am logged into the admin panel
-    Then I should see "User Dashboard"
-    When I am on the user dashboard
-    Then I should see "cucumberuser@gmail.com"
+    Then I should see "Admin"

@@ -21,10 +21,10 @@ class ItemsController < ApplicationController
 
 
     if params[:inactive]
-      @items = Item.inactive.order(name: :asc)
+      @items = Item.inactive#.order(name: :asc)
       @inactive = true
     else
-      @items = Item.active.order(name: :asc)
+      @items = Item.active#.order(name: :asc)
     end
 
 

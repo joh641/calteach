@@ -28,21 +28,15 @@ class Admin::ReservationsController < ApplicationController
       reservation.user = User.find_by_email(params[:email])
     end
 
-    if reservation.user
-      if Reservation.checkout(reservation)
-        flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}"
-      else 
-        flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation"
-      end
+    if reservation.user and Reservation.checkout(reservation)
+      flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}"
     else 
-      flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out."
+      flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation"
+      flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out." if !reservation.user
     end
 
-    if params[:dashboard]
-      redirect_to admin_reservations_path
-    else
-      redirect_to item_path(item)
-    end
+    redirect_to admin_reservations_path and return if params[:dashboard]
+    redirect_to item_path(reservation.item)
 
   end
 

@@ -29,12 +29,7 @@ class Admin::ReservationsController < ApplicationController
     end
 
     checkout_helper(reservation, reservation.user)
-
-    if params[:dashboard]
-      redirect_to admin_reservations_path
-    else
-      redirect_to item_path(reservation.item)
-    end
+    redirection(params[:dashboard], reservation.item)
   end
 
   def checkout_helper(reservation, user)
@@ -53,11 +48,7 @@ class Admin::ReservationsController < ApplicationController
     item = reservation.item
     item.save
     flash[:notice] = "Item #{item.name} was successfully checked in"
-    if params[:dashboard]
-      redirect_to admin_reservations_path
-    else
-      redirect_to item_path(item)
-    end
+    redirection(params[:dashboard], item)
   end
 
   def archive
@@ -66,6 +57,14 @@ class Admin::ReservationsController < ApplicationController
     reservation.save
     flash[:notice] = "Reservation was successfully archived"
     redirect_to admin_reservations_path
+  end
+
+  def redirection(dashboard, item)
+    if dashboard
+      redirect_to admin_reservations_path
+    else
+      redirect_to item_path(item)
+    end
   end
 
 end

@@ -44,3 +44,10 @@ Scenario: I should be not able to reserve an item if there is a conflicting rese
   And I reserve Book from today+1 to today+2
   Then there should not be a reservation for Globe from today+1 to today+2
   And I should be on the item info page for Book
+
+Scenario: It should fail gracefully if the reserve date fields are blank.
+  When I am logged into the user panel
+  And I am on the item info page for Globe
+  And I press "Reserve"
+  Then I should be on the item info page for Globe
+  And there should not be a reservation for Globe from today+0 to today+1

@@ -2,6 +2,11 @@ class Reservation < ActiveRecord::Base
 
   attr_accessible :date_in, :date_out, :item_id, :notes, :reservation_in, :reservation_out, :user_id, :user, :quantity
 
+  validates_date :date_in, :on_or_after => lambda{|m| m.date_out}, :allow_nil => true
+  validates_date :date_out, :on_or_before => lambda{|m| m.date_in}, :allow_nil => true
+  validates_date :reservation_in, :on_or_after => lambda{|m| m.reservation_out}, :allow_nil => true
+  validates_date :reservation_out, :on_or_before => lambda{|m| m.reservation_in}, :allow_nil => true
+
   belongs_to :user
   belongs_to :item
 
@@ -40,19 +45,15 @@ class Reservation < ActiveRecord::Base
   end
 
   def overlaps?(start_date, end_date)
-    if self.reservation_out
-      if self.reservation_out >= start_date and self.reservation_out <= end_date
-        true
-      elsif reservation_in
-        if (self.reservation_in >= start_date and self.reservation_in <= end_date) or
-           (self.reservation_out <= start_date and self.reservation_in >= end_date)
-          true
-        end
-      end
+    if (self.reservation_out >= start_date and self.reservation_out <= end_date) or
+       (self.reservation_in >= start_date and self.reservation_in <= end_date) or
+       (self.reservation_out <= start_date and self.reservation_in >= end_date)
+      true
     elsif (self.date_out and self.date_out >= start_date and self.date_out <= end_date)
       true
+    else
+      false
     end
-    false
   end
 
   #Performs basic sanity checks on the start and end dates.

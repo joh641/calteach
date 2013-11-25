@@ -19,25 +19,31 @@ class Admin::ReservationsController < ApplicationController
   end
 
   def checkout
-    if params[:reserved]
-      reservation = Reservation.find_by_id(params[:id])
+    reservation = get_reservation(params)
+    checkout_helper(reservation, reservation.user)
+    redirection(params[:dashboard], reservation.item)
+  end
+
+  def get_reservation(parameters)
+    if parameters[:reserved]
+      reservation = Reservation.find_by_id(parameters[:id])
     else
       reservation = Reservation.new
-      reservation.quantity = params[:quantity].to_i
-      reservation.item = Item.find_by_id(params[:item])
-      reservation.user = User.find_by_email(params[:email])
+      reservation.quantity = parameters[:quantity].to_i
+      reservation.item = Item.find_by_id(parameters[:item])
+      reservation.user = User.find_by_email(parameters[:email])
     end
+    reservation
+  end
 
-    if reservation.user and Reservation.checkout(reservation)
+
+  def checkout_helper(reservation, user)
+    if user and Reservation.checkout(reservation)
       flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}"
-    else 
+    else  
       flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation"
-      flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out." if !reservation.user
+      flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out." if !user
     end
-
-    redirect_to admin_reservations_path and return if params[:dashboard]
-    redirect_to item_path(reservation.item)
-
   end
 
   def checkin
@@ -47,11 +53,7 @@ class Admin::ReservationsController < ApplicationController
     item = reservation.item
     item.save
     flash[:notice] = "Item #{item.name} was successfully checked in"
-    if params[:dashboard]
-      redirect_to admin_reservations_path
-    else
-      redirect_to item_path(item)
-    end
+    redirection(params[:dashboard], item)
   end
 
   def archive
@@ -60,6 +62,14 @@ class Admin::ReservationsController < ApplicationController
     reservation.save
     flash[:notice] = "Reservation was successfully archived"
     redirect_to admin_reservations_path
+  end
+
+  def redirection(dashboard, item)
+    if dashboard
+      redirect_to admin_reservations_path
+    else
+      redirect_to item_path(item)
+    end
   end
 
 end

@@ -31,6 +31,10 @@ Then /there should be no results/ do
   expect(page).to have_selector('.item-container', count: 0)
 end
 
+When /I visit the User Dashboard/ do
+  find(".user-dashboard",:visible=>false).click
+end
+
 # And /I press submit/ do
 # 	page.find(".search-submit").click()
 # end

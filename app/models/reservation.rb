@@ -2,10 +2,10 @@ class Reservation < ActiveRecord::Base
 
   attr_accessible :date_in, :date_out, :item_id, :notes, :reservation_in, :reservation_out, :user_id, :user, :quantity
 
-  validates_date :date_in, :on_or_after => lambda{|m| m.date_out}, :allow_nil => true
-  validates_date :date_out, :on_or_before => lambda{|m| m.date_in}, :allow_nil => true
-  validates_date :reservation_in, :on_or_after => lambda{|m| m.reservation_out}, :allow_nil => true
-  validates_date :reservation_out, :on_or_before => lambda{|m| m.reservation_in}, :allow_nil => true
+  # validates_date :date_in, :on_or_after => lambda{|m| m.date_out}, :allow_nil => true
+  # validates_date :date_out, :on_or_before => lambda{|m| m.date_in}, :allow_nil => true
+  # validates_date :reservation_in, :on_or_after => lambda{|m| m.reservation_out}, :allow_nil => true
+  # validates_date :reservation_out, :on_or_before => lambda{|m| m.reservation_in}, :allow_nil => true
 
   belongs_to :user
   belongs_to :item
@@ -18,7 +18,10 @@ class Reservation < ActiveRecord::Base
     current_date = Date.today
     reminder_days = 1 # Time in seconds before due date
     checked_out = Reservation.where("date_out IS NOT NULL", :date_in => nil)
+    puts Reservation.first.reservation_out
+    puts Reservation.first.reservation_in    
     checked_out.each do |current_reservation|
+      puts "FINDME"
       if (current_reservation.reservation_in  \
           and (current_reservation.reservation_in - current_date) > 0 \
           and (current_reservation.reservation_in - current_date) == reminder_days)

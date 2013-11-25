@@ -30,6 +30,7 @@ Given(/^there is a reservation for "(.*?)" that is due in (\d+) days? exists und
   date = Date.today + days.to_i
 
   Reservation.create(user_id: user.id, item_id: item.id, date_out: Date.today, reservation_in: date)
+  puts "reservation created"
 end
 
 When /I reserve (.*) from (.*) to (.*)/ do |item_name, reservation_out, reservation_in|

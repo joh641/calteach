@@ -18,6 +18,8 @@
 //= require twitter/bootstrap
 //= require_tree .
 //= require bootstrap-datepicker/core
+//= require twitter/bootstrap
+//= require_tree .
 
 $.datepicker.setDefaults({
   dateFormat: 'yyyy/mm/dd'

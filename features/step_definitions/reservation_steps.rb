@@ -10,19 +10,26 @@ Given /user has reserved "(.*?)"/ do |item|
   page.driver.submit :delete, "/users/sign_out", {}
   step %Q{I am logged into the user panel}
   step %Q{I am on the home page}
-  step %Q{I follow "#{item}"}
+  step %Q{I switch to List View}
+  step %Q{I follow "#{item}" within List View}
   step %Q{I fill in "reservation_start_date" with "11/16/2013"}
   step %Q{I fill in "reservation_end_date" with "11/26/2013"}
   step %Q{I press "Reserve"}
   page.driver.submit :delete, "/users/sign_out", {}
 end
 
-Then /the reservation should be for (.*?) days/ do |days|
-  flunk "Unimplemented"
+Then /the reservation under "(.*?)" should be for (.*?) days/ do |user_email, days|
+  user = User.find_by_email(user_email)
+  res = Reservation.find_by_user_id(user.id)
+  assert(res.reservation_in - res.reservation_out == days)
 end
 
-Given(/^there is a reservation that is due in (\d+) days? exists under "(.*?)"$/) do |days, user_name|
-  flunk "Unimplemented"
+Given(/^there is a reservation for "(.*?)" that is due in (\d+) days? exists under "(.*?)"$/) do |item_name, days, user_name|
+  item = Item.find_by_name(item_name)
+  user = User.find_by_name(user_name)
+  date = Date.today + days.to_i
+
+  Reservation.create(user_id: user.id, item_id: item.id, date_out: Date.today, reservation_in: date)
 end
 
 When /I reserve (.*) from (.*) to (.*)/ do |item_name, reservation_out, reservation_in|

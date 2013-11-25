@@ -23,8 +23,9 @@ Background: items have been added to inventory
     And I am on the home page
 
 Scenario:
-    When I follow "Globe"
+    Given I switch to List View
+    When I follow "Globe" within List View
     Then I should see "Reserve this item"
-    And I should see "Quantity available:"
-    And I should see "Reservation history"
+    And I should see "Quantity"
+    And I should see "Reservations on this item"
 

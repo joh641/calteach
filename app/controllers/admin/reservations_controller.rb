@@ -26,12 +26,17 @@ class Admin::ReservationsController < ApplicationController
 
   def get_reservation(parameters)
     if parameters[:reserved]
-      reservation = Reservation.find_by_id(parameters[:id])
+      reservation = Reservation.find_by_id(parameters[:id]) 
     else
-      reservation = Reservation.new
-      reservation.quantity = parameters[:quantity].to_i
-      reservation.item = Item.find_by_id(parameters[:item])
-      reservation.user = User.find_by_email(parameters[:email])
+      user = User.find_by_email(parameters[:email])
+      item = Item.find_by_id(parameters[:item])
+      reservation = Reservation.where(user: user, item: item)
+      if not reservation
+        reservation = Reservation.new
+        reservation.quantity = parameters[:quantity].to_i
+        reservation.item = item
+        reservation.user = user
+      end
     end
     reservation
   end

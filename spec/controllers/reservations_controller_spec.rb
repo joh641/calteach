@@ -16,20 +16,6 @@ describe ReservationsController do
       get :index
     end
   end
-  describe 'checking out an item' do
-    it 'should redirect to the index if done from dashboard' do
-      put :checkout, {:id => @reservation.id, :reserved => true, :dashboard => true}
-      response.should redirect_to(reservations_path)      
-    end
-  end
-  describe 'archiving a reservation' do
-    it 'should redirect to the index' do
-      @reservation.status = 'Checked In'
-      @reservation.save
-      put :archive, {:id => @reservation.id}
-      response.should redirect_to(reservations_path)
-    end
-  end
   describe 'adding comments to a reservation' do
     it 'should save properly' do
       reservation = Reservation.new({:user_id => 1, :item_id => 1, :quantity => 1, :notes => nil})

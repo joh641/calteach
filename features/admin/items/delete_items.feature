@@ -19,10 +19,9 @@ Scenario:
   When I follow "Math book" within List View
   Then I should see "Admin"
 
-  Given I expect to click "OK" on a confirmation box saying "Are you sure?"
   When I press "Delete item"
-  Then the confirmation box should have been displayed
+  And I confirm popup
 
   Then I should see "Item Math book was successfully deleted."
-  When I follow "Inventory"
+  When I am on the home page
   Then I should not see "Math book"

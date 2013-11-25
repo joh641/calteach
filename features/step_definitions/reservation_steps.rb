@@ -21,7 +21,8 @@ end
 Then /the reservation under "(.*?)" should be for (.*?) days/ do |user_email, days|
   user = User.find_by_email(user_email)
   res = Reservation.find_by_user_id(user.id)
-  assert(res.reservation_in - res.reservation_out == days)
+  days = days.to_i
+  assert(days.business_days.after(res.reservation_out.to_datetime).to_date == res.reservation_in)
 end
 
 Given(/^there is a reservation for "(.*?)" that is due in (\d+) days? exists under "(.*?)"$/) do |item_name, days, user_name|

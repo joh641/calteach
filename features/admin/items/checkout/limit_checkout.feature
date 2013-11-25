@@ -7,10 +7,10 @@ Feature: Limit checkout length based on category
 Background:
 
   Given the following items exist:
-  | name   | quantity | category        |
-  | Globe  | 1        | Other           |
-  | Book   | 1        | Book            |
-  | Camera | 1        | Video Equipment |
+  | name   | quantity | due_date_category        |
+  | Globe  | 1        | other                    |
+  | Book   | 1        | books                    |
+  | Camera | 1        | video equipment          |
 
   And there is a user
   And there is an admin
@@ -19,7 +19,7 @@ Background:
 
 Scenario: Video Equipment can only be checked out for 2 days
   Given I switch to List View
-  When I follow "Globe" within List View
+  When I follow "Camera" within List View
   And I press "Checkout item"
   And I fill in "email" with "cucumberuser@gmail.com"
   And I press "Checkout Item"
@@ -35,7 +35,7 @@ Scenario: Books can only be checked out for 10 days
   
 Scenario: Other items can only be checked out for 5 days
   Given I switch to List View
-  When I follow "Camera" within List View
+  When I follow "Globe" within List View
   And I press "Checkout item"
   And I fill in "email" with "cucumberuser@gmail.com"
   And I press "Checkout Item"

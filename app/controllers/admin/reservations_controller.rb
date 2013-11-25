@@ -47,7 +47,11 @@ class Admin::ReservationsController < ApplicationController
       else
         if number_available < reservation.quantity
           flash[:warning] = "Item #{item.name} could not be checked out due to an existing reservation"
-          redirect_to admin_reservations_path and return
+          if params[:dashboard]
+            redirect_to admin_reservations_path and return
+          else
+            redirect_to item_path(item) and return
+          end
         end
       end
   

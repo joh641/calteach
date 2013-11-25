@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
 
+  before_filter :is_admin, :except => [:index, :show]
+
   def show
     @item = Item.find_by_id(params[:id])
     @reservations = @item.reservations

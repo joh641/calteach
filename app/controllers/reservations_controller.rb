@@ -1,5 +1,6 @@
 class ReservationsController < ApplicationController
   respond_to :html, :json
+  before_filter :is_admin, :only => :update
 
   def index
     if current_user == nil

@@ -21,50 +21,20 @@ class Admin::ReservationsController < ApplicationController
   def checkout
     if params[:reserved]
       reservation = Reservation.find_by_id(params[:id])
-      item = reservation.item
-      user = reservation.user
     else
       reservation = Reservation.new
-      item = Item.find_by_id(params[:item])
-      user = User.find_by_email(params[:email])
+      reservation.quantity = params[:quantity].to_i
+      reservation.item = Item.find_by_id(params[:item])
+      reservation.user = User.find_by_email(params[:email])
     end
-   
-    if user
-      checkout_date = Date.today
-      due_date = item.get_due_date.business_days.after(DateTime.now).to_date
-      number_available = item.quantity_available
 
-      if !params[:reserved]
-        desired_quantity = params[:quantity].to_i
-        if number_available >= desired_quantity
-          item.reservations << reservation
-          user.reservations << reservation
-          reservation.quantity = desired_quantity
-        else
-          flash[:warning] = "Item #{item.name} could not be checked out due to an existing reservation"
-          redirect_to item_path(item) and return
-        end
-      else
-        if number_available < reservation.quantity
-          flash[:warning] = "Item #{item.name} could not be checked out due to an existing reservation"
-          if params[:dashboard]
-            redirect_to admin_reservations_path and return
-          else
-            redirect_to item_path(item) and return
-          end
-        end
+    if reservation.user
+      if Reservation.checkout(reservation)
+        flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}"
+      else 
+        flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation"
       end
-  
-      reservation.reservation_out = checkout_date
-      if !reservation.reservation_in or (reservation.reservation_in and reservation.reservation_in > due_date)
-        reservation.reservation_in = due_date
-      end
-      reservation.date_out = checkout_date
-      reservation.save
-      item.save
-      flash[:notice] = "Item #{item.name} was successfully checked out to #{user.name}"
-  
-    else
+    else 
       flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out."
     end
 

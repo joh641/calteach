@@ -78,4 +78,20 @@ class Reservation < ActiveRecord::Base
     end
   end
 
+  def self.checkout(reservation)
+    number_available = reservation.item.quantity_available
+    if number_available >= reservation.quantity
+      checkout_date = Date.today
+      due_date = reservation.item.get_due_date.business_days.after(DateTime.now).to_date
+      reservation.reservation_out = checkout_date
+      if !reservation.reservation_in or (reservation.reservation_in and reservation.reservation_in > due_date)
+        reservation.reservation_in = due_date
+      end
+      reservation.date_out = checkout_date
+      reservation.save
+    else
+      false
+    end
+  end
+
 end

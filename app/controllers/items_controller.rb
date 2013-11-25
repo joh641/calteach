@@ -40,13 +40,13 @@ class ItemsController < ApplicationController
   end
 
   def create
-    item = Item.create(params[:item])
-    if item
+    item = Item.new(params[:item])
+    if item.save
       flash[:notice] = "Item #{item.name} was successfully created."
       redirect_to items_path
     else
       flash[:warning] = "Item creation was unsuccessful."
-      render action: "new"
+      redirect_to new_item_path
     end
   end
 
@@ -62,7 +62,7 @@ class ItemsController < ApplicationController
       redirect_to item_path(item)
     else
       flash[:warning] = "Item update was unsuccessful."
-      render action: "edit"
+      redirect_to edit_item_path(item)
     end
   end
 

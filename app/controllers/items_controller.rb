@@ -14,11 +14,6 @@ class ItemsController < ApplicationController
   end
 
   def index
-    #TODO (Aatash) Now that we've moved "all_categories" to
-    # application_controller.rb, we don't really need it here
-    # nor in the other controller actions.
-  	@all_categories = Item.all_categories
-
 
     if params[:inactive]
       @items = Item.inactive#.order(name: :asc)
@@ -27,12 +22,11 @@ class ItemsController < ApplicationController
       @items = Item.active#.order(name: :asc)
     end
 
-
-  	if params[:query]
-  		#TODO (Yuxin) Is this even safe?
-  		@query = params[:query]
-  		@items = @items.where("lower(name) = ?", @query.downcase)
-	  end
+    if params[:query]
+      #TODO (Yuxin) Is this even safe?
+      @query = params[:query]
+      @items = @items.where("lower(name) = ?", @query.downcase)
+    end
   end
 
   def import
@@ -41,7 +35,7 @@ class ItemsController < ApplicationController
   end
 
   def new
-    @all_categories = Item.all_categories
+    @due_date_categories = Item.due_date_categories
   end
 
   def create
@@ -52,7 +46,7 @@ class ItemsController < ApplicationController
 
   def edit
     @item = Item.find_by_id(params[:id])
-    @all_categories = Item.all_categories
+    @due_date_categories = Item.due_date_categories
   end
 
   def update

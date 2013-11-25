@@ -14,6 +14,10 @@
   = label :item, :category, 'Category'
   = select :item, :category, @all_categories
 
+#due_date_category
+  = label :item, :due_date_category, 'Due Date Category'
+  = select :item, :due_date_category, @due_date_categories
+
 #description
   = label :item, :description, 'Description'
   = text_area :item, :description

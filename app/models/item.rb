@@ -16,6 +16,10 @@ class Item < ActiveRecord::Base
   @@due_dates = {"video equipment" => 2, "books" => 10, "other" => 5}
   @@due_dates.default = 5
 
+  def self.due_date_categories
+    @@due_dates.keys
+  end
+
   def is_available
     self.quantity_available > 0
   end

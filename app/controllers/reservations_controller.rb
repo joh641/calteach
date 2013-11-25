@@ -25,8 +25,16 @@ class ReservationsController < ApplicationController
 
   def new
     item = Item.find_by_id(params[:format])
-    start_date = params[:reservation][:start_date] != "" ? Date.strptime(params[:reservation][:start_date], "%m/%d/%Y") : nil
-    end_date = params[:reservation][:end_date] != "" ? Date.strptime(params[:reservation][:end_date], "%m/%d/%Y") : nil
+    start_date = params[:reservation][:start_date]
+    end_date = params[:reservation][:end_date]
+    if start_date and end_date
+      start_date = Date.strptime(start_date, "%m/%d/%Y")
+      end_date = Date.strptime(end_date, "%m/%d/%Y")
+    else
+      start_date = nil
+      end_date = nil
+    end
+
     quantity_desired = params[:reservation][:quantity].to_i
 
     if Reservation.valid_reservation?(start_date, end_date, item, quantity_desired)

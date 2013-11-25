@@ -34,8 +34,11 @@ class Admin::ReservationsController < ApplicationController
       flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out."      
     end
 
-    redirect_to admin_reservations_path and return if params[:dashboard]
-    redirect_to item_path(reservation.item)
+    if params[:dashboard]
+      redirect_to admin_reservations_path
+    else
+      redirect_to item_path(reservation.item)
+    end
   end
 
   def checkout_helper(reservation)

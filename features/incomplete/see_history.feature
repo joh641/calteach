@@ -24,6 +24,5 @@ Background: items have been added to inventory
 
 Scenario:
     When I follow "Globe" within Card View
-    Then I should see "available"
-    And I should see "Reservations on this item"
+    Then I should see "Reservations on this item"
 

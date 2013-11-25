@@ -54,11 +54,20 @@ class Reservation < ActiveRecord::Base
     end
   end
 
-  #Performs basic sanity checks on the start and end dates.
-  def self.valid_reservation?(start_date, end_date, item, quantity_desired)
-    if !start_date or !end_date
+  def self.make_reservation(user, item, start_date, end_date, quantity_desired)
+    if start_date != "" and end_date != ""
+      start_date = Date.strptime(start_date, "%m/%d/%Y")
+      end_date = Date.strptime(end_date, "%m/%d/%Y")
       false
-    elsif quantity_desired == 0
+      self.create(:user_id => user.id, :item_id => item.id, :reservation_out => start_date, :reservation_in => end_date, :quantity => quantity_desired) if self.valid_reservation?(start_date, end_date, item, quantity_desired)
+    else
+      false
+    end
+  end
+
+ #Performs basic sanity checks on the start and end dates.
+  def self.valid_reservation?(start_date, end_date, item, quantity_desired)
+    if quantity_desired == 0
       false
     elsif item.quantity_available(start_date, end_date) < quantity_desired
       false

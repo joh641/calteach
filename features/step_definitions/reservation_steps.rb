@@ -1,8 +1,8 @@
 Given /the following reservations exist/ do |reservations_table|
   reservations_table.hashes.each do |reservation|
-    reservation_out = Date.today + reservation[:reservation_out].split("+")[1].to_i if reservation[:reservation_out].split("+").length > 1
-    reservation_in = Date.today + reservation[:reservation_in].split("+")[1].to_i if reservation[:reservation_out].split("+").length > 1
-    Reservation.create(reservation)
+    reservation[:reservation_out] = reservation[:reservation_out].split("+").length > 1 ? Date.today + reservation[:reservation_out].split("+")[1].to_i : Date.strptime(reservation[:reservation_out], "%m/%d/%Y")
+    reservation[:reservation_in] = reservation[:reservation_in].split("+").length > 1 ? Date.today + reservation[:reservation_in].split("+")[1].to_i : Date.strptime(reservation[:reservation_in], "%m/%d/%Y")
+    r = Reservation.create(reservation)
   end
 end
 

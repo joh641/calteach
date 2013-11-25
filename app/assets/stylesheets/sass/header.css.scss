@@ -11,6 +11,14 @@ $menu-unit-width: (100% / $units);
     border-radius: 0;
 }
 
+.navbar .navbar-toggle .icon-bar {
+    background-color: white
+}
+
+.navbar-header a {
+    vertical-align: bottom;
+}
+
 $menu-height: 40px;
 #main-menu {
     background-color: $calteach-dark-blue;
@@ -18,70 +26,73 @@ $menu-height: 40px;
     .navbar-header img {
         height: $menu-height;
     }
+    color: white;
 }
-// #main-menu {
-//     @include font($main-font, 300);
-//     display: block;
-//     width: 100%;
-//     ul.main-navigation {
-//     	min-width: $container-width;
-//         list-style: none;
-//         .tab {
-//             cursor: pointer;
-//             display: inline-block;
-//             text-align: center;
-//             background: $calteach-header;
-//             padding: 7px 0px 5px 0px;
-//             a {
-//                 display: block;
-//                 div, i {
-//                     cursor: pointer;
-//                     width: 100%;
-//                     @include height(17px, 12px);
-//                     text-decoration: none;
-//                     display: block;
-//                     color: white;
-//                 }
-//                 i {
-//                     font-size: 20px;
-//                 }
-//             }
-//         }
 
-//         li:hover {
-//         	background: lighten($calteach-header, 10%);
-//         }
+#main-menu a {
+    color: white;
+}
 
-//         li.account {
-//             width: $menu-unit-width;
-//         }
+#main-menu {
+    @include font($main-font, 300);
+    display: block;
+    ul.main-navigation {
+        list-style: none;
+        margin-right: 10px;
+        .tab {
+            background-color: $calteach-dark-blue;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+            padding: 7px 0px 5px 0px;
+            margin-left: 20px;
+            a {
+                padding: 0 10px;
+                display: block;
+                div, i {
+                    cursor: pointer;
+                    width: 100%;
+                    @include height(17px, 12px);
+                    text-decoration: none;
+                    color: white;
+                }
+                i {
+                    font-size: 20px;
+                }
+            }
+            a:hover {
+                background: none;
+            }
+            p {
+                margin-bottom: 0;
+            }
+        }
 
-//         li.application {
-//             width: $menu-unit-width * 2;
-//         }
-//     }
-// }
+        li:hover {
+         background: lighten($calteach-dark-blue, 10%);
+        }
+    }
+}
 
-// #main-menu ul li.dropdown ul {
-//     display: none;
-// }
+#main-menu ul li.dropdown-custom ul {
+    display: none;
+}
 
-// #main-menu ul li.dropdown:hover ul {
-//     display: block;
-//     position: absolute;
-//     width: 100%;
-//     margin-top: 5px;
-//     li {
-//         list-style: none;
-//         padding: 5px 0px 5px 0px;
-//         background: white;
-//         cursor: pointer;
-//         a {
-//             color: black;
-//             text-decoration: none;
-//         }
-//         &:hover {
-//             background: #ddd;
-//         }
-//     }
-// }
+#main-menu ul li.dropdown-custom:hover ul {
+    display: block;
+    position: absolute;
+    width: 100%;
+    li {
+        list-style: none;
+        padding: 5px 0px 5px 0px;
+        cursor: pointer;
+        color: black;
+        a {
+            color: black;
+            text-decoration: none;
+        }
+        &:hover {
+            background: #ddd;
+        }
+    }
+}

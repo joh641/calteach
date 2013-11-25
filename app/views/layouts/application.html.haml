@@ -2,51 +2,7 @@
 %html
 
   %head
-    #main-menu.navbar
-      .navbar-header
-        = link_to "/", {:class => "underline"} do
-          =image_tag "calteach-logo-white.png"
-      .navbar-collapse.collapse
-        %ul{:class => "nav navbar-nav nav-right main-navigation"}
-          - if user_signed_in?
-            %li{:class => "tab account dropdown"}>
-              %i{:class => "fa fa-user"}
-              %p{:style => "margin-bottom: 0;"}= current_user.email
-          - else
-            %li{:class => "tab account"}>
-              = link_to new_user_registration_path do
-                %i{:class => "fa fa-user"}
-                %div Sign up
-            %li{:class => "tab account"}>
-              = link_to new_user_session_path do
-                %i{:class => "fa fa-book"}
-                %div Log In
-          %li{:class => "tab application"}>
-            %i{:class => "fa fa-book"}
-            = link_to "Inventory", "/"
-          - if current_user and current_user.admin?
-            %li{:class => "tab application"}>
-              = link_to admin_users_path do
-                %i{:class => "fa fa-users"}
-                %div "User Dashboard"
-            %li{:class => "tab application"}>
-              = link_to admin_reservations_path do
-                %i{:class => "fa fa-ticket"}
-                %div "Reservation Dashboard"
-          - else
-            %li{:class => "tab application"}>
-              %i{:class => "fa fa-ticket"}
-              - if user_signed_in?
-                = link_to "My Reservations",reservations_path
-              - else
-                = link_to "My Reservations", new_user_session_path
-            %li{:class => "tab application"}>
-              = link_to new_user_session_path, {:class => "underline"} do
-                %i{:class => "fa fa-shopping-cart"}
-                "See Cart (5)"
-          %li{:class => "tab account"}>
-            %i{:class => "fa fa-envelope"}
-            = link_to "Contact", new_user_session_path
+
     %title Calteach
     = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Open+Sans:300italic,400,300,700,600"
     = stylesheet_link_tag "application"
@@ -54,6 +10,70 @@
     = csrf_meta_tags
 
   %body
+
+    #main-menu.navbar
+
+      .navbar-header
+        %button.navbar-toggle{:type => "button", "data-toggle" => "collapse", "data-target" => ".navbar-collapse"}
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+
+        = link_to "/" do
+          =image_tag "calteach-logo-white.png"
+          [inventory]
+
+      .navbar-collapse.collapse
+        %ul{:class => "nav navbar-nav navbar-right main-navigation"}
+
+          - if current_user and current_user.admin?
+
+            %li.dropdown-custom.tab.account
+              %a
+                %i.fa.fa-user
+                %p{:style => "margin-bottom: 0;"}
+                  Admin
+                  %b.caret
+              %ul.dropdown-menu
+                %li
+                  = link_to admin_users_path do
+                    All Users
+                %li
+                  = link_to admin_reservations_path do
+                    All Reservations
+
+          - if user_signed_in?
+
+            %li{:class => "tab application"}>
+              %i{:class => "fa fa-ticket"}
+              = link_to "My Reservations", reservations_path
+
+            %li.dropdown-custom.tab.account
+              %a
+                %i.fa.fa-user
+                %p
+                  = current_user.email
+                  %b.caret
+
+              %ul.dropdown-menu
+                %li
+                  = link_to "My account", edit_user_registration_path
+                %li
+                  = link_to "Sign out", destroy_user_session_path, :method => :delete
+
+          - else
+
+            %li{:class => "tab account"}>
+              = link_to new_user_registration_path do
+                %i{:class => "fa fa-user"}
+                %p Sign up
+
+            %li{:class => "tab account"}>
+              = link_to new_user_session_path do
+                %i{:class => "fa fa-book"}
+                %p Log In
+
     - flash.each do |name, msg|
       .flash
         - if not msg.nil?

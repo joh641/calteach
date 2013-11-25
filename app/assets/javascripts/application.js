@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require jquery.purr
 //= require best_in_place
-//= require_tree .
 //= require bootstrap-datepicker
+//= require twitter/bootstrap
+//= require_tree .

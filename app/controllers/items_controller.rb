@@ -58,8 +58,8 @@ class ItemsController < ApplicationController
   def update
     item = Item.find_by_id(params[:id])
     if item.update_attributes(params[:item])
-      flash[:notice] = "Item #{@item.name} was successfully updated."
-      redirect_to item_path(@item)
+      flash[:notice] = "Item #{item.name} was successfully updated."
+      redirect_to item_path(item)
     else
       flash[:warning] = "Item update was unsuccessful."
       render action: "edit"
@@ -69,7 +69,7 @@ class ItemsController < ApplicationController
   def destroy
     item = Item.find_by_id(params[:id])
     item.soft_delete
-    flash[:notice] = "Item #{@item.name} was successfully deleted."
+    flash[:notice] = "Item #{item.name} was successfully deleted."
     redirect_to '/'
   end
 

@@ -9,6 +9,8 @@ Background:
   Given the following items exist:
   | name                    | quantity  |
   | Globe                   | 5         |
+  And there is an admin
+  And I am logged into the admin panel
   And I am on the edit page for item with id 1
 
 Scenario:

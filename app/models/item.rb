@@ -16,7 +16,7 @@ class Item < ActiveRecord::Base
   validates :name, :presence => true
   validates :quantity, :presence => true
 
-  @@due_dates = {"video equipment" => 2, "books" => 10, "other" => 5}
+  @@due_dates = {"Video Equipment" => 2, "Books" => 10, "Other" => 5}
   @@due_dates.default = 5
 
   def self.due_date_categories

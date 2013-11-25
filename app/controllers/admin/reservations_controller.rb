@@ -51,7 +51,6 @@ class Admin::ReservationsController < ApplicationController
     reservation.date_in = Date.today
     reservation.save
     item = reservation.item
-    item.save
     flash[:notice] = "Item #{item.name} was successfully checked in"
     redirection(params[:dashboard], item)
   end
@@ -60,8 +59,9 @@ class Admin::ReservationsController < ApplicationController
     reservation = Reservation.find_by_id(params[:id])
     reservation.archived = true
     reservation.save
+    item = reservation.item
     flash[:notice] = "Reservation was successfully archived"
-    redirect_to admin_reservations_path
+    redirection(params[:dashboard], item)
   end
 
   def redirection(dashboard, item)

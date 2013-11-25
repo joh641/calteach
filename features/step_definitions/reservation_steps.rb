@@ -14,7 +14,7 @@ Given /user has reserved "(.*?)"/ do |item|
   step %Q{I follow "#{item}" within List View}
   step %Q{I fill in "reservation_start_date" with "11/16/2013"}
   step %Q{I fill in "reservation_end_date" with "11/26/2013"}
-  step %Q{I press "Reserve"}
+  step %Q{I press "Reserve Item"}
   page.driver.submit :delete, "/users/sign_out", {}
 end
 
@@ -29,7 +29,7 @@ Given(/^there is a reservation for "(.*?)" that is due in (\d+) days? exists und
   user = User.find_by_name(user_name)
   date = Date.today + days.to_i
 
-  Reservation.create(user_id: user.id, item_id: item.id, date_out: Date.today, reservation_in: date)
+  Reservation.create(user_id: user.id, item_id: item.id, date_out: Date.today, reservation_out: Date.today, reservation_in: date, quantity: 1)
   puts "reservation created"
 end
 

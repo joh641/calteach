@@ -18,10 +18,7 @@ class Reservation < ActiveRecord::Base
     current_date = Date.today
     reminder_days = 1 # Time in seconds before due date
     checked_out = Reservation.where("date_out IS NOT NULL", :date_in => nil)
-    puts Reservation.first.reservation_out
-    puts Reservation.first.reservation_in    
     checked_out.each do |current_reservation|
-      puts "FINDME"
       if (current_reservation.reservation_in  \
           and (current_reservation.reservation_in - current_date) > 0 \
           and (current_reservation.reservation_in - current_date) == reminder_days)
@@ -42,7 +39,7 @@ class Reservation < ActiveRecord::Base
       "Checked Out"
     else
       "Reserved"
-    end    
+    end
   end
 
   def overlaps?(start_date, end_date)

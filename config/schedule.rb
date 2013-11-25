@@ -23,6 +23,6 @@ set :environment, 'development'
 # Learn more: http://github.com/javan/whenever
 
 # If you change the frequency of this, you must also change 
-every 1.day, at: "11:38 PM" do
+every 1.day, at: "9:00 PM" do
     runner "Reservation.email_reminders"
 end

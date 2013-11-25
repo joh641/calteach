@@ -21,8 +21,12 @@ Then /the reservation should be for (.*?) days/ do |days|
   flunk "Unimplemented"
 end
 
-Given(/^there is a reservation that is due in (\d+) days? exists under "(.*?)"$/) do |days, user_name|
-  flunk "Unimplemented"
+Given(/^there is a reservation for "(.*?)" that is due in (\d+) days? exists under "(.*?)"$/) do |item_name, days, user_name|
+  item = Item.find_by_name(item_name)
+  user = User.find_by_name(user_name)
+  date = Date.today + days.to_i
+
+  Reservation.create(user_id: user.id, item_id: item.id, date_out: Date.today, reservation_in: date)
 end
 
 When /I reserve (.*) from (.*) to (.*)/ do |item_name, reservation_out, reservation_in|

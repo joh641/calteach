@@ -14,7 +14,8 @@ Background:
   And there is an admin
   And I am logged into the admin panel
   And I am on the home page
-  And I follow "Globe"
+  And I switch to List View
+  And I follow "Globe" within List View
   And I press "Checkout item"
 
 Scenario: Checkout user exists and item not reserved

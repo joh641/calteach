@@ -19,18 +19,23 @@ class Admin::ReservationsController < ApplicationController
   end
 
   def checkout
-    if params[:reserved]
-      reservation = Reservation.find_by_id(params[:id])
-    else
-      reservation = Reservation.new
-      reservation.quantity = params[:quantity].to_i
-      reservation.item = Item.find_by_id(params[:item])
-      reservation.user = User.find_by_email(params[:email])
-    end
-
+    reservation = get_reservation(params)
     checkout_helper(reservation, reservation.user)
     redirection(params[:dashboard], reservation.item)
   end
+
+  def get_reservation(parameters)
+    if parameters[:reserved]
+      reservation = Reservation.find_by_id(parameters[:id])
+    else
+      reservation = Reservation.new
+      reservation.quantity = parameters[:quantity].to_i
+      reservation.item = Item.find_by_id(parameters[:item])
+      reservation.user = User.find_by_email(parameters[:email])
+    end
+    reservation
+  end
+
 
   def checkout_helper(reservation, user)
     if user and Reservation.checkout(reservation)

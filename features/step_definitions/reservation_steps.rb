@@ -18,8 +18,10 @@ Given /user has reserved "(.*?)"/ do |item|
   page.driver.submit :delete, "/users/sign_out", {}
 end
 
-Then /the reservation should be for (.*?) days/ do |days|
-  flunk "Unimplemented"
+Then /the reservation under "(.*?)" should be for (.*?) days/ do |user_email, days|
+  user = User.find_by_email(user_email)
+  res = Reservation.find_by_user_id(user.id)
+  assert(res.reservation_in - res.reservation_out == days)
 end
 
 Given(/^there is a reservation for "(.*?)" that is due in (\d+) days? exists under "(.*?)"$/) do |item_name, days, user_name|

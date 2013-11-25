@@ -25,12 +25,12 @@ class ReservationsController < ApplicationController
 
   def new
     item = Item.find_by_id(params[:format])
-    start_date = params[:reservation][:start_date] != "" ? Date.strptime(params[:reservation][:start_date], "%m/%d/%Y") : nil
-    end_date = params[:reservation][:end_date] != "" ? Date.strptime(params[:reservation][:end_date], "%m/%d/%Y") : nil
+    start_date = params[:reservation][:start_date]
+    end_date = params[:reservation][:end_date]
+
     quantity_desired = params[:reservation][:quantity].to_i
 
-    if Reservation.valid_reservation?(start_date, end_date, item, quantity_desired)
-      Reservation.create({:user_id => current_user.id, :item_id => item.id, :reservation_out => start_date, :reservation_in => end_date, :quantity => quantity_desired})
+    if Reservation.make_reservation(current_user, item, start_date, end_date, quantity_desired)
       flash[:notice] = "Item #{item.name} was successfully reserved."
     else
       flash[:warning] = "Your reservation attempt was unsuccessful."

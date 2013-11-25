@@ -43,22 +43,26 @@ class Reservation < ActiveRecord::Base
   end
 
   def overlaps?(start_date, end_date)
-    if (self.reservation_out >= start_date and self.reservation_out <= end_date) or
-       (self.reservation_in >= start_date and self.reservation_in <= end_date) or
-       (self.reservation_out <= start_date and self.reservation_in >= end_date)
-      true
-    elsif (self.date_out and self.date_out >= start_date and self.date_out <= end_date)
-      true
+    (self.reservation_out >= start_date and self.reservation_out <= end_date) or
+    (self.reservation_in >= start_date and self.reservation_in <= end_date) or
+    (self.reservation_out <= start_date and self.reservation_in >= end_date) or
+    (self.date_out and self.date_out >= start_date and self.date_out <= end_date)
+  end
+
+  def self.make_reservation(user, item, start_date, end_date, quantity_desired)
+    if start_date != "" and end_date != ""
+      start_date = Date.strptime(start_date, "%m/%d/%Y")
+      end_date = Date.strptime(end_date, "%m/%d/%Y")
+      false
+      self.create(:user_id => user.id, :item_id => item.id, :reservation_out => start_date, :reservation_in => end_date, :quantity => quantity_desired) if self.valid_reservation?(start_date, end_date, item, quantity_desired)
     else
       false
     end
   end
 
-  #Performs basic sanity checks on the start and end dates.
+ #Performs basic sanity checks on the start and end dates.
   def self.valid_reservation?(start_date, end_date, item, quantity_desired)
-    if !start_date or !end_date
-      false
-    elsif quantity_desired == 0
+    if quantity_desired == 0
       false
     elsif item.quantity_available(start_date, end_date) < quantity_desired
       false
@@ -66,6 +70,20 @@ class Reservation < ActiveRecord::Base
       false
     else
       true
+    end
+  end
+
+  def self.checkout(reservation)
+    number_available = reservation.item.quantity_available
+    checkout_date = Date.today
+    due_date = reservation.item.get_due_date.business_days.after(DateTime.now).to_date
+    reservation.reservation_out = checkout_date
+    reservation.reservation_in = due_date if !reservation.reservation_in or (reservation.reservation_in and reservation.reservation_in > due_date)
+    reservation.date_out = checkout_date
+    if number_available >= reservation.quantity
+      reservation.save
+    else
+      false
     end
   end
 

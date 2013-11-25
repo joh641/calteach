@@ -8,7 +8,6 @@
   %table.table.table-striped
     %thead
       %tr
-        %th Reservation Id
         %th Name
         %th Email
         %th Item
@@ -23,7 +22,6 @@
     .body
       - @reservations.to_a.each do |reservation|
         %tr
-          %td= link_to "#{reservation.id}", edit_reservation_path(reservation.id)
           %td= reservation.user.name
           %td= reservation.user.email
           %td= link_to "#{reservation.item.name}", item_path(reservation.item)

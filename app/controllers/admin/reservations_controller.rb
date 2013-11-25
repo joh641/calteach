@@ -30,9 +30,10 @@ class Admin::ReservationsController < ApplicationController
 
     if reservation.user and Reservation.checkout(reservation)
       flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}"
-    else 
+    elsif !reservation.user 
+      flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out."
+    else
       flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation"
-      flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out." if !reservation.user
     end
 
     redirect_to admin_reservations_path and return if params[:dashboard]

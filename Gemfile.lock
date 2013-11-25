@@ -87,7 +87,7 @@ GEM
       rails (>= 3.0.0)
     cucumber-rails-training-wheels (1.0.0)
       cucumber-rails (>= 1.1.1)
-    database_cleaner (1.1.1)
+    database_cleaner (1.0.1)
     devise (3.0.1)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -249,7 +249,7 @@ DEPENDENCIES
   coffee-rails
   cucumber-rails
   cucumber-rails-training-wheels
-  database_cleaner
+  database_cleaner (= 1.0.1)
   devise
   email_spec
   factory_girl_rails

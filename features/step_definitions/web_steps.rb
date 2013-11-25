@@ -88,7 +88,7 @@ When /^(?:|I )click "([^"]*)"$/ do |link|
 end
 
 When /^(?:|I )switch to List View$/ do
-  find('#list-view-link').click
+  click_link('list-view-link')
 end
 
 When /^(?:|I )fill in "([^"]*)" with "([^"]*)"$/ do |field, value|
@@ -137,6 +137,14 @@ When /^(?:|I )attach the file "([^"]*)" to "([^"]*)"$/ do |path, field|
 end
 
 Then /^(?:|I )should see "([^"]*)"$/ do |text|
+  if page.respond_to? :should
+    page.should have_content(text)
+  else
+    assert page.has_content?(text)
+  end
+end
+
+Then /^(?:|I )should see ([^"]*) button$/ do |text|
   if page.respond_to? :should
     page.should have_content(text)
   else

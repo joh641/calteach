@@ -30,7 +30,7 @@ class Admin::ReservationsController < ApplicationController
     else
       user = User.find_by_email(parameters[:email])
       item = Item.find_by_id(parameters[:item])
-      reservation = Reservation.where(user: user, item: item)
+      reservation = user ? Reservation.find_by_user_id_and_item_id(user.id, item.id) : nil
       if not reservation
         reservation = Reservation.new
         reservation.quantity = parameters[:quantity].to_i

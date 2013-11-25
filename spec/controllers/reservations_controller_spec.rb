@@ -2,6 +2,11 @@ require 'spec_helper'
 
 describe ReservationsController do
   before :each do
+    request.env["device.mapping"] = Devise.mappings[:user]
+    @admin = User.create(:name => 'Test Admin', :email => 'admin@email.com', :phone => '1234567890', :category => User::ADMIN, :password => "password")
+    @admin.confirmed_at = Time.zone.now
+    @admin.save
+    sign_in @admin
     @item = Item.create(:name => "Globe", :quantity => 1)
     @reservation = Reservation.create
     @user = User.create(:name => "Test", :email => "test@test.com")

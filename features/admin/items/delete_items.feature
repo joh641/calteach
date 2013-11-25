@@ -15,8 +15,8 @@ Background:
 Scenario:
   Given I am logged into the admin panel
   And I am on the home page
-  Then I should see all the items
-  When I follow "Math book"
+  And I switch to List View
+  When I follow "Math book" within List View
   Then I should see "Admin"
 
   Given I expect to click "OK" on a confirmation box saying "Are you sure?"

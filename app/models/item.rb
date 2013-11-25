@@ -62,6 +62,8 @@ class Item < ActiveRecord::Base
         number_available -= reservation.quantity
       elsif reservation.get_status == "Checked Out" and reservation.overlaps?(start_date, end_date)
         number_available -= reservation.quantity
+      elsif reservation.get_status == "Overdue"
+        number_available -= reservation.quantity
       end
     end
     number_available

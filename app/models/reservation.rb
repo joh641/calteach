@@ -36,7 +36,7 @@ class Reservation < ActiveRecord::Base
     elsif self.date_in and self.date_out
       "Checked In"
     elsif self.date_out and not self.date_in
-      "Checked Out"
+      Date.today > self.reservation_in ? "Overdue" : "Checked Out"
     else
       "Reserved"
     end

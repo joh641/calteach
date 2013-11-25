@@ -42,7 +42,7 @@ Then /there should (not )?be a reservation for (.*) from (.*) to (.*)/ do |not_e
 
   reservation = nil
   item.reservations.each do |r|
-    if r.reservation_out.to_date == start_date.to_date and r.reservation_in.to_date == end_date.to_date
+    if r.reservation_out and r.reservation_in and r.reservation_out.to_date == start_date.to_date and r.reservation_in.to_date == end_date.to_date
       reservation = r
     end
   end

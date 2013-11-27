@@ -3,9 +3,7 @@
     = render partial: 'left_column'
     .right-column-container.column
       %h2#name Add Item
-      = form_tag items_path, :multipart => true do
-        = render partial: 'item_form'
-        = submit_tag 'Create Item'
+      = render partial: 'item_form'
       %h2#name Add Multiple Items
       = form_tag import_items_path, :multipart => true do
         = file_field_tag :file

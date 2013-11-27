@@ -2,6 +2,4 @@
   .content
     = render partial: 'left_column'
     .right-column-container.column
-      = form_tag item_path(@item), :method => :put, :multipart => true do
-        = render partial: 'item_form'
-        = submit_tag 'Update Item'
+      = render partial: 'item_form'

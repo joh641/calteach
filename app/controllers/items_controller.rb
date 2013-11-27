@@ -36,40 +36,39 @@ class ItemsController < ApplicationController
   end
 
   def new
-    @due_date_categories = Item.due_date_categories
+    @item = Item.new
   end
 
   def create
-    item = Item.new(params[:item])
-    if item.save
-      flash[:notice] = "Item #{item.name} was successfully created."
+    @item = Item.new(params[:item])
+    if @item.save
+      flash[:notice] = "Item #{@item.name} was successfully created."
       redirect_to items_path
     else
       flash[:warning] = "Item creation was unsuccessful."
-      redirect_to new_item_path
+      render action: "new"
     end
   end
 
   def edit
     @item = Item.find_by_id(params[:id])
-    @due_date_categories = Item.due_date_categories
   end
 
   def update
-    item = Item.find_by_id(params[:id])
-    if item.update_attributes(params[:item])
-      flash[:notice] = "Item #{item.name} was successfully updated."
-      redirect_to item_path(item)
+    @item = Item.find_by_id(params[:id])
+    if @item.update_attributes(params[:item])
+      flash[:notice] = "Item #{@item.name} was successfully updated."
+      redirect_to item_path(@item)
     else
       flash[:warning] = "Item update was unsuccessful."
-      redirect_to edit_item_path(item)
+      render action: "edit"
     end
   end
 
   def destroy
-    item = Item.find_by_id(params[:id])
-    item.soft_delete
-    flash[:notice] = "Item #{item.name} was successfully deleted."
+    @item = Item.find_by_id(params[:id])
+    @item.soft_delete
+    flash[:notice] = "Item #{@item.name} was successfully deleted."
     redirect_to '/'
   end
 

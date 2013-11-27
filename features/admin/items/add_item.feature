@@ -15,6 +15,6 @@ Scenario:
   And I fill in "Quantity" with "2"
   And I select "Geography" from "Category"
   And I fill in "ID" with "F123"
-  And I press "Create Item"
+  And I press "Submit"
   Then I should be on the Calteach inventory page
   Then I should see "Globe"

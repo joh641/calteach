@@ -35,7 +35,7 @@
           %td
             - if reservation.get_status == "Reserved"
               = link_to 'Check Out', checkout_admin_reservation_path(reservation, :reserved => true, :dashboard => true), :method => :put, :class => 'btn btn-default btn-sm'
-            - if reservation.get_status == "Checked Out"
+            - if reservation.get_status == "Checked Out" || reservation.get_status == "Overdue"
               = link_to 'Check In', checkin_admin_reservation_path(reservation, :dashboard => true), :method => :put, :class => 'btn btn-default btn-sm'
             - if reservation.get_status == "Checked In" || reservation.get_status == "Canceled"
-              = link_to 'Archive', archive_admin_reservation_path(reservation), :method => :put, :class => 'btn btn-default btn-sm'
+              = link_to 'Archive', archive_admin_reservation_path(reservation, :dashboard => true), :method => :put, :class => 'btn btn-default btn-sm'

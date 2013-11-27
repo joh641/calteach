@@ -36,7 +36,7 @@ class Reservation < ActiveRecord::Base
     elsif self.date_in and self.date_out
       "Checked In"
     elsif self.date_out and not self.date_in
-      "Checked Out"
+      Date.today > self.reservation_in ? "Overdue" : "Checked Out"
     else
       "Reserved"
     end
@@ -66,7 +66,7 @@ class Reservation < ActiveRecord::Base
       false
     elsif item.quantity_available(start_date, end_date) < quantity_desired
       false
-    elsif end_date > item.get_due_date.business_days.after(start_date.to_datetime).to_date
+    elsif end_date > item.get_due_date.business_days.after(start_date.to_datetime + 8.hours).to_date
       false
     else
       true

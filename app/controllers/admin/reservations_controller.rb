@@ -26,12 +26,17 @@ class Admin::ReservationsController < ApplicationController
 
   def get_reservation(parameters)
     if parameters[:reserved]
-      reservation = Reservation.find_by_id(parameters[:id])
+      reservation = Reservation.find_by_id(parameters[:id]) 
     else
-      reservation = Reservation.new
-      reservation.quantity = parameters[:quantity].to_i
-      reservation.item = Item.find_by_id(parameters[:item])
-      reservation.user = User.find_by_email(parameters[:email])
+      user = User.find_by_email(parameters[:email])
+      item = Item.find_by_id(parameters[:item])
+      reservation = user ? Reservation.find_by_user_id_and_item_id(user.id, item.id) : nil
+      if not reservation
+        reservation = Reservation.new
+        reservation.quantity = parameters[:quantity].to_i
+        reservation.item = item
+        reservation.user = user
+      end
     end
     reservation
   end
@@ -39,9 +44,9 @@ class Admin::ReservationsController < ApplicationController
 
   def checkout_helper(reservation, user)
     if user and Reservation.checkout(reservation)
-      flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}"
+      flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}."
     else  
-      flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation"
+      flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation."
       flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out." if !user
     end
   end
@@ -51,8 +56,7 @@ class Admin::ReservationsController < ApplicationController
     reservation.date_in = Date.today
     reservation.save
     item = reservation.item
-    item.save
-    flash[:notice] = "Item #{item.name} was successfully checked in"
+    flash[:notice] = "Item #{item.name} was successfully checked in."
     redirection(params[:dashboard], item)
   end
 
@@ -60,8 +64,9 @@ class Admin::ReservationsController < ApplicationController
     reservation = Reservation.find_by_id(params[:id])
     reservation.archived = true
     reservation.save
-    flash[:notice] = "Reservation was successfully archived"
-    redirect_to admin_reservations_path
+    item = reservation.item
+    flash[:notice] = "Reservation was successfully archived."
+    redirection(params[:dashboard], item)
   end
 
   def redirection(dashboard, item)

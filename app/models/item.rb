@@ -13,8 +13,15 @@ class Item < ActiveRecord::Base
   has_many :reservations
   has_many :users, :through => :reservations
 
-  @@due_dates = {"video equipment" => 2, "books" => 10, "other" => 5}
+  validates :name, :presence => true
+  validates :quantity, :presence => true
+
+  @@due_dates = {"Video Equipment" => 2, "Books" => 10, "Other" => 5}
   @@due_dates.default = 5
+
+  def self.due_date_categories
+    @@due_dates.keys
+  end
 
   def is_available
     self.quantity_available > 0
@@ -54,6 +61,8 @@ class Item < ActiveRecord::Base
       if reservation.get_status == "Reserved" and reservation.overlaps?(start_date, end_date)
         number_available -= reservation.quantity
       elsif reservation.get_status == "Checked Out" and reservation.overlaps?(start_date, end_date)
+        number_available -= reservation.quantity
+      elsif reservation.get_status == "Overdue"
         number_available -= reservation.quantity
       end
     end

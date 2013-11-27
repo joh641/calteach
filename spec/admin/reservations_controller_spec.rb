@@ -10,7 +10,6 @@ describe Admin::ReservationsController, :type => :controller  do
     @reservation.save
 
     request.env["devise.mapping"] = Devise.mappings[:user]
-    # get :new
     @admin = User.create!(:name => 'Test Admin', :email => 'admin@email.com', :phone => '1234567890', :category => User::ADMIN, :password => 'password')
     @admin.confirmed_at = Time.zone.now
     @admin.save
@@ -23,10 +22,10 @@ describe Admin::ReservationsController, :type => :controller  do
     end
   end
   describe 'archiving a reservation' do
-    it 'should redirect to the index' do
+    it 'should redirect to the index if done from dashboard' do
       @reservation.archived = true
       @reservation.save
-      put :archive, {:id => @reservation.id}
+      put :archive, {:id => @reservation.id, :dashboard => true}
       response.should redirect_to(admin_reservations_path)
     end
   end

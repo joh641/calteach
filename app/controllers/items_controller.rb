@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
 
+  before_filter :is_admin, :except => [:index, :show]
+
   def show
     @item = Item.find_by_id(params[:id])
     @reservations = @item.reservations
@@ -14,25 +16,18 @@ class ItemsController < ApplicationController
   end
 
   def index
-    #TODO (Aatash) Now that we've moved "all_categories" to
-    # application_controller.rb, we don't really need it here
-    # nor in the other controller actions.
-  	@all_categories = Item.all_categories
-
-
     if params[:inactive]
-      @items = Item.inactive#.order(name: :asc)
+      @items = Item.inactive#.find(:all, :order => "name ASC")
       @inactive = true
     else
-      @items = Item.active#.order(name: :asc)
+      @items = Item.active#.find(:all, :order => "name ASC")
     end
 
-
-  	if params[:query]
-  		#TODO (Yuxin) Is this even safe?
-  		@query = params[:query]
-  		@items = @items.where("lower(name) = ?", @query.downcase)
-	  end
+    if params[:query]
+      #TODO (Yuxin) Is this even safe?
+      @query = params[:query]
+      @items = @items.where("lower(name) = ?", @query.downcase)
+    end
   end
 
   def import
@@ -41,25 +36,33 @@ class ItemsController < ApplicationController
   end
 
   def new
-    @all_categories = Item.all_categories
+    @item = Item.new
   end
 
   def create
-    @item = Item.create(params[:item])
-    flash[:notice] = "Item #{@item.name} was successfully created."
-    redirect_to items_path
+    @item = Item.new(params[:item])
+    if @item.save
+      flash[:notice] = "Item #{@item.name} was successfully created."
+      redirect_to items_path
+    else
+      flash[:warning] = "Item creation was unsuccessful."
+      render action: "new"
+    end
   end
 
   def edit
     @item = Item.find_by_id(params[:id])
-    @all_categories = Item.all_categories
   end
 
   def update
     @item = Item.find_by_id(params[:id])
-    @item.update_attributes(params[:item])
-    flash[:notice] = "Item #{@item.name} was successfully updated."
-    redirect_to item_path(@item)
+    if @item.update_attributes(params[:item])
+      flash[:notice] = "Item #{@item.name} was successfully updated."
+      redirect_to item_path(@item)
+    else
+      flash[:warning] = "Item update was unsuccessful."
+      render action: "edit"
+    end
   end
 
   def destroy

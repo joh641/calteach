@@ -8,9 +8,9 @@ Background:
 
   Given the following items exist:
   | name   | quantity | due_date_category        |
-  | Globe  | 1        | other                    |
-  | Book   | 1        | books                    |
-  | Camera | 1        | video equipment          |
+  | Globe  | 1        | Other                    |
+  | Book   | 1        | Books                    |
+  | Camera | 1        | Video Equipment          |
 
   And there is a user
   And there is an admin

@@ -1,22 +1,31 @@
-#name
-  = label :item, :name, 'Name'
-  = text_field :item, :name
+= form_for @item, :multipart => true do |f|
 
-#id
-  = label :item, :legacy_id, 'ID'
-  = text_field :item, :legacy_id
+  #name
+    = f.label :name, 'Name'
+    = f.text_field :name
 
-#quantity
-  = label :item, :quantity, 'Quantity'
-  = text_field :item, :quantity
+  #id
+    = f.label :legacy_id, 'ID'
+    = f.text_field :legacy_id
 
-#category
-  = label :item, :category, 'Category'
-  = select :item, :category, @all_categories
+  #quantity
+    = f.label :quantity, 'Quantity'
+    = f.text_field :quantity
 
-#description
-  = label :item, :description, 'Description'
-  = text_area :item, :description
+  #category
+    = f.label :category, 'Category'
+    = f.select :category, @all_categories
 
-#image
-  = file_field :item, :image
+  #due_date_category
+    = f.label :due_date_category, 'Due Date Category'
+    = f.select :due_date_category, @due_date_categories
+
+  #description
+    = f.label :description, 'Description'
+    = f.text_area :description
+
+  #image
+    = f.file_field :image
+
+  #submit
+    = f.submit 'Submit'

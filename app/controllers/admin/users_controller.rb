@@ -51,4 +51,11 @@ class Admin::UsersController < ApplicationController
     redirect_to admin_users_path
   end
 
+  def activate
+    @user = User.find(params[:id])
+    @user.update_attribute(:inactive, false)
+    redirect_to admin_users_path
+  end
+
+
 end

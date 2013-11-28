@@ -1,6 +1,6 @@
 class ReservationsController < ApplicationController
   respond_to :html, :json
-  before_filter :is_admin, :only => :update
+  before_filter :is_admin_or_owner, :only => [:update, :cancel]
 
   def index
     if not current_user
@@ -24,17 +24,32 @@ class ReservationsController < ApplicationController
 
     redirect_to item_path(item)
   end
-  
+
   def update
-    @reservation = Reservation.find(params[:id])
-    @reservation.update_attributes(params[:reservation])
-    respond_with @reservation
+    reservation.update_attributes(params[:reservation])
+    respond_with reservation
   end
-  
+
   def cancel
     reservation = Reservation.find_by_id(params[:id])
     reservation.cancel
     redirect_to reservations_path, notice: "Reservation was successfully canceled."
+  end
+
+  private
+
+  def reservation
+    @reservation = Reservation.find(params[:id])
+  end
+
+  def is_admin_or_owner
+    if current_user && (current_user.admin? || current_user == reservation.user)
+      return true
+    else
+      flash[:error] = "Error: Not owner or admin"
+      redirect_to root_path
+      return false
+    end
   end
 
 end

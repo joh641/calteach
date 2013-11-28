@@ -4,7 +4,7 @@
     -if @archived
       = link_to 'Hide Archived', admin_reservations_path(), :class => 'btn btn-primary'
     -else
-      = link_to 'Show Archived', admin_reservations_path(:archived => true), :class => 'btn btn-primary'
+      = link_to 'Show Archived', admin_reservations_path(:archived => true), :class => 'btn btn-default'
   %table.table.table-striped
     %thead
       %tr

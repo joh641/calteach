@@ -27,6 +27,9 @@ class Item < ActiveRecord::Base
     self.quantity_available > 0
   end
 
+  def active
+    not inactive
+  end
   def available
     if is_available
       "Available"

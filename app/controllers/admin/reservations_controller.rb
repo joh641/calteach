@@ -25,7 +25,7 @@ class Admin::ReservationsController < ApplicationController
   def checkout
     reservation = get_reservation(params)
     checkout_helper(reservation, reservation.user)
-    redirection(params[:dashboard], reservation.item)
+    redirect_to :back
   end
 
   def get_reservation(parameters)
@@ -45,7 +45,6 @@ class Admin::ReservationsController < ApplicationController
     reservation
   end
 
-
   def checkout_helper(reservation, user)
     if user and Reservation.checkout(reservation)
       flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}."
@@ -57,28 +56,14 @@ class Admin::ReservationsController < ApplicationController
 
   def checkin
     reservation = Reservation.find_by_id(params[:id])
-    reservation.date_in = Date.today
-    reservation.save
-    item = reservation.item
-    flash[:notice] = "Item #{item.name} was successfully checked in."
-    redirection(params[:dashboard], item)
+    reservation.check_in
+    redirect_to :back, notice: "Item #{reservation.item.name} was successfully checked in."
   end
 
   def archive
     reservation = Reservation.find_by_id(params[:id])
-    reservation.archived = true
-    reservation.save
-    item = reservation.item
-    flash[:notice] = "Reservation was successfully archived."
-    redirection(params[:dashboard], item)
-  end
-
-  def redirection(dashboard, item)
-    if dashboard
-      redirect_to admin_reservations_path
-    else
-      redirect_to item_path(item)
-    end
+    reservation.archive
+    redirect_to :back, notice: "Reservation was successfully archived."
   end
 
 end

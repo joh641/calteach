@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :course, :email, :name, :phone, :category
+  attr_accessible :category, :course, :name, :phone 
 
   has_many :reservations
   has_many :items, :through => :reservations
@@ -36,9 +36,17 @@ class User < ActiveRecord::Base
     return category == ADMIN
   end
 
-  # For preventing users from hard deleting their accounts
+  def can_deactivate?
+    not admin? and not inactive
+  end
+
+  # For preventing users from hard deleting their accounts  
   def soft_delete
     update_attribute(:inactive, true)
+  end
+  
+  def activate
+    update_attribute(:inactive, false)
   end
 
   # Not allowing "inactive" users to sign in

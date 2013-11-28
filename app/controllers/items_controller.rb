@@ -2,6 +2,21 @@ class ItemsController < ApplicationController
 
   before_filter :is_admin, :except => [:index, :show]
 
+  def index
+    if params[:inactive]
+      @items = Item.inactive.order(:name)
+      @inactive = true
+    else
+      @items = Item.active.order(:name)
+    end
+
+    if params[:query]
+      #TODO (Yuxin) Is this even safe?
+      @query = params[:query]
+      @items = @items.where("lower(name) = ?", @query.downcase)
+    end
+  end
+  
   def show
     @item = Item.find_by_id(params[:id])
     @reservations = @item.reservations
@@ -13,21 +28,6 @@ class ItemsController < ApplicationController
       d = d + 1
     end
 
-  end
-
-  def index
-    if params[:inactive]
-      @items = Item.inactive#.find(:all, :order => "name ASC")
-      @inactive = true
-    else
-      @items = Item.active#.find(:all, :order => "name ASC")
-    end
-
-    if params[:query]
-      #TODO (Yuxin) Is this even safe?
-      @query = params[:query]
-      @items = @items.where("lower(name) = ?", @query.downcase)
-    end
   end
 
   def import
@@ -42,8 +42,7 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(params[:item])
     if @item.save
-      flash[:notice] = "Item #{@item.name} was successfully created."
-      redirect_to items_path
+      redirect_to items_path, notice: "Item #{@item.name} was successfully created."
     else
       flash[:warning] = "Item creation was unsuccessful."
       render action: "new"
@@ -57,8 +56,7 @@ class ItemsController < ApplicationController
   def update
     @item = Item.find_by_id(params[:id])
     if @item.update_attributes(params[:item])
-      flash[:notice] = "Item #{@item.name} was successfully updated."
-      redirect_to item_path(@item)
+      redirect_to item_path(@item), notice: "Item #{@item.name} was successfully updated."
     else
       flash[:warning] = "Item update was unsuccessful."
       render action: "edit"
@@ -68,8 +66,13 @@ class ItemsController < ApplicationController
   def destroy
     @item = Item.find_by_id(params[:id])
     @item.soft_delete
-    flash[:notice] = "Item #{@item.name} was successfully deleted."
-    redirect_to '/'
+    redirect_to :back, notice: "Item #{@item.name} was successfully archived."
+  end
+
+  def unarchive
+    @item = Item.find_by_id(params[:id])
+    @item.unarchive
+    redirect_to :back, notice: "Item #{@item.name} was successfully unarchived."
   end
 
   def checkout

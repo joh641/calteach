@@ -19,9 +19,9 @@ Scenario:
   When I follow "Math book" within List View
   Then I should see "Admin"
 
-  When I press "Delete item"
+  When I press "Archive item"
   And I confirm popup
 
-  Then I should see "Item Math book was successfully deleted."
+  Then I should see "Item Math book was successfully archived."
   When I am on the home page
   Then I should not see "Math book"

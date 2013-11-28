@@ -32,6 +32,7 @@ describe ItemsController do
   end
   describe 'DELETE #destroy' do
     it 'should destroy an item with the id passed in' do
+      request.env["HTTP_REFERER"] = "/items"
       i1 = Item.create!(item_hash1)
       delete :destroy, :id => i1.id
       Item.find(i1.id).inactive.should eq(true)

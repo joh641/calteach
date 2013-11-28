@@ -12,7 +12,7 @@ Feature: Admin delete users
     And I am on the user dashboard
     Then I should see "cucumberuser@gmail.com"
     And I should see "cucumberadmin@gmail.com"
-    When I follow "Destroy"
+    When I follow "Deactivate"
     Then I should see "cucumberadmin@gmail.com"
     Then I should not see "cucumberuser@gmail.com"
 

@@ -4,7 +4,7 @@
     -if @inactive
       = link_to 'Show Active', admin_users_path(), :class => 'btn btn-primary'
     -else
-      = link_to 'Show Inactive', admin_users_path(:inactive => true), :class => 'btn btn-primary'
+      = link_to 'Show Inactive', admin_users_path(:inactive => true), :class => 'btn btn-default'
     = link_to 'Create New User', new_admin_user_path, :class => 'btn btn-primary'
   %table.table.table-striped.sortable
     %thead

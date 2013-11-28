@@ -17,10 +17,10 @@ class ItemsController < ApplicationController
 
   def index
     if params[:inactive]
-      @items = Item.inactive#.find(:all, :order => "name ASC")
+      @items = Item.inactive.order(:name)
       @inactive = true
     else
-      @items = Item.active#.find(:all, :order => "name ASC")
+      @items = Item.active.order(:name)
     end
 
     if params[:query]

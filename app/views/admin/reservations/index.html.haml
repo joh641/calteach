@@ -4,7 +4,6 @@
   -else
     %h1 Active Reservations
   .new-btn
-<<<<<<< HEAD
     .left
       Download: 
       = link_to 'Excel', admin_reservations_path(params.merge(format: "xls"))
@@ -13,14 +12,7 @@
         = link_to 'Hide Archived', admin_reservations_path(), :class => 'btn btn-primary'
       -else
         = link_to 'Show Archived', admin_reservations_path(:archived => true), :class => 'btn btn-primary'
-  %table.table.table-striped
-=======
-    -if @archived
-      = link_to 'Hide Archived', admin_reservations_path(), :class => 'btn btn-primary'
-    -else
-      = link_to 'Show Archived', admin_reservations_path(:archived => true), :class => 'btn btn-default'
   %table.table.table-striped.sortable
->>>>>>> master
     %thead
       %tr
         %th Name

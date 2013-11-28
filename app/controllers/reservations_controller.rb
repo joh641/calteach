@@ -10,19 +10,6 @@ class ReservationsController < ApplicationController
     end
   end
 
-  def update
-    @reservation = Reservation.find(params[:id])
-    @reservation.update_attributes(params[:reservation])
-    respond_with @reservation
-  end
-  
-  def cancel
-    reservation = Reservation.find_by_id(params[:id])
-    reservation.canceled = true
-    reservation.save
-    redirect_to reservations_path, notice: "Reservation was successfully canceled."
-  end
-
   def new
     item = Item.find_by_id(params[:format])
     start_date = params[:reservation][:start_date]
@@ -37,6 +24,19 @@ class ReservationsController < ApplicationController
     end
 
     redirect_to item_path(item)
+  end
+  
+  def update
+    @reservation = Reservation.find(params[:id])
+    @reservation.update_attributes(params[:reservation])
+    respond_with @reservation
+  end
+  
+  def cancel
+    reservation = Reservation.find_by_id(params[:id])
+    reservation.canceled = true
+    reservation.save
+    redirect_to reservations_path, notice: "Reservation was successfully canceled."
   end
 
 end

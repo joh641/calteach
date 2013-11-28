@@ -41,7 +41,6 @@ class Admin::ReservationsController < ApplicationController
     reservation
   end
 
-
   def checkout_helper(reservation, user)
     if user and Reservation.checkout(reservation)
       flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}."

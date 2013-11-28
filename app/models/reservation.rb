@@ -10,24 +10,6 @@ class Reservation < ActiveRecord::Base
   belongs_to :user
   belongs_to :item
 
-  def self.hide_archived
-    Reservation.where(:archived => nil)
-  end
-
-  def self.email_reminders
-    current_date = Date.today
-    reminder_days = 1 # Time in seconds before due date
-    checked_out = Reservation.where("date_out IS NOT NULL", :date_in => nil)
-    checked_out.each do |current_reservation|
-      if (current_reservation.reservation_in  \
-          and (current_reservation.reservation_in - current_date) > 0 \
-          and (current_reservation.reservation_in - current_date) == reminder_days)
-        user = User.find(current_reservation.user_id)
-        UserMailer.return_reminder(user).deliver
-      end
-    end
-  end
-
   def get_status
     if self.archived
       "Archived"
@@ -41,26 +23,18 @@ class Reservation < ActiveRecord::Base
       "Reserved"
     end
   end
-
+  
   def overlaps?(start_date, end_date)
     (self.reservation_out >= start_date and self.reservation_out <= end_date) or
     (self.reservation_in >= start_date and self.reservation_in <= end_date) or
     (self.reservation_out <= start_date and self.reservation_in >= end_date) or
     (self.date_out and self.date_out >= start_date and self.date_out <= end_date)
   end
-
-  def self.make_reservation(user, item, start_date, end_date, quantity_desired)
-    if start_date != "" and end_date != ""
-      start_date = Date.strptime(start_date, "%m/%d/%Y")
-      end_date = Date.strptime(end_date, "%m/%d/%Y")
-      false
-      self.create(:user_id => user.id, :item_id => item.id, :reservation_out => start_date, :reservation_in => end_date, :quantity => quantity_desired) if self.valid_reservation?(start_date, end_date, item, quantity_desired)
-    else
-      false
-    end
+  
+  def self.hide_archived
+    Reservation.where(:archived => nil)
   end
-
- #Performs basic sanity checks on the start and end dates.
+  
   def self.valid_reservation?(start_date, end_date, item, quantity_desired)
     if quantity_desired == 0
       false
@@ -70,6 +44,17 @@ class Reservation < ActiveRecord::Base
       false
     else
       true
+    end
+  end
+  
+  def self.make_reservation(user, item, start_date, end_date, quantity_desired)
+    if start_date != "" and end_date != ""
+      start_date = Date.strptime(start_date, "%m/%d/%Y")
+      end_date = Date.strptime(end_date, "%m/%d/%Y")
+      false
+      self.create(:user_id => user.id, :item_id => item.id, :reservation_out => start_date, :reservation_in => end_date, :quantity => quantity_desired) if self.valid_reservation?(start_date, end_date, item, quantity_desired)
+    else
+      false
     end
   end
 
@@ -84,6 +69,20 @@ class Reservation < ActiveRecord::Base
       reservation.save
     else
       false
+    end
+  end
+
+  def self.email_reminders
+    current_date = Date.today
+    reminder_days = 1 # Time in seconds before due date
+    checked_out = Reservation.where("date_out IS NOT NULL", :date_in => nil)
+    checked_out.each do |current_reservation|
+      if (current_reservation.reservation_in  \
+          and (current_reservation.reservation_in - current_date) > 0 \
+          and (current_reservation.reservation_in - current_date) == reminder_days)
+        user = User.find(current_reservation.user_id)
+        UserMailer.return_reminder(user).deliver
+      end
     end
   end
 

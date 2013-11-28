@@ -2,19 +2,6 @@ class ItemsController < ApplicationController
 
   before_filter :is_admin, :except => [:index, :show]
 
-  def show
-    @item = Item.find_by_id(params[:id])
-    @reservations = @item.reservations
-
-    @availability = {}
-    d = Date.today
-    60.times do
-      @availability[d] = @item.quantity_available(d, d)
-      d = d + 1
-    end
-
-  end
-
   def index
     if params[:inactive]
       @items = Item.inactive.order(:name)
@@ -28,6 +15,19 @@ class ItemsController < ApplicationController
       @query = params[:query]
       @items = @items.where("lower(name) = ?", @query.downcase)
     end
+  end
+  
+  def show
+    @item = Item.find_by_id(params[:id])
+    @reservations = @item.reservations
+
+    @availability = {}
+    d = Date.today
+    60.times do
+      @availability[d] = @item.quantity_available(d, d)
+      d = d + 1
+    end
+
   end
 
   def import

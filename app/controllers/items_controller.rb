@@ -71,7 +71,7 @@ class ItemsController < ApplicationController
 
   def unarchive
     @item = Item.find_by_id(params[:id])
-    @item.update_attribute(:inactive, false)
+    @item.unarchive
     redirect_to :back, notice: "Item #{@item.name} was successfully unarchived."
   end
 

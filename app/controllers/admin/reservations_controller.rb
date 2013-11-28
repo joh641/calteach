@@ -52,17 +52,13 @@ class Admin::ReservationsController < ApplicationController
 
   def checkin
     reservation = Reservation.find_by_id(params[:id])
-    reservation.date_in = Date.today
-    reservation.save
-    item = reservation.item
-    redirect_to :back, notice: "Item #{item.name} was successfully checked in."
+    reservation.check_in
+    redirect_to :back, notice: "Item #{reservation.item.name} was successfully checked in."
   end
 
   def archive
     reservation = Reservation.find_by_id(params[:id])
-    reservation.archived = true
-    reservation.save
-    item = reservation.item
+    reservation.archive
     redirect_to :back, notice: "Reservation was successfully archived."
   end
 

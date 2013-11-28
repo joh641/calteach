@@ -3,8 +3,8 @@ class ReservationsController < ApplicationController
   before_filter :is_admin, :only => :update
 
   def index
-    if current_user == nil
-      redirect_to "/"
+    if not current_user
+      redirect_to items_path
     else
       @reservations = current_user.reservations
     end
@@ -14,7 +14,6 @@ class ReservationsController < ApplicationController
     item = Item.find_by_id(params[:format])
     start_date = params[:reservation][:start_date]
     end_date = params[:reservation][:end_date]
-
     quantity_desired = params[:reservation][:quantity].to_i
 
     if Reservation.make_reservation(current_user, item, start_date, end_date, quantity_desired)
@@ -34,8 +33,7 @@ class ReservationsController < ApplicationController
   
   def cancel
     reservation = Reservation.find_by_id(params[:id])
-    reservation.canceled = true
-    reservation.save
+    reservation.cancel
     redirect_to reservations_path, notice: "Reservation was successfully canceled."
   end
 

@@ -1,6 +1,6 @@
 class Reservation < ActiveRecord::Base
 
-  attr_accessible :date_in, :date_out, :item_id, :notes, :reservation_in, :reservation_out, :user_id, :user, :quantity
+  attr_accessible :archived, :canceled, :date_in, :date_out, :item_id, :notes, :quantity, :reservation_in, :reservation_out, :user, :user_id
 
   # validates_date :date_in, :on_or_after => lambda{|m| m.date_out}, :allow_nil => true
   # validates_date :date_out, :on_or_before => lambda{|m| m.date_in}, :allow_nil => true
@@ -11,28 +11,40 @@ class Reservation < ActiveRecord::Base
   belongs_to :item
 
   def get_status
-    if self.archived
+    if archived
       "Archived"
-    elsif self.canceled
+    elsif canceled
       "Canceled"
-    elsif self.date_in and self.date_out
+    elsif date_in and date_out
       "Checked In"
-    elsif self.date_out and not self.date_in
-      Date.today > self.reservation_in ? "Overdue" : "Checked Out"
+    elsif date_out and not date_in
+      Date.today > reservation_in ? "Overdue" : "Checked Out"
     else
       "Reserved"
     end
   end
   
   def overlaps?(start_date, end_date)
-    (self.reservation_out >= start_date and self.reservation_out <= end_date) or
-    (self.reservation_in >= start_date and self.reservation_in <= end_date) or
-    (self.reservation_out <= start_date and self.reservation_in >= end_date) or
-    (self.date_out and self.date_out >= start_date and self.date_out <= end_date)
+    (reservation_out >= start_date and reservation_out <= end_date) or
+    (reservation_in >= start_date and reservation_in <= end_date) or
+    (reservation_out <= start_date and reservation_in >= end_date) or
+    (date_out and date_out >= start_date and date_out <= end_date)
+  end
+  
+  def check_in
+    update_attribute(:date_in, Date.today)
+  end
+  
+  def archive
+    update_attribute(:archived, true)
+  end
+  
+  def cancel
+    update_attribute(:canceled, true)
   end
   
   def self.hide_archived
-    Reservation.where(:archived => nil)
+    where(:archived => nil)
   end
   
   def self.valid_reservation?(start_date, end_date, item, quantity_desired)
@@ -52,7 +64,7 @@ class Reservation < ActiveRecord::Base
       start_date = Date.strptime(start_date, "%m/%d/%Y")
       end_date = Date.strptime(end_date, "%m/%d/%Y")
       false
-      self.create(:user_id => user.id, :item_id => item.id, :reservation_out => start_date, :reservation_in => end_date, :quantity => quantity_desired) if self.valid_reservation?(start_date, end_date, item, quantity_desired)
+      create(:user_id => user.id, :item_id => item.id, :reservation_out => start_date, :reservation_in => end_date, :quantity => quantity_desired) if valid_reservation?(start_date, end_date, item, quantity_desired)
     else
       false
     end
@@ -75,7 +87,7 @@ class Reservation < ActiveRecord::Base
   def self.email_reminders
     current_date = Date.today
     reminder_days = 1 # Time in seconds before due date
-    checked_out = Reservation.where("date_out IS NOT NULL", :date_in => nil)
+    checked_out = where("date_out IS NOT NULL", :date_in => nil)
     checked_out.each do |current_reservation|
       if (current_reservation.reservation_in  \
           and (current_reservation.reservation_in - current_date) > 0 \

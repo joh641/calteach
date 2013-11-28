@@ -44,7 +44,7 @@ class Reservation < ActiveRecord::Base
   end
   
   def self.hide_archived
-    where(:archived => nil)
+    where(:archived => false)
   end
   
   def self.valid_reservation?(start_date, end_date, item, quantity_desired)
@@ -84,6 +84,15 @@ class Reservation < ActiveRecord::Base
     end
   end
 
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |reservation|
+        csv << reservation.attributes.values_at(*column_names)
+      end
+    end
+  end
+
   def self.email_reminders
     current_date = Date.today
     reminder_days = 1 # Time in seconds before due date
@@ -97,5 +106,5 @@ class Reservation < ActiveRecord::Base
       end
     end
   end
-
+  
 end

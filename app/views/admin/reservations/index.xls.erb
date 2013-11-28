@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Reservation ID</Data></Cell>
+        <Cell><Data ss:Type="String">User Name</Data></Cell>
+        <Cell><Data ss:Type="String">User Email</Data></Cell>
+        <Cell><Data ss:Type="String">Item ID</Data></Cell>
+        <Cell><Data ss:Type="String">Item Name</Data></Cell>
+        <Cell><Data ss:Type="String">Item Category</Data></Cell>
+        <Cell><Data ss:Type="String">Date Checked Out</Data></Cell>
+        <Cell><Data ss:Type="String">Date Returned</Data></Cell>
+      </Row>
+      <% @reservations.each do |reservation| %>
+        <% item = Item.find(reservation.item_id) %>
+        <% user = User.find(reservation.user_id) %>
+        <Row>
+          <Cell><Data ss:Type="Number"><%= reservation.id %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.email %></Data></Cell>
+          <Cell><Data ss:Type="Number"><%= item.id %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= item.name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= item.category %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= reservation.date_out %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= reservation.date_in %></Data></Cell>
+        </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

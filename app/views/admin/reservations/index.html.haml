@@ -1,10 +1,17 @@
 .container
-  %h1 Reservations
+  -if @archived 
+    %h1 All Reservations
+  -else
+    %h1 Active Reservations
   .new-btn
-    -if @archived
-      = link_to 'Hide Archived', admin_reservations_path(), :class => 'btn btn-primary'
-    -else
-      = link_to 'Show Archived', admin_reservations_path(:archived => true), :class => 'btn btn-primary'
+    .left
+      Download: 
+      = link_to 'Excel', admin_reservations_path(params.merge(format: "xls"))
+    .right
+      -if @archived
+        = link_to 'Hide Archived', admin_reservations_path(), :class => 'btn btn-primary'
+      -else
+        = link_to 'Show Archived', admin_reservations_path(:archived => true), :class => 'btn btn-primary'
   %table.table.table-striped
     %thead
       %tr

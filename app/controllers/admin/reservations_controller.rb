@@ -10,6 +10,10 @@ class Admin::ReservationsController < ApplicationController
     else
       @reservations = Reservation.hide_archived
     end
+    respond_to do |format|
+      format.html
+      format.xls # { send_data @reservations.to_csv(col_sep: "\t") }
+    end
   end
 
   def update

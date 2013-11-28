@@ -11,7 +11,7 @@ class Reservation < ActiveRecord::Base
   belongs_to :item
 
   def self.hide_archived
-    Reservation.where(:archived => nil)
+    Reservation.where(:archived => false)
   end
 
   def self.email_reminders
@@ -87,4 +87,12 @@ class Reservation < ActiveRecord::Base
     end
   end
 
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |reservation|
+        csv << reservation.attributes.values_at(*column_names)
+      end
+    end
+  end
 end

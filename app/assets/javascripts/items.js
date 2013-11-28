@@ -2,7 +2,7 @@ $(document).ready(function(){
   $('#toolbar a:last').tab('show');
   $('#toolbar a:last').addClass('active');
 
-  $('#toolbar a').click(function() {
+  $(document).on('click', '#toolbar a:not(.active)', function() {
     $('#toolbar a').toggleClass('active');
   });
 

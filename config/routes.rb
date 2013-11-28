@@ -1,5 +1,5 @@
 Calteach::Application.routes.draw do
-  devise_for :users, :controllers => { :registrations => 'registrations' } 
+  devise_for :users, :controllers => { :registrations => 'registrations' }
 
   resources :items do
     member do
@@ -15,7 +15,11 @@ Calteach::Application.routes.draw do
   end
 
   namespace 'admin' do
-    resources :users
+    resources :users do
+      member do
+        put 'activate'
+      end
+    end
     resources :reservations do
       member do
         post 'checkout'

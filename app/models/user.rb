@@ -36,6 +36,10 @@ class User < ActiveRecord::Base
     return category == ADMIN
   end
 
+  def can_deactivate?
+    not admin? and not inactive
+  end
+
   # For preventing users from hard deleting their accounts
   def soft_delete
     update_attribute(:inactive, true)

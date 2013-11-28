@@ -68,8 +68,15 @@ class ItemsController < ApplicationController
   def destroy
     @item = Item.find_by_id(params[:id])
     @item.soft_delete
-    flash[:notice] = "Item #{@item.name} was successfully deleted."
-    redirect_to '/'
+    flash[:notice] = "Item #{@item.name} was successfully archived."
+    redirect_to :back
+  end
+
+  def unarchive
+    @item = Item.find_by_id(params[:id])
+    @item.update_attribute(:inactive, false)
+    flash[:notice] = "Item #{@item.name} was successfully unarchived."
+    redirect_to :back
   end
 
   def checkout

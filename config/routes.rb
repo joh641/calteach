@@ -4,6 +4,7 @@ Calteach::Application.routes.draw do
   resources :items do
     member do
       get 'checkout'
+      put 'unarchive'
     end
     collection { post :import }
   end

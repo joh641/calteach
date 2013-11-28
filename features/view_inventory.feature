@@ -56,14 +56,14 @@ Scenario: User can reserve item on item's individual page
 Scenario: Admin can delete, edit and checkout items from inventory page
   Given I am logged into the admin panel
   And I switch to List View
-  Then I should see "Delete"
+  Then I should see "Archive"
   Then I should see "Edit" within List View
   Then I should see "Checkout"
 
 Scenario: User cannot delete, edit and checkout items from inventory page
   Given I am logged into the user panel
   And I switch to List View
-  Then I should not see "Delete"
+  Then I should not see "Deactivate"
   Then I should not see "Edit" within List View
   Then I should not see "Checkout"
   Then I should see "Reserve"

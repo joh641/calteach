@@ -2,7 +2,7 @@ class Item < ActiveRecord::Base
 
   scope :active, -> { where(inactive: false) }
   scope :inactive, -> { where(inactive: true) }
-  attr_accessible :category, :description, :legacy_id, :name, :quantity, :image, :due_date_category
+  attr_accessible :category, :description, :due_date_category, :image, :legacy_id, :name, :quantity
 
   has_attached_file :image,
   :storage => :s3,
@@ -16,6 +16,7 @@ class Item < ActiveRecord::Base
   validates :name, :presence => true
   validates :quantity, :presence => true
 
+  @@all_categories = ["Geography", "Math", "Science", "Social Studies"]
   @@due_dates = {"Video Equipment" => 2, "Books" => 10, "Other" => 5}
   @@due_dates.default = 5
 
@@ -23,25 +24,14 @@ class Item < ActiveRecord::Base
     @@due_dates.keys
   end
 
-  def is_available
-    self.quantity_available > 0
+  def get_due_date
+    @@due_dates[due_date_category]
   end
-
-  def active
-    not inactive
-  end
-  def available
-    if is_available
-      "Available"
-    else
-      "Unavailable"
-    end
-  end
-
+  
   def self.all_categories
-    ["Geography", "Math", "Science", "Social Studies"]
+    @@all_categories
   end
-
+  
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       item = find_by_legacy_id(row["legacy_id"]) || new
@@ -50,17 +40,9 @@ class Item < ActiveRecord::Base
     end
   end
 
-  def get_due_date
-    @@due_dates[self.due_date_category]
-  end
-
-  def soft_delete
-    update_attribute(:inactive, true)
-  end
-
   def quantity_available(start_date= Date.today, end_date= Date.today)
-    number_available = self.quantity
-    self.reservations.each do |reservation|
+    number_available = quantity
+    reservations.each do |reservation|
       if reservation.get_status == "Reserved" and reservation.overlaps?(start_date, end_date)
         number_available -= reservation.quantity
       elsif reservation.get_status == "Checked Out" and reservation.overlaps?(start_date, end_date)
@@ -70,6 +52,30 @@ class Item < ActiveRecord::Base
       end
     end
     number_available
+  end
+  
+  def is_available
+    quantity_available > 0
+  end
+
+  def available
+    if is_available
+      "Available"
+    else
+      "Unavailable"
+    end
+  end
+  
+  def active
+    not inactive
+  end
+
+  def soft_delete
+    update_attribute(:inactive, true)
+  end
+  
+  def unarchive
+    update_attribute(:inactive, false)
   end
 
 end

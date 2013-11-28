@@ -2,19 +2,6 @@ class ItemsController < ApplicationController
 
   before_filter :is_admin, :except => [:index, :show]
 
-  def show
-    @item = Item.find_by_id(params[:id])
-    @reservations = @item.reservations
-
-    @availability = {}
-    d = Date.today
-    60.times do
-      @availability[d] = @item.quantity_available(d, d)
-      d = d + 1
-    end
-
-  end
-
   def index
     if params[:inactive]
       @items = Item.inactive.order(:name)
@@ -29,6 +16,19 @@ class ItemsController < ApplicationController
       @items = @items.where("lower(name) = ?", @query.downcase)
     end
   end
+  
+  def show
+    @item = Item.find_by_id(params[:id])
+    @reservations = @item.reservations
+
+    @availability = {}
+    d = Date.today
+    60.times do
+      @availability[d] = @item.quantity_available(d, d)
+      d = d + 1
+    end
+
+  end
 
   def import
     Item.import(params[:file])
@@ -42,8 +42,7 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(params[:item])
     if @item.save
-      flash[:notice] = "Item #{@item.name} was successfully created."
-      redirect_to items_path
+      redirect_to items_path, notice: "Item #{@item.name} was successfully created."
     else
       flash[:warning] = "Item creation was unsuccessful."
       render action: "new"
@@ -57,8 +56,7 @@ class ItemsController < ApplicationController
   def update
     @item = Item.find_by_id(params[:id])
     if @item.update_attributes(params[:item])
-      flash[:notice] = "Item #{@item.name} was successfully updated."
-      redirect_to item_path(@item)
+      redirect_to item_path(@item), notice: "Item #{@item.name} was successfully updated."
     else
       flash[:warning] = "Item update was unsuccessful."
       render action: "edit"
@@ -68,15 +66,13 @@ class ItemsController < ApplicationController
   def destroy
     @item = Item.find_by_id(params[:id])
     @item.soft_delete
-    flash[:notice] = "Item #{@item.name} was successfully archived."
-    redirect_to :back
+    redirect_to :back, notice: "Item #{@item.name} was successfully archived."
   end
 
   def unarchive
     @item = Item.find_by_id(params[:id])
-    @item.update_attribute(:inactive, false)
-    flash[:notice] = "Item #{@item.name} was successfully unarchived."
-    redirect_to :back
+    @item.unarchive
+    redirect_to :back, notice: "Item #{@item.name} was successfully unarchived."
   end
 
   def checkout

@@ -24,15 +24,16 @@ Scenario: Checkout user exists and item not reserved
   When I fill in "email" with "cucumberuser@gmail.com"
   And I press "Checkout Item"
   Then I should see "Item Globe was successfully checked out"
-  When I follow "Check In"
+  When I am on the home page
+  And I switch to List View
+  And I follow "Globe" within List View
+  And I follow "Check In"
   Then I should see "Item Globe was successfully checked in"
 
 Scenario: Checkout to user that does not exist (sad path)
   When I fill in "email" with "thisuserdoesnotexist@gmail.com"
   And I press "Checkout Item"
   Then I should see "User does not exist"
-  And I should see the "Checkout item" button
-  And I should not see the "Check In" button
 
 Scenario: Checkout to user when reserved for another user (sad path)
   Given there is a reservation for "Globe" that is due in 3 days exists under "user"

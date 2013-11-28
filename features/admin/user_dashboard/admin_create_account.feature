@@ -68,7 +68,7 @@ Scenario: Admin can create basic users
   Then I should see "Bobby"
   Then I should be on the user dashboard
   When I destroy "Bobby"
-  Then I should not see "Bobby"
+  Then I should not see "basic@berkeley.edu"
   Then I should be on the user dashboard
 
 

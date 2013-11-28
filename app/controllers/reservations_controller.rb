@@ -48,7 +48,6 @@ class ReservationsController < ApplicationController
     else
       flash[:error] = "Error: Not owner or admin"
       redirect_to root_path
-      return false
     end
   end
 

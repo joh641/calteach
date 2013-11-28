@@ -31,7 +31,6 @@ class ReservationsController < ApplicationController
   end
 
   def cancel
-    reservation = Reservation.find_by_id(params[:id])
     reservation.cancel
     redirect_to reservations_path, notice: "Reservation was successfully canceled."
   end

@@ -5,7 +5,8 @@
       = link_to 'Hide Archived', admin_reservations_path(), :class => 'btn btn-primary'
     -else
       = link_to 'Show Archived', admin_reservations_path(:archived => true), :class => 'btn btn-primary'
-  %table.table.table-striped
+
+  %table.table.table-striped.sortable
     %thead
       %tr
         %th Name
@@ -17,8 +18,8 @@
         %th Reservation End
         %th Checkout Date
         %th Check In Date
-        %th Notes
-        %th Actions
+        %th.sorttable_nosort Notes
+        %th.sorttable_nosort Actions
     .body
       - @reservations.to_a.each do |reservation|
         %tr

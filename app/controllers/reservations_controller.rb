@@ -20,8 +20,7 @@ class ReservationsController < ApplicationController
     reservation = Reservation.find_by_id(params[:id])
     reservation.canceled = true
     reservation.save
-    flash[:notice] = "Reservation was successfully canceled."
-    redirect_to reservations_path
+    redirect_to reservations_path, notice: "Reservation was successfully canceled."
   end
 
   def new

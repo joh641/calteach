@@ -42,8 +42,7 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(params[:item])
     if @item.save
-      flash[:notice] = "Item #{@item.name} was successfully created."
-      redirect_to items_path
+      redirect_to items_path, notice: "Item #{@item.name} was successfully created."
     else
       flash[:warning] = "Item creation was unsuccessful."
       render action: "new"
@@ -57,8 +56,7 @@ class ItemsController < ApplicationController
   def update
     @item = Item.find_by_id(params[:id])
     if @item.update_attributes(params[:item])
-      flash[:notice] = "Item #{@item.name} was successfully updated."
-      redirect_to item_path(@item)
+      redirect_to item_path(@item), notice: "Item #{@item.name} was successfully updated."
     else
       flash[:warning] = "Item update was unsuccessful."
       render action: "edit"
@@ -68,8 +66,7 @@ class ItemsController < ApplicationController
   def destroy
     @item = Item.find_by_id(params[:id])
     @item.soft_delete
-    flash[:notice] = "Item #{@item.name} was successfully deleted."
-    redirect_to '/'
+    redirect_to items_path, notice: "Item #{@item.name} was successfully deleted."
   end
 
   def checkout

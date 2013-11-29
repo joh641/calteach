@@ -1,3 +1,26 @@
-// Place all the styles related to the admin/reservations controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "base";
+
+.envelope-icon {
+  color: $calteach-dark-blue;
+  margin-left: 5px;
+}
+
+.checked_date {
+  font-weight: bold;
+  .check-icon {
+    color: green;
+    margin-left: 2px;
+  }
+}
+
+.res_date {
+  font-style: italic;
+}
+
+.book-icon {
+  margin-left: 2px;
+}
+
+.pencil-icon {
+  margin-left: 5px;
+}

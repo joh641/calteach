@@ -1,0 +1,25 @@
+.btn.btn-default.btn-sm{"data-toggle" => "modal", "data-target" => "#notes#{reservation.id}"}
+  %i.fa.fa-book.book-icon
+  Notes
+
+- if reservation.get_status == "Reserved"
+  = link_to 'Check Out', checkout_admin_reservation_path(reservation, :reserved => true), :method => :put, :class => 'btn btn-default btn-sm'
+- if reservation.get_status == "Checked Out" || reservation.get_status == "Overdue"
+  = link_to 'Check In', checkin_admin_reservation_path(reservation), :method => :put, :class => 'btn btn-default btn-sm'
+- if reservation.get_status == "Checked In" || reservation.get_status == "Canceled"
+  = link_to 'Archive', archive_admin_reservation_path(reservation), :method => :put, :class => 'btn btn-default btn-sm'
+
+
+.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "Notes", role: "dialog", tabindex: "-1", id: "notes#{reservation.id}"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
+        %h4#myModalLabel.modal-title Notes
+      .modal-body
+        = best_in_place(reservation, :notes, type: :textarea, :activator => "#edit#{reservation.id}")
+        %a.btn-link{id: "edit#{reservation.id}"}
+          %i.fa.fa-pencil.pencil-icon
+
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", type: "button"} Close

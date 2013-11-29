@@ -1,11 +1,11 @@
 .container
-  -if @archived 
+  -if @archived
     %h1 All Reservations
   -else
     %h1 Active Reservations
   .new-btn
     .left
-      Download: 
+      Download:
       = link_to 'Excel', admin_reservations_path(params.merge(format: "xls"))
     .right
       -if @archived
@@ -16,33 +16,26 @@
     %thead
       %tr
         %th Name
-        %th Email
         %th Item
-        %th Quantity
+        %th #
         %th Status
-        %th Reservation Start
-        %th Reservation End
-        %th Checkout Date
-        %th Check In Date
-        %th.sorttable_nosort Notes
+        %th Start Date
+        %th End Date
+        / %th.sorttable_nosort Notes
         %th.sorttable_nosort Actions
     .body
       - @reservations.to_a.each do |reservation|
+        - user = reservation.user
         %tr
-          %td= reservation.user.name
-          %td= reservation.user.email
+          %td
+            =user.name
+            %a{:href => "mailto:" + user.email}
+              %i.fa.fa-envelope-o.envelope-icon
           %td= link_to "#{reservation.item.name}", item_path(reservation.item)
           %td= reservation.quantity
           %td= reservation.get_status
-          %td= reservation.reservation_out
-          %td= reservation.reservation_in
-          %td= reservation.date_out
-          %td= reservation.date_in
-          %td= best_in_place(reservation, :notes, type: :textarea)
-          %td
-            - if reservation.get_status == "Reserved"
-              = link_to 'Check Out', checkout_admin_reservation_path(reservation, :reserved => true), :method => :put, :class => 'btn btn-default btn-sm'
-            - if reservation.get_status == "Checked Out" || reservation.get_status == "Overdue"
-              = link_to 'Check In', checkin_admin_reservation_path(reservation), :method => :put, :class => 'btn btn-default btn-sm'
-            - if reservation.get_status == "Checked In" || reservation.get_status == "Canceled"
-              = link_to 'Archive', archive_admin_reservation_path(reservation), :method => :put, :class => 'btn btn-default btn-sm'
+          %td= date_out(reservation)
+          %td= date_in(reservation)
+          / %td= best_in_place(reservation, :notes, type: :textarea)
+          %td= render "actions", :reservation => reservation
+

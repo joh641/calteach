@@ -23,30 +23,30 @@ class Reservation < ActiveRecord::Base
       "Reserved"
     end
   end
-  
+
   def overlaps?(start_date, end_date)
     (reservation_out >= start_date and reservation_out <= end_date) or
     (reservation_in >= start_date and reservation_in <= end_date) or
     (reservation_out <= start_date and reservation_in >= end_date) or
     (date_out and date_out >= start_date and date_out <= end_date)
   end
-  
+
   def check_in
     update_attribute(:date_in, Date.today)
   end
-  
+
   def archive
     update_attribute(:archived, true)
   end
-  
+
   def cancel
     update_attribute(:canceled, true)
   end
-  
+
   def self.hide_archived
     where(:archived => false)
   end
-  
+
   def self.valid_reservation?(start_date, end_date, item, quantity_desired)
     if quantity_desired == 0
       false
@@ -58,7 +58,7 @@ class Reservation < ActiveRecord::Base
       true
     end
   end
-  
+
   def self.make_reservation(user, item, start_date, end_date, quantity_desired)
     if start_date != "" and end_date != ""
       start_date = Date.strptime(start_date, "%m/%d/%Y")
@@ -106,5 +106,5 @@ class Reservation < ActiveRecord::Base
       end
     end
   end
-  
+
 end

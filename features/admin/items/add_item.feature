@@ -25,5 +25,5 @@ Scenario: Create an item using invalid inputs, negative quantity (sad path)
   And I select "Geography" from "Category"
   And I fill in "ID" with "F123"
   And I press "Submit"
-  Then I should be on the create item page
-  And I should see "quantity must be a positive integer"
+  Then I should see "Add Item"
+  And I should see "Invalid quantity specified."

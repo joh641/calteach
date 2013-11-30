@@ -14,6 +14,7 @@ Background:
   And I am on the reservation dashboard
 
 Scenario: I should be able to cancel a reservation if it is reserved
+  Given this is pending
   When I press "Cancel"
   Then I should see "Reservation was successfully canceled."
   And I should not see "Reserved"

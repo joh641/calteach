@@ -4,12 +4,10 @@
     %thead
       %tr
         %th Item
-        %th Quantity
+        %th #
         %th Status
-        %th Reservation Start
-        %th Reservation End
-        %th Checkout Date
-        %th Check In Date
+        %th Start Date
+        %th End Date
         %th Actions
     .body
       - @reservations.each do |reservation|
@@ -17,10 +15,6 @@
           %td= link_to "#{reservation.item.name}", item_path(reservation.item)
           %td= reservation.quantity
           %td= reservation.get_status
-          %td= reservation.reservation_out
-          %td= reservation.reservation_in
-          %td= reservation.date_out
-          %td= reservation.date_in
-          %td
-            - if reservation.get_status == "Reserved"
-              = link_to 'Cancel', cancel_reservation_path(reservation), :method => :put, :class => 'btn btn-default btn-sm'
+          %td= date_out(reservation)
+          %td= date_in(reservation)
+          %td= render "actions", :reservation => reservation

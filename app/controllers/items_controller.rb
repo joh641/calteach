@@ -41,7 +41,10 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(params[:item])
-    if @item.save
+    if @item.quantity and @item.quantity < 1
+      flash[:warning] = "Invalid quantity specified."
+      render action: "/new"
+    elsif @item.save
       redirect_to items_path, notice: "Item #{@item.name} was successfully created."
     else
       flash[:warning] = "Item creation was unsuccessful."

@@ -25,6 +25,8 @@ module NavigationHelpers
       items_path
     when /^the user dashboard/
       admin_users_path
+    when /^the reservation dashboard/
+      admin_reservations_path
     when /^the checkout page for (.*)/
       checkout_item_path(Item.find_by_name($1))
     when /^the edit user page for "(.*)"/

@@ -4,11 +4,11 @@ class Admin::ReservationsController < ApplicationController
   before_filter :is_admin
 
   def index
-    if params[:archived]
+    if params[:canceled]
       @reservations = Reservation.all
-      @archived = true
+      @canceled = true
     else
-      @reservations = Reservation.hide_archived
+      @reservations = Reservation.hide_canceled
     end
     respond_to do |format|
       format.html
@@ -30,7 +30,7 @@ class Admin::ReservationsController < ApplicationController
 
   def get_reservation(parameters)
     if parameters[:reserved]
-      reservation = Reservation.find_by_id(parameters[:id]) 
+      reservation = Reservation.find_by_id(parameters[:id])
     else
       user = User.find_by_email(parameters[:email])
       item = Item.find_by_id(parameters[:item])
@@ -48,7 +48,7 @@ class Admin::ReservationsController < ApplicationController
   def checkout_helper(reservation, user)
     if user and Reservation.checkout(reservation)
       flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}."
-    else  
+    else
       flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation."
       flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out." if !user
     end
@@ -60,10 +60,10 @@ class Admin::ReservationsController < ApplicationController
     redirect_to :back, notice: "Item #{reservation.item.name} was successfully checked in."
   end
 
-  def archive
-    reservation = Reservation.find_by_id(params[:id])
-    reservation.archive
-    redirect_to :back, notice: "Reservation was successfully archived."
-  end
+  # def archive
+  #   reservation = Reservation.find_by_id(params[:id])
+  #   reservation.archive
+  #   redirect_to :back, notice: "Reservation was successfully archived."
+  # end
 
 end

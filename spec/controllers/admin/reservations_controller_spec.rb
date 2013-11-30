@@ -22,12 +22,12 @@ describe Admin::ReservationsController, :type => :controller  do
       response.should redirect_to(admin_reservations_path)
     end
   end
-  describe 'archiving a reservation' do
-    it 'should redirect to the index if done from dashboard' do
-      @reservation.archived = true
-      @reservation.save
-      put :archive, {:id => @reservation.id}
-      response.should redirect_to(admin_reservations_path)
-    end
-  end
+  # describe 'archiving a reservation' do
+  #   it 'should redirect to the index if done from dashboard' do
+  #     @reservation.archived = true
+  #     @reservation.save
+  #     put :archive, {:id => @reservation.id}
+  #     response.should redirect_to(admin_reservations_path)
+  #   end
+  # end
 end

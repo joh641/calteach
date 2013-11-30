@@ -11,9 +11,9 @@ class Reservation < ActiveRecord::Base
   belongs_to :item
 
   def get_status
-    if archived
-      "Archived"
-    elsif canceled
+    # if archived
+    #   "Archived"
+    if canceled
       "Canceled"
     elsif date_in and date_out
       "Checked In"
@@ -35,17 +35,23 @@ class Reservation < ActiveRecord::Base
     update_attribute(:date_in, Date.today)
   end
 
-  def archive
-    update_attribute(:archived, true)
+  # def archive
+  #   update_attribute(:archived, true)
+  # end
+  #
+  # def self.hide_archived
+  #   where(:archived => false)
+  # end
+
+  def self.hide_canceled
+    where(:canceled => false)
   end
 
   def cancel
     update_attribute(:canceled, true)
   end
 
-  def self.hide_archived
-    where(:archived => false)
-  end
+
 
   def self.valid_reservation?(start_date, end_date, item, quantity_desired)
     if quantity_desired == 0

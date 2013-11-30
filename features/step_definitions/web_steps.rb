@@ -54,6 +54,10 @@ World(WithinHelpers)
 #   with_scope(parent) { When step }
 # end
 
+Then /^I should get a download file with a header of "([^\"]*)"$/ do |header|
+  page.driver.response.body.should include(header)
+end
+
 When /^I confirm popup$/ do
   page.driver.browser.accept_js_confirms 
 end

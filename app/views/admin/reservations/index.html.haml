@@ -1,5 +1,5 @@
 .container
-  -if @archived
+  -if @canceled
     %h1 All Reservations
   -else
     %h1 Active Reservations
@@ -8,10 +8,10 @@
       Download:
       = link_to 'Excel', admin_reservations_path(params.merge(format: "xls"))
     .right
-      -if @archived
-        = link_to 'Hide Archived', admin_reservations_path(), :class => 'btn btn-primary'
+      -if @canceled
+        = link_to 'Hide Canceled', admin_reservations_path(), :class => 'btn btn-primary'
       -else
-        = link_to 'Show Archived', admin_reservations_path(:archived => true), :class => 'btn btn-primary'
+        = link_to 'Show Canceled', admin_reservations_path(:canceled => true), :class => 'btn btn-primary'
   %table.table.table-striped.sortable
     %thead
       %tr
@@ -19,9 +19,8 @@
         %th Item
         %th #
         %th Status
-        %th Start Date
-        %th End Date
-        / %th.sorttable_nosort Notes
+        %th Date Out
+        %th Date In
         %th.sorttable_nosort Actions
     .body
       - @reservations.to_a.each do |reservation|
@@ -36,6 +35,5 @@
           %td= reservation.get_status
           %td= date_out(reservation)
           %td= date_in(reservation)
-          / %td= best_in_place(reservation, :notes, type: :textarea)
           %td= render "actions", :reservation => reservation
 

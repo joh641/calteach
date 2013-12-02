@@ -1,0 +1,4 @@
+- if reservation.get_status == "Checked In"
+  = date_in(reservation)
+- else 
+  %div{:class => "res_date"}= best_in_place reservation, :reservation_in

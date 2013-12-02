@@ -26,6 +26,12 @@ class ReservationsController < ApplicationController
   end
 
   def update
+    date = params[:reservation][:reservation_in]
+    if date.is_a?(String)
+      params[:reservation][:reservation_in] = date != "" ? Date.strptime(date, "%m/%d/%Y") : nil
+      start_date = reservation.date_out ? reservation.date_out : reservation.reservation_out
+      raise "Conflicting Date Error" unless Reservation.valid_reservation?(start_date, params[:reservation][:reservation_in], Item.find_by_id(reservation.item_id), reservation.quantity, reservation)
+    end
     reservation.update_attributes(params[:reservation])
     respond_with reservation
   end

@@ -40,9 +40,10 @@ class Item < ActiveRecord::Base
     end
   end
 
-  def quantity_available(start_date= Date.today, end_date= Date.today)
+  def quantity_available(start_date= Date.today, end_date= Date.today, exclude_reservation= nil)
     number_available = quantity
-    reservations.each do |reservation|
+    all_reservations = reservations.reject{|r| r == exclude_reservation}
+    all_reservations.each do |reservation|
       if reservation.get_status == "Reserved" and reservation.overlaps?(start_date, end_date)
         number_available -= reservation.quantity
       elsif reservation.get_status == "Checked Out" and reservation.overlaps?(start_date, end_date)

@@ -3,7 +3,7 @@ Feature: Admin delete users
   So that I can remove users from the website,
   I want to allow for marking of users as inactive.
 
-  Background: 
+  Background:
     Given there is an admin
     And there is a user
 
@@ -18,6 +18,11 @@ Feature: Admin delete users
 
     When I follow "Show Inactive"
     Then I should see "cucumberuser@gmail.com"
+    Then I should see "Activate"
 
     When I follow "Show Active"
     Then I should see "cucumberadmin@gmail.com"
+
+    When I follow "Show Inactive"
+    When I follow "Activate"
+    Then I should see "was successfully activated"

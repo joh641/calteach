@@ -12,7 +12,7 @@
         = link_to 'Hide Canceled', admin_reservations_path(), :class => 'btn btn-primary'
       -else
         = link_to 'Show Canceled', admin_reservations_path(:canceled => true), :class => 'btn btn-primary'
-  %table.table.table-striped.sortable
+  %table.table.sortable
     %thead
       %tr
         %th Name
@@ -25,7 +25,7 @@
     .body
       - @reservations.to_a.each do |reservation|
         - user = reservation.user
-        %tr
+        %tr{:class => reservation.get_status.sub(" ", "_")}
           %td
             =user.name
             %a{:href => "mailto:" + user.email}
@@ -34,6 +34,6 @@
           %td= reservation.quantity
           %td= reservation.get_status
           %td= date_out(reservation)
-          %td= date_in(reservation)
+          %td= render "date_in", :reservation => reservation
           %td= render "actions", :reservation => reservation
 

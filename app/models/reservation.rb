@@ -2,6 +2,7 @@ class Reservation < ActiveRecord::Base
 
   attr_accessible :archived, :canceled, :date_in, :date_out, :item_id, :notes, :quantity, :reservation_in, :reservation_out, :user, :user_id
 
+
   # validates_date :date_in, :on_or_after => lambda{|m| m.date_out}, :allow_nil => true
   # validates_date :date_out, :on_or_before => lambda{|m| m.date_in}, :allow_nil => true
   # validates_date :reservation_in, :on_or_after => lambda{|m| m.reservation_out}, :allow_nil => true
@@ -51,12 +52,10 @@ class Reservation < ActiveRecord::Base
     update_attribute(:canceled, true)
   end
 
-
-
-  def self.valid_reservation?(start_date, end_date, item, quantity_desired)
+  def self.valid_reservation?(start_date, end_date, item, quantity_desired, exclude_reservation= nil)
     if quantity_desired == 0
       false
-    elsif item.quantity_available(start_date, end_date) < quantity_desired
+    elsif item.quantity_available(start_date, end_date, exclude_reservation) < quantity_desired
       false
     elsif end_date > item.get_due_date.business_days.after(start_date.to_datetime + 8.hours).to_date
       false
@@ -112,5 +111,4 @@ class Reservation < ActiveRecord::Base
       end
     end
   end
-
 end

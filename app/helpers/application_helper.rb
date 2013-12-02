@@ -20,6 +20,6 @@ module ApplicationHelper
   end
 
   def format(str)
-    str.strftime("%m/%d/%y")
+    str.strftime("%m/%d/%Y")
   end
 end

@@ -51,19 +51,3 @@ Scenario: User can reserve item on item's individual page
     Given I am logged into the user panel
     When I follow "Globe" within Card View
     Then I should see "Reserve this item"
-
-
-Scenario: Admin can delete, edit and checkout items from inventory page
-  Given I am logged into the admin panel
-  And I switch to List View
-  Then I should see "Archive"
-  Then I should see "Edit" within List View
-  Then I should see "Checkout"
-
-Scenario: User cannot delete, edit and checkout items from inventory page
-  Given I am logged into the user panel
-  And I switch to List View
-  Then I should not see "Deactivate"
-  Then I should not see "Edit" within List View
-  Then I should not see "Checkout"
-  Then I should see "Reserve"

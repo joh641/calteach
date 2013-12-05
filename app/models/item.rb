@@ -2,7 +2,8 @@ class Item < ActiveRecord::Base
 
   scope :active, -> { where(inactive: false) }
   scope :inactive, -> { where(inactive: true) }
-  attr_accessible :category, :description, :due_date_category, :image, :legacy_id, :name, :quantity
+  attr_accessible :category, :description, :due_date_category, :image, :legacy_id, :name, :quantity, :tag_list
+  acts_as_taggable
 
   has_attached_file :image,
   :storage => :s3,
@@ -27,11 +28,11 @@ class Item < ActiveRecord::Base
   def get_due_date
     @@due_dates[due_date_category]
   end
-  
+
   def self.all_categories
     @@all_categories
   end
-  
+
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       item = find_by_legacy_id(row["legacy_id"]) || new
@@ -54,7 +55,7 @@ class Item < ActiveRecord::Base
     end
     number_available
   end
-  
+
   def is_available
     quantity_available > 0
   end
@@ -66,7 +67,7 @@ class Item < ActiveRecord::Base
       "Unavailable"
     end
   end
-  
+
   def active
     not inactive
   end
@@ -74,7 +75,7 @@ class Item < ActiveRecord::Base
   def soft_delete
     update_attribute(:inactive, true)
   end
-  
+
   def unarchive
     update_attribute(:inactive, false)
   end

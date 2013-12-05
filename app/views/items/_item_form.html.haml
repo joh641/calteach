@@ -16,6 +16,10 @@
     = f.label :category, 'Category'
     = f.select :category, @all_categories
 
+  #tags
+    = f.label :tag_list, 'Tags'
+    = f.text_field :tag_list, :data => {all: @all_tags}
+
   #due_date_category
     = f.label :due_date_category, 'Due Date Category'
     = f.select :due_date_category, @due_date_categories

@@ -16,7 +16,7 @@ class ItemsController < ApplicationController
       @items = @items.where("lower(name) = ?", @query.downcase)
     end
   end
-  
+
   def show
     @item = Item.find_by_id(params[:id])
     @reservations = @item.reservations
@@ -37,6 +37,7 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new
+    @all_tags = ActsAsTaggableOn::Tag.all.map { |tag| tag.name }
   end
 
   def create
@@ -54,6 +55,7 @@ class ItemsController < ApplicationController
 
   def edit
     @item = Item.find_by_id(params[:id])
+    @all_tags = ActsAsTaggableOn::Tag.all.map { |tag| tag.name }
   end
 
   def update

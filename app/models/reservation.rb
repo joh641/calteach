@@ -15,8 +15,8 @@ class Reservation < ActiveRecord::Base
 
   scope :canceled, -> { where(canceled: true) }
   scope :reserved, -> { where(:date_out => nil) }
-  scope :checked_out, -> { where("date_out != ? AND date_in = ?", nil, nil) }
-  scope :checked_in, -> { where("date_out != ? AND date_in != ?", nil, nil) }
+  scope :checked_out, -> { where("date_out IS NOT NULL AND date_in IS NULL") }
+  scope :checked_in, -> { where("date_out IS NOT NULL AND date_in IS NOT NULL") }
 
   scope :for_user, lambda {|name| joins(:user).where("users.name = ?", name)}
 

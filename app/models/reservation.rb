@@ -11,6 +11,17 @@ class Reservation < ActiveRecord::Base
   belongs_to :user
   belongs_to :item
 
+  STATUSES = ["All", "Canceled", "Checked Out", "Checked In", "Reserved"]
+
+  scope :canceled, -> { where(canceled: true) }
+  scope :reserved, -> { where(:date_out => nil) }
+  scope :checked_out, -> { where("date_out != ? AND date_in = ?", nil, nil) }
+  scope :checked_in, -> { where("date_out != ? AND date_in != ?", nil, nil) }
+
+  scope :for_user, lambda {|name| joins(:user).where("users.name = ?", name)}
+
+  scope :for_item, lambda {|name| joins(:item).where("items.name = ?", name)}
+
   def get_status
     # if archived
     #   "Archived"

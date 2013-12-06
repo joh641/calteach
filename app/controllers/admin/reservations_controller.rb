@@ -4,16 +4,43 @@ class Admin::ReservationsController < ApplicationController
   before_filter :is_admin
 
   def index
+    name = params[:name]
+    item = params[:item]
+    status = params[:status]
+
     if params[:canceled]
       @reservations = Reservation.all
       @canceled = true
     else
       @reservations = Reservation.hide_canceled
     end
+
+    if status == "Canceled"
+      @reservations = @reservations.canceled
+    elsif status == "Reserved"
+      @reservations = @reservations.reserved
+    elsif status == "Checked Out"
+      @reservations = @reservations.checked_out
+    elsif status == "Checked In"
+      @reservations = @reservations.checked_in
+    end
+
+    if name && name != ""
+      @reservations = @reservations.for_user(name)
+    end
+
+    if item && item != ""
+      @reservations = @reservations.for_item(item)
+    end
+
     respond_to do |format|
       format.html
       format.xls # { send_data @reservations.to_csv(col_sep: "\t") }
     end
+  end
+
+  def filter
+    redirect_to admin_reservations_path(:name => params[:name], :item => params[:item], :status => params[:status], :date_out => params[:date_out], :date_out => params[:date_out])
   end
 
   def update

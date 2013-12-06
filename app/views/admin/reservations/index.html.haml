@@ -3,6 +3,11 @@
     %h1 All Reservations
     = render "settings"
 
+  .filter
+    #filter-btn.btn.btn-default.btn-sm
+      Show Filters
+      %i.fa.fa-caret-down.caret-icon
+
   %table.table.sortable
     %thead
       %tr
@@ -14,6 +19,20 @@
         %th Date In
         %th.sorttable_nosort Actions
     .body
+      %tr#filter-section.hide
+        = form_tag filter_admin_reservations_path, :method => :get do
+          %td
+            =text_field_tag :name, nil, :class => 'form-control'
+          %td
+            =text_field_tag :item, nil, :class => 'form-control'
+          %td
+          %td= select_tag :status, options_for_select(Reservation::STATUSES), :class => 'form-control'
+          %td
+            =text_field_tag :date_out, nil, :placeholder => "Between This Date", :class => "form-control"
+          %td
+            =text_field_tag :date_in, nil, :placeholder => "And This Date", :class => "form-control"
+          %td
+            = submit_tag 'Filter', :class => "btn btn-primary btn-sm"
       - @reservations.to_a.each do |reservation|
         - user = reservation.user
         %tr{:class => reservation.get_status.sub(" ", "_")}

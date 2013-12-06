@@ -1,17 +1,8 @@
 .container
-  -if @canceled
+  .header
     %h1 All Reservations
-  -else
-    %h1 Active Reservations
-  .new-btn
-    .left
-      Download:
-      = link_to 'Excel', admin_reservations_path(params.merge(format: "xls"))
-    .right
-      -if @canceled
-        = link_to 'Hide Canceled', admin_reservations_path(), :class => 'btn btn-primary'
-      -else
-        = link_to 'Show Canceled', admin_reservations_path(:canceled => true), :class => 'btn btn-primary'
+    = render "settings"
+
   %table.table.sortable
     %thead
       %tr

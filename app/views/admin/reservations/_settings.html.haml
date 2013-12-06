@@ -1,0 +1,23 @@
+.dropdown.btn-group
+  .settings.btn.btn-default{"data-toggle" => "dropdown"}
+    %i.fa.fa-gear.gear-icon
+    %i.fa.fa-caret-down
+  %ul.dropdown-menu{"role"=>"menu", "aria-labelledby"=>"dLabel"}
+    %li
+      =link_to admin_reservations_path(:canceled => true) do
+        - if @canceled
+          %i.fa.fa-check.icon
+        - else
+          %i.fa.fa-check.icon.trans
+        Show Canceled
+      = link_to admin_reservations_path() do
+        - if @canceled
+          %i.fa.fa-check.icon.trans
+        - else
+          %i.fa.fa-check.icon
+        Hide Canceled
+    %li.divider
+    %li
+      =link_to admin_reservations_path(params.merge(format: "xls")) do
+        %i.fa.fa-download.icon
+        Download to Excel

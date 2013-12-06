@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	calteach.initInventory();
+	// calteach.initInventory();
     $(window).resize(function() {
         calteach.adjustInventoryColumnHeight();
     });

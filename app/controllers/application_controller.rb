@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :all_categories, :due_date_categories
 
   def all_categories
-    @all_categories = Item.all_categories
+    @all_categories = ActsAsTaggableOn::Tag.all.map { |tag| tag.name }
   end
 
   def due_date_categories

@@ -8,7 +8,7 @@ class Item < ActiveRecord::Base
   :storage => :s3,
   :s3_credentials => S3_CREDENTIALS,
   :path => "/items/:style/:id/:filename",
-  :styles => { :medium => "165x165>", :thumb => "100x100>" },
+  :styles => { :medium => "250x250>", :thumb => "100x100>" },
   :default_url => "http://placekitten.com/165/165"
   has_many :reservations
   has_many :users, :through => :reservations
@@ -27,11 +27,11 @@ class Item < ActiveRecord::Base
   def get_due_date
     @@due_dates[due_date_category]
   end
-  
+
   def self.all_categories
     @@all_categories
   end
-  
+
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       item = find_by_legacy_id(row["legacy_id"]) || new
@@ -54,7 +54,7 @@ class Item < ActiveRecord::Base
     end
     number_available
   end
-  
+
   def is_available
     quantity_available > 0
   end
@@ -66,7 +66,7 @@ class Item < ActiveRecord::Base
       "Unavailable"
     end
   end
-  
+
   def active
     not inactive
   end
@@ -74,7 +74,7 @@ class Item < ActiveRecord::Base
   def soft_delete
     update_attribute(:inactive, true)
   end
-  
+
   def unarchive
     update_attribute(:inactive, false)
   end

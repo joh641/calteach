@@ -6,75 +6,70 @@
 
 .item-left {
     float: left;
-    width: 165px;
-}
-
-.item-left h2 {
-    margin-top: 0;
+    width: 250px;
+    max-height: 250px;
+    margin: auto;
+    #image {
+        text-align: center;
+    }
+    h2 {
+        margin-top: 0;
+    }
 }
 
 .item-right {
-    margin-left: 165px;
-    padding: 40px 10px 10px 10px;
+    margin-left: 280px;
+    padding: 0px 10px 10px 10px;
     width: 70%;
+    #description {
+        margin-bottom: 10px;
+    }
 }
 
-.bold {
-    font-weight: bold;
+.item-box {
+    margin-top: 20px;
+    border: 1px solid black;
+    padding: 10px;
+    display: inline-block;
+    h4 {
+        background-color: #CCCCCC;
+        margin: -10px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    &#reservation-table {
+        max-width: 688px;
+    }
 }
 
-.crossed {
-    text-decoration: line-through;
-    font-style: italic;
-}
+
+
 
 .admin {
-    width: 165px;
+    width: 250px;
     padding: 5px;
     margin-top: 10px;
     border: 1px solid gray;
     border-radius: 5px;
     text-align: center;
-}
-
-.admin h5 {
-    background-color: #CCCCCC;
-    margin: -5px;
-    padding: 5px;
-    margin-bottom: 10px;
-    border-radius: 5px 5px 0 0;
-}
-
-.admin .button_to {
-    margin-top: 5px;
-}
-
-.tag {
-    color: white
+    h5 {
+        background-color: #CCCCCC;
+        margin: -5px;
+        padding: 5px;
+        margin-bottom: 10px;
+        border-radius: 5px 5px 0 0;
+    }
+    .button_to {
+        margin-top: 5px;
+    }
 }
 
 #backlink {
     margin-top: 10px
 }
-
-.item-box {
-    margin-top: 10px;
-    border: 1px solid black;
-    padding: 10px;
-    display: inline-block;
+.tag {
+    color: white
 }
-
-.item-box h4 {
-    background-color: #CCCCCC;
-    margin: -10px;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-#start-reservation, #end-reservation {
-    display: inline-block;
-}
-
 .bold {
     font-weight: bold;
 }

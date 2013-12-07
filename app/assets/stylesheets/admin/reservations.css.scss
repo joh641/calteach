@@ -70,3 +70,14 @@
 .Checked_Out {
   background-color: #d9edf7;
 }
+
+#reservation_error {
+  color: #D8000C;
+  background-color: #FFBABA;
+  border: 1px solid;
+  margin: 10px 0px;
+  padding:11px 10px;
+  background-repeat: no-repeat;
+  border-radius:.5em;
+  visibility:hidden;
+}

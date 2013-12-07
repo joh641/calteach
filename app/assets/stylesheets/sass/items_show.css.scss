@@ -24,26 +24,24 @@
     #description {
         margin-bottom: 10px;
     }
-}
-
-.item-box {
-    margin-top: 20px;
-    border: 1px solid black;
-    padding: 10px;
-    display: inline-block;
-    h4 {
-        background-color: #CCCCCC;
-        margin: -10px;
+    .item-box {
+        margin-top: 20px;
+        border: 1px solid black;
         padding: 10px;
-        margin-bottom: 10px;
-    }
-    &#reservation-table {
-        max-width: 688px;
+        display: inline-block;
+        h4 {
+            background-color: #CCCCCC;
+            margin: -10px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
     }
 }
 
-
-
+#reservation-table {
+    max-width: 688px;
+    margin-top: 20px;
+}
 
 .admin {
     width: 250px;

@@ -44,10 +44,6 @@ class ReservationsController < ApplicationController
         raise "Invalid Date"
       end
 
-      Rails.logger.info "asdf"
-      Rails.logger.info start_date
-      Rails.logger.info end_date
-
       if !Reservation.valid_reservation?(start_date, end_date, Item.find_by_id(reservation.item_id), reservation.quantity, reservation, (current_user and current_user.admin?))
         raise "Conflicting Reservation"
       end

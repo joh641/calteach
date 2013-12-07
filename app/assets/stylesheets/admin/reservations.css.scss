@@ -1,7 +1,7 @@
 @import "base";
 
 .header {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   position: relative;
   .dropdown {
     position: absolute;
@@ -26,6 +26,24 @@
           color: transparent;
         }
       }
+    }
+  }
+}
+.filter {
+  margin-bottom: 15px;
+  .caret-icon {
+    margin-left: 3px;
+  }
+
+}
+
+#filter-section {
+  margin-top: 15px;
+  .form-control {
+    height: 30px;
+    padding: 5px;
+    &#status {
+      width: 120px;
     }
   }
 }

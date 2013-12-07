@@ -28,6 +28,9 @@ Calteach::Application.routes.draw do
         put 'checkin'
         put 'archive'
       end
+      collection do
+        get 'filter'
+      end
     end
   end
 

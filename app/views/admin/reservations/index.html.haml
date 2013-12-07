@@ -43,7 +43,8 @@
           %td= link_to "#{reservation.item.name}", item_path(reservation.item)
           %td= reservation.quantity
           %td= reservation.get_status
-          %td= date_out(reservation)
-          %td= render "date_in", :reservation => reservation
+          %td{:class => "reservation_out", :'data-id' => reservation.id}= date_out(reservation)
+          %td{:class => "reservation_in", :'data-id' => reservation.id}= date_in(reservation)
           %td= render "actions", :reservation => reservation
 
+  %div{:id => "reservation_error", :visible => "false"}

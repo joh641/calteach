@@ -4,9 +4,15 @@ class Admin::ReservationsController < ApplicationController
   before_filter :is_admin
 
   def index
-    name = params[:name]
-    item = params[:item]
+    @name = params[:name]
+    @item = params[:item]
     status = params[:status]
+    @default_status = status.to_s.empty? ? "All" : status
+    @default_date_out = params[:date_out]
+    @default_date_in = params[:date_in]
+
+    @date_out = Date.strptime(params[:date_out], "%m/%d/%Y").strftime("%Y-%m-%d") if not params[:date_out].to_s.empty?
+    @date_in = Date.strptime(params[:date_in], "%m/%d/%Y").strftime("%Y-%m-%d") if not params[:date_in].to_s.empty?
 
     if params[:canceled]
       @reservations = Reservation.all
@@ -15,23 +21,15 @@ class Admin::ReservationsController < ApplicationController
       @reservations = Reservation.hide_canceled
     end
 
-    if status == "Canceled"
-      @reservations = @reservations.canceled
-    elsif status == "Reserved"
-      @reservations = @reservations.reserved
-    elsif status == "Checked Out"
-      @reservations = @reservations.checked_out
-    elsif status == "Checked In"
-      @reservations = @reservations.checked_in
+    if Reservation::STATUSES.include? status
+      sym_status = status.parameterize.underscore.to_sym
+      @reservations = @reservations.send(sym_status)
     end
 
-    if name && name != ""
-      @reservations = @reservations.for_user(name)
-    end
+    @reservations = @reservations.for_user(@name) if not @name.to_s.empty?
+    @reservations = @reservations.for_item(@item) if not @item.to_s.empty?
 
-    if item && item != ""
-      @reservations = @reservations.for_item(item)
-    end
+    @reservations = @reservations.within_dates(@date_out, @date_in) if @date_out and @date_in
 
     respond_to do |format|
       format.html
@@ -40,7 +38,7 @@ class Admin::ReservationsController < ApplicationController
   end
 
   def filter
-    redirect_to admin_reservations_path(:name => params[:name], :item => params[:item], :status => params[:status], :date_out => params[:date_out], :date_out => params[:date_out])
+    redirect_to admin_reservations_path(:name => params[:name], :item => params[:item], :status => params[:status], :date_out => params[:date_out], :date_in => params[:date_in])
   end
 
   def update

@@ -1,9 +1,5 @@
 @import "base";
 
-#image {
-    margin-right:10px;
-}
-
 .item-left {
     float: left;
     width: 250px;
@@ -34,6 +30,12 @@
             margin: -10px;
             padding: 10px;
             margin-bottom: 10px;
+        }
+        .reserve-label {
+            @include make-sm-column(4);
+        }
+        .reserve-input {
+            @include make-sm-column(8);
         }
     }
 }

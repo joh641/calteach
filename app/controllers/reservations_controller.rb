@@ -26,14 +26,39 @@ class ReservationsController < ApplicationController
   end
 
   def update
-    date = params[:reservation][:reservation_in]
-    if date.is_a?(String)
-      params[:reservation][:reservation_in] = date != "" ? Date.strptime(date, "%m/%d/%Y") : nil
-      start_date = reservation.date_out ? reservation.date_out : reservation.reservation_out
-      raise "Conflicting Date Error" unless Reservation.valid_reservation?(start_date, params[:reservation][:reservation_in], Item.find_by_id(reservation.item_id), reservation.quantity, reservation)
+    start_date = params[:start_date]
+    end_date = params[:end_date]
+    if start_date and end_date
+      begin
+        start_date = start_date != "" ? Date.strptime(start_date, "%m/%d/%Y") : nil
+        end_date = end_date != "" ? Date.strptime(end_date, "%m/%d/%Y") : nil
+        params[:reservation] = Hash.new if !params[:reservation]
+
+        if reservation.checked_out?
+          params[:reservation][:date_out] = start_date
+        else
+          params[:reservation][:reservation_out] = start_date
+        end
+        params[:reservation][:reservation_in] = end_date
+      rescue
+        raise "Invalid Date"
+      end
+
+      Rails.logger.info "asdf"
+      Rails.logger.info start_date
+      Rails.logger.info end_date
+
+      if !Reservation.valid_reservation?(start_date, end_date, Item.find_by_id(reservation.item_id), reservation.quantity, reservation, (current_user and current_user.admin?))
+        raise "Conflicting Reservation"
+      end
     end
+
     reservation.update_attributes(params[:reservation])
-    respond_with reservation
+    if params[:return_address] != nil
+      respond_with reservation, :location => params[:return_address]
+    else
+      respond_with reservation
+    end
   end
 
   def cancel

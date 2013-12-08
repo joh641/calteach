@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $('#toolbar a:last').tab('show');
+  $('#toolbar a:first').tab('show');
   $('#toolbar a:last').addClass('active');
 
   $(document).on('click', '#toolbar a:not(.active)', function() {

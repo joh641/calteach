@@ -50,7 +50,7 @@ $left-column-container-width: 270px;
 	@include make-xs-column(12);
 	@include make-sm-column(4);
 	@include make-md-column(3);
-	padding: 10px;
+	padding: 7px;
 	max-width: 300px;
 
 	.item-container {
@@ -58,16 +58,28 @@ $left-column-container-width: 270px;
 		text-align: center;
 		border: 1px grey solid;
 		.item-info {
-			img {
-				padding: 10px 0px 0px;
-				width: 90%;
-				margin: auto;
+			.img-wrapper {
+				height: 165px;
+				position: relative;
+				img {
+					padding: 0px;
+					max-height: 92%;
+					max-width: 92%;
+					margin: auto;
+					position: absolute;
+					top: 0;
+					bottom: 0;
+					left: 0;
+					right: 0;
+				}
 			}
 		}
 		.title {
-			@include height(30px, 24px);
-			margin-top: 10px;
-			margin-bottom: 15px;
+			// @include height(18px, 18px);
+			font-size: 17px;
+			height: 39px;
+			margin-top: 5px;
+			margin-bottom: 10px;
 		}
 		.subtitle {
 			@include height(25px, 12px);

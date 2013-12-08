@@ -75,7 +75,7 @@ $(document).ready(function() {
         reservation_out = reservation_out.trim()
 
         $.ajax({
-            type: "PUT",
+            type: "POST",
             url: "/reservations/" + id,
             data: {_method:'put', start_date:reservation_out, end_date:reservation_in, return_address:window.location.pathname },
             success: function(data) {

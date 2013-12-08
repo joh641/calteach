@@ -45,12 +45,13 @@ $left-column-container-width: 270px;
 	}
 }
 
+
 .item-wrapper {
 /*	@include make-xs-column(6);*/
 	@include make-xs-column(12);
 	@include make-sm-column(4);
 	@include make-md-column(3);
-	padding: 7px;
+	padding: 7px 15px 7px 0px;
 	max-width: 300px;
 
 	.item-container {
@@ -176,6 +177,7 @@ $category-width: $left-column-container-width/$grid-units;
 }
 #toolbar {
 	float: right;
+	margin-right: 15px;
 	.view-txt {
 		display: inline-block;
 		margin-left: 5px;

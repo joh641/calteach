@@ -2,9 +2,17 @@
   .content
     = render partial: 'left_column'
     .right-column-container.column
-      %h2#name Add Item
-      = render partial: 'item_form'
-      %h2#name Add Multiple Items
-      = form_tag import_items_path, :multipart => true do
-        = file_field_tag :file
-        = submit_tag "Import"
+      %ul.nav.nav-tabs#tripTabs.container
+        %li.active
+          %a{:href => "#add", "data-toggle" => "tab"} Photos
+        %li
+          %a{:href => "#import", "data-toggle" => "tab"} Testimonies
+      .tab-content
+        .tab-pane.active#add
+          %h2.header Add Item
+          = render partial: 'item_form'
+        .tab-pane#import
+          %h2.header Import Multiple Items
+          = form_tag import_items_path, :multipart => true do
+            = file_field_tag :file
+            = submit_tag "Import", :class => "btn btn-primary submit-btn"

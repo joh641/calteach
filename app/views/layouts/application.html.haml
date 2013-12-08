@@ -48,8 +48,9 @@
           - if user_signed_in?
 
             %li{:class => "tab application"}>
-              %i{:class => "fa fa-ticket"}
-              = link_to "My Reservations", reservations_path
+              = link_to reservations_path do
+                %i{:class => "fa fa-ticket"}
+                %p My Reservations
 
             %li.dropdown-custom.tab.account
               %a

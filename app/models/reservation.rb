@@ -40,6 +40,22 @@ class Reservation < ActiveRecord::Base
     end
   end
 
+  def canceled?
+    canceled
+  end
+
+  def checked_in?
+    date_in and date_out
+  end
+
+  def checked_out?
+    date_out and not date_in
+  end
+
+  def reserved?
+    not (canceled? or checked_in? or checked_out?)
+  end
+
   def overlaps?(start_date, end_date)
     (reservation_out >= start_date and reservation_out <= end_date) or
     (reservation_in >= start_date and reservation_in <= end_date) or
@@ -67,12 +83,14 @@ class Reservation < ActiveRecord::Base
     update_attribute(:canceled, true)
   end
 
-  def self.valid_reservation?(start_date, end_date, item, quantity_desired, exclude_reservation= nil)
+  def self.valid_reservation?(start_date, end_date, item, quantity_desired, exclude_reservation= nil, current_user_admin= false)
     if quantity_desired == 0
+      false
+    elsif end_date < start_date
       false
     elsif item.quantity_available(start_date, end_date, exclude_reservation) < quantity_desired
       false
-    elsif end_date > item.get_due_date.business_days.after(start_date.to_datetime + 8.hours).to_date
+    elsif not current_user_admin and end_date > item.get_due_date.business_days.after(start_date.to_datetime + 8.hours).to_date
       false
     else
       true
@@ -91,7 +109,7 @@ class Reservation < ActiveRecord::Base
   end
 
   def self.checkout(reservation)
-    number_available = reservation.item.quantity_available
+    number_available = reservation.item.quantity_available(Date.today, Date.today, reservation)
     checkout_date = Date.today
     due_date = reservation.item.get_due_date.business_days.after(DateTime.now).to_date
     reservation.reservation_out = checkout_date

@@ -6,16 +6,14 @@
       - if is_admin?
         .active-btn
           -if @inactive
-            = link_to 'Show Active Items', items_path(), :class => 'btn btn-primary'
+            = link_to 'Show Active', items_path(), :class => 'btn btn-primary'
           -else
-            = link_to 'Show Archived Items', items_path(:inactive => true), :class => 'btn btn-default'
+            = link_to 'Show Archived', items_path(:inactive => true), :class => 'btn btn-default'
       .btn-group#toolbar
         %a.btn.btn-default#card-view-link{:href => "#card-view", "data-toggle" => "tab"}
           %i.fa.fa-th-large
-          .view-txt Card View
         %a.btn.btn-default#list-view-link{:href => "#list-view", "data-toggle" => "tab"}
           %i.fa.fa-list
-          .view-txt List View
 
       #item-cards.tab-content
         - if @items.length > 0

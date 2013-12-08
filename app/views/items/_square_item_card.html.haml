@@ -3,6 +3,6 @@
     .item-info
       .img-wrapper
         =link_to image_tag(item.image.url(:medium)), item_path(item), :id => "#{item.name}"
-      .title= truncate(item.name, :length => 35)
+      .title= truncate(item.name, :length => 34)
       .wrapper
         .subtitle{:class => (item.is_available ? "available" : "unavailable")}= item.available

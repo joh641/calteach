@@ -5,17 +5,18 @@
       %input{:class => 'search-bar', :type => 'text', :placeholder => 'Search for an Item...', :name => 'search_query', :value => @query}
       %input{:type=>"hidden", :name => 'tag_query', :value=>session[:tag_query]}
       <input type="submit" id="search_submit" class="calteach-button" value="Search" />
-  %h2 Tags
-  %ul
-    - @all_tags.each do |category|
-      %li.category{:data => {:category => category}}>
-        / hardcoded for now
-        %i
-        = form_tag items_path, :method => :get, :id => 'tag_form' do
-          %input{:type=>"hidden", :name => 'search_query', :value=>session[:search_query]}
-          %input{:type=>"hidden", :name => 'tag_query', :value=>category}
-          <input type="submit" id="search_submit" class="calteach-button" value=#{category} />
-    - if current_user and current_user.admin?
-      %li.category.add-item>
-        %i{:class => "fa fa-barcode"}
-        .category-name= link_to 'Add Item', new_item_path
+  .categories-container.left-container
+    %h2 Tags
+    %ul
+      - @all_tags.each do |category|
+        %li.category{:data => {:category => category}}>
+          / hardcoded for now
+          %i
+          = form_tag items_path, :method => :get, :id => 'tag_form' do
+            %input{:type=>"hidden", :name => 'search_query', :value=>session[:search_query]}
+            %input{:type=>"hidden", :name => 'tag_query', :value=>category}
+            <input type="submit" id="search_submit" class="calteach-button" value=#{category} />
+      - if current_user and current_user.admin?
+        %li.category.add-item>
+          %i{:class => "fa fa-barcode"}
+          .category-name= link_to 'Add Item', new_item_path

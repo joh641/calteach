@@ -43,7 +43,18 @@ $(document).ready(function() {
         }
     });
 
-
+    var datepickerSettings = {
+        clearBtn: true,
+        todayHighlight: true,
+        autoclose: true
+    };
+    $('#filter-section .input-daterange').datepicker(datepickerSettings);
+    $('#filter-section_quantity').change(function() {
+      $('#filter-section .input-daterange').datepicker('remove');
+      $('#filter-section #date_in').val('');
+      $('#filter-section #date_out').val('');
+      $('#filter-section .input-daterange').datepicker(datepickerSettings);
+    });
 
     function convertDivToTextBox(div) {
         var date = div.text();

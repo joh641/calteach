@@ -4,7 +4,8 @@
       .image-wrapper
         =link_to image_tag(item.image.url(:medium)), item_path(item), :id => "#{item.name}"
       .content
-        .title=item.name
+        =link_to item_path(item) do
+          .title= item.name
         .actions
           -if is_admin?
             -if item.active

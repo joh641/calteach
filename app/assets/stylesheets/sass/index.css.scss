@@ -2,19 +2,22 @@
 
 html, body {
 	height: 100%;
+}
+
+#container.inventory {
 	background-color: #f0f0f0;
 }
 
 h1, h2, h3, h4, h5, h6, p, div {
-	font-family: 'Open Sans', sans-serif;
-	font-weight: 300;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
 }
 
 $page-width: 960px;
 
 .column {
-	display: inline-block;
-	vertical-align: top;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .right-column-container {
@@ -43,6 +46,9 @@ $page-width: 960px;
 
 $left-column-container-width: 274px;
 .left-column-container {
+	&.inventory {
+		background-color: #f0f0f0;
+	}
 	width: $left-column-container-width;
 	margin-left: 20px;
 	.header-text {
@@ -151,36 +157,36 @@ $left-column-container-width: 274px;
 $grid-units: 3;
 $category-width: ($left-column-container-width - 3)/$grid-units;
 .category {
-	i {
-		padding-top: 18px;
-		font-size: 35px;
-	}
-	i, .category-name {
-		display: block;
-		text-align: center;
-	}
-	.category-name {
-		@include line-height(25px, 13px);
-		a {
-			color: white;
-		}
-	}
-	display: inline-block;
-	vertical-align: top;
-	width: $category-width;
-	height: $category-width;
+  i {
+    padding-top: 18px;
+    font-size: 35px;
+  }
+  i, .category-name {
+    display: block;
+    text-align: center;
+  }
+  .category-name {
+    @include line-height(25px, 13px);
+    a {
+      color: white;
+    }
+  }
+  display: inline-block;
+  vertical-align: top;
+  width: $category-width;
+  height: $category-width;
 
-	color: white;
-	cursor: pointer;
+  color: white;
+  cursor: pointer;
 }
 
 .active-btn {
-	display: inline-block;
-	float: left;
+  display: inline-block;
+  float: left;
 }
 
 #item-cards {
-	clear: both;
+  clear: both;
 }
 
 .header {

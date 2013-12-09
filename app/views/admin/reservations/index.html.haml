@@ -27,9 +27,9 @@
             =text_field_tag :item, @item, :class => 'form-control'
           %td
           %td= select_tag :status, options_for_select(["All"] + Reservation::STATUSES, @default_status), :class => 'form-control'
-          %td
+          %td.input-daterange
             =text_field_tag :date_out, @default_date_out, :placeholder => "After This Date", :class => "form-control"
-          %td
+          %td.input-daterange
             =text_field_tag :date_in, @default_date_in, :placeholder => "Before This Date", :class => "form-control"
           %td
             = submit_tag 'Filter', :class => "btn btn-primary btn-sm"

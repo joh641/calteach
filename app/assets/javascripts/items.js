@@ -10,6 +10,7 @@ $(document).ready(function(){
   var datepickerSettings = {
       startDate: new Date(),
       endDate: moment(new Date()).add('days', 59).toDate(),
+      autoclose: true,
       beforeShowDay: function (date) {
         var thisDate = moment(date).format("MM/DD/YYYY");
         if (availability[thisDate] < $('#reservation_quantity').find(":selected").text()) {

@@ -26,7 +26,6 @@ Calteach::Application.routes.draw do
         post 'checkout'
         put 'checkout'
         put 'checkin'
-        put 'archive'
       end
       collection do
         get 'filter'

@@ -59,7 +59,7 @@ class ReservationsController < ApplicationController
 
   def cancel
     reservation.cancel
-    redirect_to reservations_path, notice: "Reservation was successfully canceled."
+    redirect_to :back, notice: "Reservation was successfully canceled."
   end
 
   private

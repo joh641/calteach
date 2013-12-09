@@ -1,0 +1,20 @@
+#admin-toolbar
+  .dropdown#inventory-settings
+    .settings.btn.btn-default{"data-toggle" => "dropdown"}
+      %i.fa.fa-gear.gear-icon
+      %i.fa.fa-caret-down
+    %ul.dropdown-menu{"role"=>"menu", "aria-labelledby"=>"dLabel"}
+      %li
+        = link_to items_path() do
+          - if @inactive
+            %i.fa.fa-check.icon.trans
+          - else
+            %i.fa.fa-check.icon
+          Show Active
+        =link_to items_path(:inactive => true) do
+          - if @inactive
+            %i.fa.fa-check.icon
+          - else
+            %i.fa.fa-check.icon.trans
+          Show Archived
+  = link_to 'Add Item', new_item_path(), :class => "btn btn-danger add-item"

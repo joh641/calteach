@@ -1,6 +1,17 @@
 $(document).ready(function(){
-  $('#toolbar a:first').tab('show');
-  $('#toolbar a:first').addClass('active');
+
+  var is_admin = $('#is-admin').attr("data-is-admin");
+  console.log($('#is-admin'));
+  console.log(is_admin);
+  console.log("hi");
+  if (is_admin == "true") {
+    $('#toolbar a:last').tab('show');
+    $('#toolbar a:last').addClass('active');
+  }
+  else {
+    $('#toolbar a:first').tab('show');
+    $('#toolbar a:first').addClass('active');
+  }
 
   $(document).on('click', '#toolbar a:not(.active)', function() {
     $('#toolbar a').toggleClass('active');

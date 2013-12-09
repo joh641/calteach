@@ -1,19 +1,16 @@
-#container
+#container.inventory
   .content
     = render partial: 'left_column'
 
     .right-column-container.column
-      - if is_admin?
-        .active-btn
-          -if @inactive
-            = link_to 'Show Active', items_path(), :class => 'btn btn-primary'
-          -else
-            = link_to 'Show Archived', items_path(:inactive => true), :class => 'btn btn-default'
-      .btn-group#toolbar
-        %a.btn.btn-default#card-view-link{:href => "#card-view", "data-toggle" => "tab"}
-          %i.fa.fa-th-large
-        %a.btn.btn-default#list-view-link{:href => "#list-view", "data-toggle" => "tab"}
-          %i.fa.fa-list
+      .header
+        .btn-group#toolbar
+          %a.btn.btn-default#card-view-link{:href => "#card-view", "data-toggle" => "tab"}
+            %i.fa.fa-th-large
+          %a.btn.btn-default#list-view-link{:href => "#list-view", "data-toggle" => "tab"}
+            %i.fa.fa-list
+        - if is_admin?
+          = render "settings"
 
       #item-cards.tab-content
         - if @items.length > 0

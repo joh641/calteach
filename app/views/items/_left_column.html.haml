@@ -1,18 +1,14 @@
-.left-column-container.column
-  / .header-text Calteach Inventory
-  %h2 Search
-  .search-bar-container
+.left-column-container.column.inventory
+  .search-bar-container.left-container
+    %h2 Search
     = form_tag items_path, :method => :get, :id => 'search_form' do
       %input{:class => 'search-bar', :type => 'text', :placeholder => 'Search for an Item...', :name => 'query', :value => @query}
       = submit_tag 'Search', {:id => 'search_submit', :class => "calteach-button"}
-  %h2 Categories
-  %ul
-    - @all_categories.each do |category|
-      %li.category{:data => {:category => category}}>
-        / hardcoded for now
-        %i
-        .category-name= category
-    - if current_user and current_user.admin?
-      %li.category.add-item>
-        %i{:class => "fa fa-barcode"}
-        .category-name= link_to 'Add Item', new_item_path
+  .categories-container.left-container
+    %h2 Categories
+    %ul
+      - @all_categories.each do |category|
+        %li.category{:data => {:category => category}}>
+          / hardcoded for now
+          %i
+          .category-name= category

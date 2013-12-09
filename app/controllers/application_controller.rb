@@ -2,10 +2,10 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  before_filter :all_categories, :due_date_categories
+  before_filter :all_tags, :due_date_categories
 
-  def all_categories
-    @all_categories = ActsAsTaggableOn::Tag.all.map { |tag| tag.name }
+  def all_tags
+    @all_tags = ActsAsTaggableOn::Tag.all.map { |tag| tag.name }
   end
 
   def due_date_categories

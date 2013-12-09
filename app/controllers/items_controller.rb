@@ -10,10 +10,35 @@ class ItemsController < ApplicationController
       @items = Item.active.order(:name)
     end
 
-    if params[:query]
+    if params[:search_query] or params[:tag_query]   
+      print "HEHEHEHEHE"
+      print params[:tag_query]
+
+      if params[:tag_query]
+        session[:tag_query] = params[:tag_query]
+      end
+
+      if params[:search_query]
+        session[:search_query] = params[:search_query]
+      end
+
+      @search_query = session[:search_query]
+      @tag_query = session[:tag_query]
+
+      print @search_query
       #TODO (Yuxin) Is this even safe?
-      @query = params[:query]
-      @items = @items.where("lower(name) = ?", @query.downcase)
+      if @search_query != ""
+        @items = @items.where("lower(name) = ?", @search_query.downcase)
+      end
+
+      if @tag_query != ""
+        puts "HEY GUYS: " + session[:tag_query]
+        @items = @items.tagged_with(session[:tag_query])
+        print @items
+      end
+    elsif
+      session.delete(:search_query)
+      session.delete(:tag_query)
     end
   end
 
@@ -37,7 +62,6 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new
-    @all_tags = ActsAsTaggableOn::Tag.all.map { |tag| tag.name }
   end
 
   def create
@@ -55,7 +79,6 @@ class ItemsController < ApplicationController
 
   def edit
     @item = Item.find_by_id(params[:id])
-    @all_tags = ActsAsTaggableOn::Tag.all.map { |tag| tag.name }
   end
 
   def update

@@ -12,10 +12,6 @@
     = f.label :quantity, 'Quantity'
     = f.text_field :quantity
 
-  #category
-    = f.label :category, 'Category'
-    = f.select :category, @all_categories
-
   #tags
     = f.label :tag_list, 'Tags'
     = f.text_field :tag_list, :data => {all: @all_tags}

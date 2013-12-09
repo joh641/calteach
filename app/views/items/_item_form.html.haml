@@ -1,31 +1,43 @@
-= form_for @item, :multipart => true do |f|
+= form_for @item, :multipart => true, :html => {:class => "form-horizontal"} do |f|
 
-  #name
-    = f.label :name, 'Name'
-    = f.text_field :name
+  #name.form-group
+    = f.label :name, 'Name', :class => "control-label reserve-label"
+    .reserve-input
+      = f.text_field :name, :class => "form-control"
 
-  #id
-    = f.label :legacy_id, 'ID'
-    = f.text_field :legacy_id
+  #id.form-group
+    = f.label :legacy_id, 'ID', :class => "control-label reserve-label"
+    .reserve-input
+      = f.text_field :legacy_id, :class => "form-control"
 
-  #quantity
-    = f.label :quantity, 'Quantity'
-    = f.text_field :quantity
+  #quantity.form-group
+    = f.label :quantity, 'Quantity', :class => "control-label reserve-label"
+    .reserve-input
+      = f.text_field :quantity, :class => "form-control"
 
-  #tags
+  #tags.form-group
     = f.label :tag_list, 'Tags'
     = f.text_field :tag_list, :data => {all: @all_tags}
 
-  #due_date_category
-    = f.label :due_date_category, 'Due Date Category'
-    = f.select :due_date_category, @due_date_categories
+  #category.form-group
+    = f.label :category, 'Category', :class => "control-label reserve-label"
+    .reserve-input
+      = f.select :category, @all_categories, {}, :class => "form-control"
 
-  #description
-    = f.label :description, 'Description'
-    = f.text_area :description
+  #due_date_category.form-group
+    = f.label :due_date_category, 'Due Date Category', :class => "control-label reserve-label"
+    .reserve-input
+      = f.select :due_date_category, @due_date_categories, {}, :class => "form-control"
 
-  #image
-    = f.file_field :image
+  #description.form-group
+    = f.label :description, 'Description', :class => "control-label reserve-label"
+    .reserve-input
+      = f.text_area :description, :class => "form-control"
+
+  #image.form-group
+    = f.label :image, 'Image', :class => "control-label reserve-label"
+    .reserve-input
+      = f.file_field :image
 
   #submit
-    = f.submit 'Submit'
+    = f.submit 'Submit', :class => "btn btn-primary"

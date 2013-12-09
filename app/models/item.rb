@@ -9,7 +9,7 @@ class Item < ActiveRecord::Base
   :storage => :s3,
   :s3_credentials => S3_CREDENTIALS,
   :path => "/items/:style/:id/:filename",
-  :styles => { :medium => "165x165>", :thumb => "100x100>" },
+  :styles => { :medium => "250x250>", :thumb => "100x100>" },
   :default_url => "http://placekitten.com/165/165"
   has_many :reservations
   has_many :users, :through => :reservations

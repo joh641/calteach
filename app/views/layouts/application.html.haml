@@ -3,11 +3,13 @@
 
   %head
 
-    %title Calteach
+    %title Cal Teach Inventory
+    = favicon_link_tag '/favicon.ico'
     = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Open+Sans:300italic,400,300,700,600"
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"
     = csrf_meta_tags
+
 
   %body
 
@@ -46,8 +48,9 @@
           - if user_signed_in?
 
             %li{:class => "tab application"}>
-              %i{:class => "fa fa-ticket"}
-              = link_to "My Reservations", reservations_path
+              = link_to reservations_path do
+                %i{:class => "fa fa-ticket"}
+                %p My Reservations
 
             %li.dropdown-custom.tab.account
               %a

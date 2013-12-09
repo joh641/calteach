@@ -1,15 +1,14 @@
-#container
+#container.inventory
   .content
     = render partial: 'left_column'
     .right-column-container.column
       .item-detail
         .item-left
-          %h2#name= @item.name
           #image= image_tag @item.image.url(:medium), :class => "img-rounded"
           - if is_admin?
             = render partial: 'admin'
         .item-right
-          %h4= "Description"
+          %h2#name= @item.name
           #description= @item.description
           #category{:class => "label label-info"}= @item.category
           #tags
@@ -18,9 +17,6 @@
                 = tag
           %br
           = render :partial => 'reserve_item_form'
-          - if is_admin?
-            = render :partial => 'reservation_history'
-
-          #backlink= link_to 'Back to Items', '/'
-      %br
-
+          / #backlink= link_to 'Back to Items', '/'
+      - if is_admin?
+        = render :partial => 'reservation_history'

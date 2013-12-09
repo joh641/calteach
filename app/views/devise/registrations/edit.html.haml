@@ -1,36 +1,37 @@
 .container
   %h2
-    Edit #{resource_name.to_s.humanize}
-  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+    Account settings
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal"}) do |f|
     = devise_error_messages!
-    %div
-      = f.label :email
-      %br/
-      = f.email_field :email, :autofocus => true
+    .form-group
+      = f.label :email, :class => "account-label control-label"
+      .account-input
+        = f.email_field :email, :autofocus => true, :class => "form-control"
     - if devise_mapping.confirmable? && resource.pending_reconfirmation?
       %div
         Currently waiting confirmation for: #{resource.unconfirmed_email}
+    .form-group
+      = f.label :name, :class => "account-label control-label"
+      .account-input
+        = f.text_field :name, :class => "form-control"
+    .form-group
+      = f.label :phone, :class => "account-label control-label"
+      .account-input
+        = f.text_field :phone, :class => "form-control"
+    .form-group
+      = f.label :password, :class => "account-label control-label"
+      .account-input
+        = f.password_field :password, :autocomplete => "off", :class => "form-control"
+        %i (leave blank if you don't want to change it)
+    .form-group
+      = f.label :password_confirmation, :class => "account-label control-label"
+      .account-input
+        = f.password_field :password_confirmation, :class => "form-control"
+    .form-group
+      = f.label :current_password, :class => "account-label control-label"
+      .account-input
+        = f.password_field :current_password, :class => "form-control"
+        %i (we need your current password to confirm your changes)
     %div
-      = f.label :name
-      %br/
-      = f.text_field :name
-    %div
-      = f.label :phone
-      %br/
-      = f.text_field :phone
-    %div
-      = f.label :password
-      %i (leave blank if you don't want to change it)
-      %br/
-      = f.password_field :password, :autocomplete => "off"
-    %div
-      = f.label :password_confirmation
-      %br/
-      = f.password_field :password_confirmation
-    %div
-      = f.label :current_password
-      %i (we need your current password to confirm your changes)
-      %br/
-      = f.password_field :current_password
-    %div= f.submit "Update"
-  = link_to "Back", :back
+      = f.submit "Update", :class => "btn btn-primary"
+      = link_to "Back", :back, :class => "btn btn-default"

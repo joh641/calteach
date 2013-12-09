@@ -1,6 +1,6 @@
 $(document).ready(function(){
-  $('#toolbar a:last').tab('show');
-  $('#toolbar a:last').addClass('active');
+  $('#toolbar a:first').tab('show');
+  $('#toolbar a:first').addClass('active');
 
   $(document).on('click', '#toolbar a:not(.active)', function() {
     $('#toolbar a').toggleClass('active');
@@ -12,6 +12,7 @@ $(document).ready(function(){
   var datepickerSettings = {
       startDate: new Date(),
       endDate: moment(new Date()).add('days', 59).toDate(),
+      autoclose: true,
       beforeShowDay: function (date) {
         var thisDate = moment(date).format("MM/DD/YYYY");
         if (availability[thisDate] < $('#reservation_quantity').find(":selected").text()) {

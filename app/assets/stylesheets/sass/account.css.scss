@@ -1,0 +1,24 @@
+@import "base";
+
+#error_explanation {
+    background-color: #f0ad4e;
+    color: white;
+    margin-bottom: 20px;
+    padding:5px;
+    h2 {
+        margin-top: 0;
+        font-size: 14pt;
+    }
+    li {
+        margin-left: 20px;
+    }
+}
+
+.form-group {
+  .account-label {
+    @include make-sm-column(2);
+  }
+  .account-input {
+    @include make-sm-column(8);
+  }
+}

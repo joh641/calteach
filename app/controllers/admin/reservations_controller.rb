@@ -59,7 +59,14 @@ class Admin::ReservationsController < ApplicationController
     else
       user = User.find_by_email(parameters[:email])
       item = Item.find_by_id(parameters[:item])
-      reservation = user ? Reservation.find_by_user_id_and_item_id(user.id, item.id) : nil
+
+      if user
+        Reservation.where(["user_id = ? and item_id = ?", user.id, item.id]).each do |r|
+          if r.reserved? and r.reservation_out <= Date.today and r.reservation_in >= Date.today
+            reservation = r
+          end
+        end
+      end
       if not reservation
         reservation = Reservation.new
         reservation.quantity = parameters[:quantity].to_i

@@ -92,8 +92,8 @@ class Reservation < ActiveRecord::Base
       false
     elsif not current_user_admin and end_date > item.get_due_date.business_days.after(start_date.to_datetime + 8.hours).to_date
       false
-    elsif not current_user_admin and (start_date#isweekend or end_date#isweekend)
-      false
+    #elsif not current_user_admin and (start_date#isweekend or end_date#isweekend)
+    #  false
     else
       true
     end

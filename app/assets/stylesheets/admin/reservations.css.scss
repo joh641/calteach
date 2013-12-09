@@ -1,7 +1,7 @@
 @import "base";
 
 .header {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   position: relative;
   .dropdown {
     position: absolute;
@@ -26,6 +26,24 @@
           color: transparent;
         }
       }
+    }
+  }
+}
+.filter {
+  margin-bottom: 15px;
+  .caret-icon {
+    margin-left: 3px;
+  }
+
+}
+
+#filter-section {
+  margin-top: 15px;
+  .form-control {
+    height: 30px;
+    padding: 5px;
+    &#status {
+      width: 120px;
     }
   }
 }
@@ -69,4 +87,15 @@
 
 .Checked_Out {
   background-color: #d9edf7;
+}
+
+#reservation_error {
+  color: #D8000C;
+  background-color: #FFBABA;
+  border: 1px solid;
+  margin: 10px 0px;
+  padding:11px 10px;
+  background-repeat: no-repeat;
+  border-radius:.5em;
+  visibility:hidden;
 }

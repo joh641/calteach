@@ -57,9 +57,9 @@ class Reservation < ActiveRecord::Base
   end
 
   def overlaps?(start_date, end_date)
-    (reservation_out >= start_date and reservation_out <= end_date) or
-    (reservation_in >= start_date and reservation_in <= end_date) or
-    (reservation_out <= start_date and reservation_in >= end_date) or
+    (reservation_out and reservation_out >= start_date and reservation_out <= end_date) or
+    (reservation_in and reservation_in >= start_date and reservation_in <= end_date) or
+    (reservation_out and reservation_in and reservation_out <= start_date and reservation_in >= end_date) or
     (date_out and date_out >= start_date and date_out <= end_date)
   end
 
@@ -112,11 +112,21 @@ class Reservation < ActiveRecord::Base
     number_available = reservation.item.quantity_available(Date.today, Date.today, reservation)
     checkout_date = Date.today
     due_date = reservation.item.get_due_date.business_days.after(DateTime.now).to_date
-    reservation.reservation_out = checkout_date
-    reservation.reservation_in = due_date if !reservation.reservation_in or (reservation.reservation_in and reservation.reservation_in > due_date)
+
+    if !reservation.reservation_in and number_available >= reservation.quantity
+      end_date = Date.today
+      while end_date + 1 <= due_date and reservation.quantity <= reservation.item.quantity_available(Date.today, end_date+1, reservation) do
+        end_date += 1
+      end
+      reservation.reservation_in = end_date
+    elsif reservation.reservation_in and reservation.reservation_in > due_date
+      reservation.reservation_in = due_date
+    end
     reservation.date_out = checkout_date
+
     if number_available >= reservation.quantity
-      reservation.save
+      reservation.save!
+      true
     else
       false
     end

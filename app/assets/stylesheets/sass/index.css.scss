@@ -21,9 +21,12 @@ $page-width: 960px;
 }
 
 .right-column-container {
-  padding: 30px;
-  width: calc(100% - 298px);
-  overflow-y: scroll;
+	padding: 30px;
+	width: calc(100% - 298px);
+	overflow-y: scroll;
+	&.inventory {
+		padding-left: 10px;
+	}
 }
 
 .left-container {
@@ -43,22 +46,23 @@ $page-width: 960px;
   }
 }
 
-$left-column-container-width: 274px;
+$left-column-container-width: 294px;
 .left-column-container {
-  &.inventory {
-    background-color: #f0f0f0;
-  }
-  width: $left-column-container-width;
-  margin-left: 20px;
-  .header-text {
-    padding: 20px 0px 0px 20px;
-    @include line-height(50px, 35px);
-  }
-  h2 {
-    margin-top: 0;
-    padding: 10px 0px 0px 20px;
-    @include line-height(30px, 20px);
-  }
+	&.inventory {
+		background-color: #f0f0f0;
+	}
+	width: $left-column-container-width;
+	padding-left: 20px;
+	padding-right: 20px;
+	.header-text {
+		padding: 20px 0px 0px 20px;
+		@include line-height(50px, 35px);
+	}
+	h2 {
+		margin-top: 0;
+		padding: 10px 0px 0px 20px;
+		@include line-height(30px, 20px);
+	}
 }
 
 .item-wrapper {
@@ -113,38 +117,72 @@ $left-column-container-width: 274px;
 }
 
 .list-item-wrapper {
-  padding-top: 10px;
-  .item-container {
-    background-color: white;
-    padding: 7px;
-    border: 1px #ccc solid;
-    .image-wrapper {
-      margin-top: -10px;
-      margin-right: 5px;
-      margin-bottom: -10px;
-      padding-bottom: 10px;
-      width:50px;
-      height: 50px;
-      overflow:hidden;
-      display: inline-block;
-      position: relative;
-      img {
-        width:50px;
-        height: auto;
-      }
-    }
-    .content {
-      display: inline-block;
-      .title {
-        font-size: 16px;
-      }
-    }
-    .subtitle {
+	padding-top: 10px;
+	.item-container {
+		background-color: white;
+		padding: 7px;
+		border: 1px #ccc solid;
+		.image-wrapper {
+			margin-top: -10px;
+			margin-right: 5px;
+			margin-bottom: -10px;
+			padding-bottom: 10px;
+			width:50px;
+			height: 50px;
+			overflow:hidden;
+			display: inline-block;
+			position: relative;
+			img {
+				width:50px;
+				height: auto;
+			}
+		}
+		.content {
+			display: inline-block;
+			.title {
+				font-size: 16px;
+			}
+		}
+		.subtitle {
 
-      float:right;
-      margin-top: 10px;
-      display: inline-block;
+			float:right;
+			margin-top: 10px;
+			display: inline-block;
 
+			color: white;
+			font-size: 12px;
+			padding: 2px 8px 4px;
+
+			border-radius: 7px;
+			width: 80px;
+			text-align: center;
+			&.available { background-color: $calteach-green; }
+			&.unavailable { background-color: $calteach-red; }
+		}
+		.actions {
+			margin-top: 3px;
+			.button_to {
+				margin-right: 5px;
+				display: inline-block;
+			}
+		}
+	}
+}
+
+$grid-units: 3;
+$category-width: ($left-column-container-width - 44)/$grid-units;
+.category {
+  i {
+    padding-top: 18px;
+    font-size: 35px;
+  }
+  i, .category-name {
+    display: block;
+    text-align: center;
+  }
+  .category-name {
+    @include line-height(25px, 13px);
+    a {
       color: white;
       font-size: 12px;
       padding: 2px 8px 4px;
@@ -235,7 +273,7 @@ $left-column-container-width: 274px;
   margin-right: 10px;
 }
 
-// "No results" styles 
+// "No results" styles
 .no-results-container {
   width: 70%;
   margin: 0 auto;

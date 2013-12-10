@@ -1,18 +1,22 @@
 @import "base";
 
 .item-left {
-  float: left;
-  max-width: 250px;
-  max-height: 250px;
-  margin: auto;
-  #image {
-    text-align: center;
-    background-color: white;
-    border: 1px solid #ccc;
-    img {
-      padding: 10px;
-      max-width: 100%;
-      max-height: 100%;
+    float: left;
+    margin: auto;
+    #image {
+        max-width: 250px;
+        max-height: 250px;
+        text-align: center;
+        background-color: white;
+        border: 1px solid #ccc;
+        img {
+            padding: 10px;
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+    h2 {
+        margin-top: 0;
     }
   }
   h2 {
@@ -93,5 +97,24 @@
 }
 
 .bold {
-  font-weight: bold;
+    font-weight: bold;
+}
+
+.checkout-form {
+    max-width: 400px;
+    padding-top: 20px;
+    .form-group {
+      .reserve-label {
+        @include make-sm-column(4);
+      }
+      .reserve-input {
+        @include make-sm-column(8);
+      }
+    }
+    .form-group#quantity {
+        height: 40px;
+    }
+    .form-group#email {
+        height: 50px;
+    }
 }

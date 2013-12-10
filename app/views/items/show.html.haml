@@ -1,7 +1,7 @@
 #container.inventory
   .content
     = render partial: 'left_column'
-    .right-column-container.column
+    .right-column-container.column.inventory
       .item-detail
         .item-left
           #image= image_tag @item.image.url(:medium), :class => "img-rounded"

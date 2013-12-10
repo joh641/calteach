@@ -123,7 +123,7 @@ class Reservation < ActiveRecord::Base
       raise StandardError, " the reservation end date must be after the start date."
     elsif item.quantity_available(start_date, end_date, exclude_reservation) < quantity_desired
       raise StandardError, " the quantity requested is not available."
-    elsif not current_user_admin and end_date > item.get_due_date.business_days.after(start_date.to_datetime + 8.hours).to_date
+    elsif not current_user_admin and end_date > item.upper_limit(start_date)
       raise StandardError, " the requested length exceeds the max for this item: " + item.get_due_date.to_s + " business days."
     elsif not current_user_admin and on_weekend?(start_date, end_date)
       raise StandardError, " reservations cannot start or end on weekends."
@@ -169,7 +169,7 @@ class Reservation < ActiveRecord::Base
     end
   end
 
-  def self.find_end_of_current_semester 
+  def self.find_end_of_current_semester
     current_month = Date.today.month
     if current_month.between?(1,5)
       end_month = 5

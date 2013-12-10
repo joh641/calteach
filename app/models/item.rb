@@ -37,6 +37,10 @@ class Item < ActiveRecord::Base
     @@due_dates.delete(category_name)
   end
 
+  def upper_limit(start_date)
+    get_due_date.business_days.after(start_date.to_datetime + 8.hours).to_date
+  end
+
   def get_due_date
     @@due_dates[due_date_category]
   end

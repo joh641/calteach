@@ -12,7 +12,7 @@
           #description= @item.description
           #category{:class => "label label-info"}= @item.category
           %br
-          = render :partial => 'reserve_item_form'
+          = render partial: 'reserve_item_form'
           / #backlink= link_to 'Back to Items', '/'
       - if is_admin?
-        = render :partial => 'reservation_history'
+        =render partial: 'reservation_history'

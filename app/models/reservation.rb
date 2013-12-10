@@ -29,6 +29,7 @@ class Reservation < ActiveRecord::Base
   scope :reserved, -> { where(:date_out => nil) }
   scope :checked_out, -> { where("date_out IS NOT NULL AND date_in IS NULL") }
   scope :checked_in, -> { where("date_out IS NOT NULL AND date_in IS NOT NULL") }
+  scope :reserved_or_checked_out, -> { where("(date_out IS NOT NULL AND date_in IS NULL) OR date_out IS NULL") }
 
   scope :within_dates, lambda { |start_date, end_date|
     where("reservation_out > ? AND reservation_in < ?", start_date, end_date) }
@@ -64,6 +65,10 @@ class Reservation < ActiveRecord::Base
 
   def reserved?
     not (canceled? or checked_in? or checked_out?)
+  end
+
+  def reserved_or_checked_out?
+    reserved? or checked_out?
   end
 
   def overlaps?(start_date, end_date)

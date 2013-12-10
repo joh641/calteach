@@ -127,21 +127,22 @@ class Reservation < ActiveRecord::Base
   end
 
   def self.valid_reservation?(start_date, end_date, item, quantity_desired, exclude_reservation= nil, current_user_admin= false)
-    raise StandardError, " the quantity requested must be greater than 0." if quantity_desired == 0
+    raise " the quantity requested must be greater than 0." if quantity_desired == 0
     Reservation.valid_dates?(start_date, end_date, item, current_user_admin)
     if item.quantity_available(start_date, end_date, exclude_reservation) < quantity_desired
-      raise StandardError, " the quantity requested is not available."
+      raise " the quantity requested is not available."
     else
       true
     end
   end
 
   def self.valid_dates?(start_date, end_date, item, current_user_admin)
+    raise " the reservation end date must be after the start date." if end_date < start_date
     return if current_user_admin
     if end_date > item.upper_limit(start_date)
-      raise StandardError, " the requested length exceeds the max for this item: " + item.get_due_date.to_s + " business days."
+      raise " the requested length exceeds the max for this item: " + item.get_due_date.to_s + " business days."
     elsif on_weekend?(start_date, end_date)
-      raise StandardError, " reservations cannot start or end on weekends."
+      raise " reservations cannot start or end on weekends."
     end
   end
 

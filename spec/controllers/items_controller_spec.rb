@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ItemsController do
   before(:each) do
-    request.env["device.mapping"] = Devise.mappings[:user] 
+    request.env["device.mapping"] = Devise.mappings[:user]
     @admin = User.create(:name => 'Test Admin', :email => 'admin@email.com', :phone => '1234567890', :category => User::ADMIN, :password => "password")
     @admin.confirmed_at = Time.zone.now
     @admin.save
@@ -69,6 +69,21 @@ describe ItemsController do
         }
       )
       get :index, :search_query => 'globe'
+      assigns(:items).length.should == 1
+    end
+  end
+  describe 'filtering by tag' do
+    it "shows the results" do
+      Item.create(
+        {
+          name: "Globe",
+          legacy_id: "1",
+          quantity: 5,
+          description: "A round object you can use to view countries of the world!",
+          tag_list: ["science", "geography"]
+        }
+      )
+      get :index, :tag_query => 'science'
       assigns(:items).length.should == 1
     end
   end

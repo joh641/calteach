@@ -24,11 +24,6 @@ class ItemsController < ApplicationController
     if is_valid_query(session[:tag_query])
       @items = @items.tagged_with(session[:tag_query])
     end
-
-    if not (session[:search_query] or session[:tag_query])
-      session.delete(:search_query)
-      session.delete(:tag_query)
-    end
   end
 
   def is_valid_query(input)

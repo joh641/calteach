@@ -59,11 +59,6 @@ class ReservationsController < ApplicationController
 
   private
 
-  # def format_dates(start_date, end_date)
-  #   start_date = start_date != "" ? Reservation.strip_date(start_date) : nil
-  #   end_date = end_date != "" ? Reservation.strip_date(end_date) : nil
-  # end
-
   def update_params(reservation, res_params, start_date, end_date)
     res_params ||= Hash.new
 

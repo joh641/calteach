@@ -47,7 +47,9 @@ class Admin::ReservationsController < ApplicationController
       end
     end
     
-    reservation.notes = (!reservation.notes or reservation.notes == "") ? parameters[:notes] : reservation.notes + " " + parameters[:notes]
+    if parameters[:notes]
+      reservation.notes = (!reservation.notes or reservation.notes == "") ? parameters[:notes] : reservation.notes + " " + parameters[:notes]
+    end
     reservation
   end
 

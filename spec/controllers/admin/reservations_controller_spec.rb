@@ -17,6 +17,37 @@ describe Admin::ReservationsController, :type => :controller  do
     request.env["HTTP_REFERER"] = "/admin/reservations"
   end
 
+  describe 'looking at reservations list' do
+    it 'should show canceled reservations if flag is set' do
+      item = Item.create(:name => "Book", :quantity => 1)
+      r1 = Reservation.create({:user_id => @admin.id, :item_id => item.id, :reservation_out => Date.today + 2, :reservation_in => Date.today + 4, :quantity => 1, :canceled => true})
+      get :index, :canceled => true
+      assigns(:reservations).length.should == Reservation.all.length
+      item.delete()
+      r1.delete()
+    end
+  end
+
+  describe 'updating a reservation' do
+    it 'should go through' do
+      item = Item.create(:name => "Book", :quantity => 1)
+      r1 = Reservation.create({:user_id => @admin.id, :item_id => item.id, :reservation_out => Date.today + 2, :reservation_in => Date.today + 4, :quantity => 1})
+      put :update, :id => r1.id, :reservation => {:reservation_out => Date.today}
+      assigns(:reservation).reservation_out == Date.today
+      item.delete()
+      r1.delete()
+    end
+  end
+
+  describe 'checking in a reservation' do
+    it 'should work for a checked out item' do
+      item = Item.create(:name => "Book", :quantity => 1)
+      r1 = Reservation.create({:user_id => @admin.id, :item_id => item.id, :date_out => Date.today - 2, :reservation_in => Date.today + 4, :quantity => 1})
+      put :checkin, :id => r1.id
+      Reservation.find(r1.id).date_in == Date.today
+    end
+  end
+
   describe 'checking out an item' do
     it 'should redirect to the index if done from dashboard' do
       put :checkout, {:id => @reservation.id, :reserved => true}

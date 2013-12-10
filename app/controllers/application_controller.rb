@@ -12,8 +12,12 @@ class ApplicationController < ActionController::Base
     @due_date_categories = Item.due_date_categories
   end
 
+  def is_admin?
+    !current_user || !current_user.admin?
+  end
+
   def is_admin
-    if !current_user || !current_user.admin?
+    if is_admin?
       flash[:error] = "Error: Not an admin"
       redirect_to root_path
       return

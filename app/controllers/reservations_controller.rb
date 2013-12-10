@@ -31,6 +31,7 @@ class ReservationsController < ApplicationController
       check_valid_reservation(start_date, end_date, reservation)
     end
     make_updates(reservation, params)
+
   end
 
   def cancel
@@ -42,7 +43,6 @@ class ReservationsController < ApplicationController
 
   def make_updates(reservation, params)
     reservation.update_attributes(params[:reservation])
-
     get_response(reservation, params[:return_address])
   end
 
@@ -63,7 +63,7 @@ class ReservationsController < ApplicationController
   end
 
   def check_valid_reservation(start_date, end_date, reservation)
-    if not Reservation.valid_reservation?(start_date, end_date, reservation.item, reservation.quantity, reservation, is_admin)
+    if not Reservation.valid_reservation?(start_date, end_date, reservation.item, reservation.quantity, reservation, is_admin?)
       raise "Conflicting Reservation"
     end
   end

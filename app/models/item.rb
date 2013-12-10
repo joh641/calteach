@@ -45,6 +45,10 @@ class Item < ActiveRecord::Base
     @@due_dates[due_date_category]
   end
 
+  def get_due_date_business_days(date)
+    @@due_dates[due_date_category].business_days.after(date).to_date
+  end
+
   def self.all_categories
     @@all_categories
   end

@@ -105,7 +105,7 @@ class Reservation < ActiveRecord::Base
   # end
 
   def get_due_date
-    self.item.get_due_date.business_days.after(DateTime.now).to_date
+    self.item.get_due_date_business_days(DateTime.now)
   end
 
   def self.hide_canceled

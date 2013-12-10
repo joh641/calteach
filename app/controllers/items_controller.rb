@@ -74,13 +74,13 @@ class ItemsController < ApplicationController
   def destroy
     @item = Item.find_by_id(params[:id])
     @item.soft_delete
-    redirect_and_flash("Item", @item.name, true)
+    redirect_and_flash("Item", @item.name, "unarchived")
   end
 
   def unarchive
     @item = Item.find_by_id(params[:id])
     @item.unarchive
-    redirect_and_flash("Item", @item.name, false)
+    redirect_and_flash("Item", @item.name, "archived")
   end
 
   def checkout

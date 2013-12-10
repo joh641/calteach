@@ -186,4 +186,49 @@ class Reservation < ActiveRecord::Base
       end
     end
   end
+
+
+  def self.filter(params, date_out, date_in)
+    reservations = canceled_res(reservations, params[:canceled])
+    reservations = status_res(reservations, params[:status])
+    reservations = user_item_res(reservations, params[:name], params[:item])
+    reservations = date_res(reservations, date_out, date_in)
+  end
+
+  private
+
+  def self.canceled_res(reservations, canceled)
+    if canceled
+      Reservation.all
+    else
+      Reservation.hide_canceled
+    end
+  end
+
+  def self.status_res(reservations, status)
+    if STATUSES.include? status
+      reservations.send(status.parameterize.underscore.to_sym)
+    else
+      reservations
+    end
+  end
+
+  def self.user_item_res(reservations, name, item)
+    reservations = reservations.for_user(name) if not name.to_s.empty?
+    reservations = reservations.for_item(item) if not item.to_s.empty?
+    reservations
+  end
+
+  def self.date_res(reservations, date_out, date_in)
+    if not date_out.to_s.empty? and not date_in.to_s.empty?
+      reservations.within_dates(date_out, date_in)
+    else
+      reservations
+    end
+  end
+
+  def self.format_date date
+    Date.strptime(date, "%m/%d/%Y").strftime("%Y-%m-%d")
+  end
+
 end

@@ -76,12 +76,25 @@ class Reservation < ActiveRecord::Base
     end_date_overlap = date_within_range?(res_end, start_date, end_date)
 
     begin
-      date_within_res = reservation_out >= start_date and reservation_in <= end_date
+      date_within_res = (res_start <= start_date and res_end >= end_date)
+      date_including_res = (res_start >= start_date and res_end <= end_date)
     rescue NoMethodError
       date_within_res = false
+      date_including_res = false
     end
 
-    return start_date_overlap || end_date_overlap || date_within_res
+    puts start_date_overlap
+    puts end_date_overlap
+    puts date_within_res
+    puts date_including_res
+    puts res_start
+    puts start_date
+    puts res_end
+    puts end_date
+    puts res_start <= start_date
+    puts res_end >= end_date
+
+    return start_date_overlap || end_date_overlap || date_within_res || date_including_res
   end
 
   def date_within_range?(date, start_range, end_range)
@@ -126,7 +139,7 @@ class Reservation < ActiveRecord::Base
 
   def self.valid_reservation?(start_date, end_date, item, quantity_desired, exclude_reservation= nil, current_user_admin= false)
     raise StandardError, " the quantity requested must be greater than 0." if quantity_desired == 0
-    self.valid_dates?(start_date, end_date, item, current_user_admin)
+    Reservation.valid_dates?(start_date, end_date, item, current_user_admin)
     if item.quantity_available(start_date, end_date, exclude_reservation) < quantity_desired
       raise StandardError, " the quantity requested is not available."
     else
@@ -259,5 +272,4 @@ class Reservation < ActiveRecord::Base
       Date.strptime(date, "%m/%d/%Y")
     end
   end
-
 end

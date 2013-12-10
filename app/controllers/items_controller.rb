@@ -10,7 +10,7 @@ class ItemsController < ApplicationController
     session[:search_query] = params[:search_query]
 
     if is_valid_query(session[:search_query])
-      @items = @items.where("name like ?", "%#{session[:search_query]}%")
+      @items = @items.where("upper(name) like ?", "%"+session[:search_query].upcase+"%")
     end
 
     if is_valid_query(session[:tag_query])

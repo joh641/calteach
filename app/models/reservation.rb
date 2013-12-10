@@ -39,11 +39,11 @@ class Reservation < ActiveRecord::Base
   def get_status
     # if archived
     #   "Archived"
-    if canceled
+    if canceled?
       "Canceled"
-    elsif date_in and date_out
+    elsif checked_in?
       "Checked In"
-    elsif date_out and not date_in
+    elsif checked_out?
       Date.today > reservation_in ? "Overdue" : "Checked Out"
     else
       "Reserved"
@@ -93,6 +93,10 @@ class Reservation < ActiveRecord::Base
     update_attribute(:canceled, true)
   end
 
+  def self.on_weekend?(start_date, end_date)
+    start_date.wday == 0 or start_date.wday == 6 or end_date.wday == 0 or end_date.wday == 6
+  end
+
   def self.valid_reservation?(start_date, end_date, item, quantity_desired, exclude_reservation= nil, current_user_admin= false)
     if quantity_desired == 0
       false
@@ -101,6 +105,8 @@ class Reservation < ActiveRecord::Base
     elsif item.quantity_available(start_date, end_date, exclude_reservation) < quantity_desired
       false
     elsif not current_user_admin and end_date > item.get_due_date.business_days.after(start_date.to_datetime + 8.hours).to_date
+      false
+    elsif not current_user_admin and on_weekend?(start_date, end_date)
       false
     else
       true

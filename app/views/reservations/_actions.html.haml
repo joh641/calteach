@@ -3,7 +3,7 @@
   Notes
 
 - if reservation.get_status == "Reserved"
-  = link_to 'Cancel', cancel_reservation_path(reservation), :method => :put, :class => 'btn btn-default btn-sm'
+  = link_to 'Cancel', cancel_reservation_path(reservation), :method => :put, :confirm => 'Are you sure?', :class => 'btn btn-default btn-sm'
 
 
 .modal.fade{"aria-hidden" => "true", "aria-labelledby" => "Notes", role: "dialog", tabindex: "-1", id: "notes#{reservation.id}"}

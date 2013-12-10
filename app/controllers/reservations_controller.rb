@@ -38,13 +38,8 @@ class ReservationsController < ApplicationController
       check_valid_reservation(start_date, end_date, reservation)
     end
 
-    reservation.update_attributes(params[:reservation])
+    make_updates(reservation, params)
 
-    if params[:return_address]
-      respond_with reservation, :location => params[:return_address]
-    else
-      respond_with reservation
-    end
   end
 
   def cancel
@@ -53,6 +48,20 @@ class ReservationsController < ApplicationController
   end
 
   private
+
+  def make_updates(reservation, params)
+    reservation.update_attributes(params[:reservation])
+
+    get_response(reservation, params[:return_address])
+  end
+
+  def get_response(reservation, return_address)
+    if return_address
+      respond_with reservation, :location => return_address
+    else
+      respond_with reservation
+    end
+  end
 
   def check_dates(start_date, end_date, reservation, res_params)
     begin

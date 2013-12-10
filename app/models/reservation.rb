@@ -15,7 +15,6 @@ class Reservation < ActiveRecord::Base
 
   # Supports faculty checkout dates up until the end of the summer session of 2016
   # For additional support, add dates to the top of this list.
-  END_OF_SEMESTER_DAY = 7
 
   scope :canceled, -> { where(canceled: true) }
 

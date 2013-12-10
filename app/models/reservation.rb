@@ -231,7 +231,13 @@ class Reservation < ActiveRecord::Base
   end
 
   def self.format_date date
-    Date.strptime(date, "%m/%d/%Y").strftime("%Y-%m-%d")
+    self.strip_date(date).strftime("%Y-%m-%d")
+  end
+
+  def self.strip_date date
+    if not date.empty?
+      Date.strptime(date, "%m/%d/%Y")
+    end
   end
 
 end

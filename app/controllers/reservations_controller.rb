@@ -28,19 +28,14 @@ class ReservationsController < ApplicationController
   def update
     start_date = params[:start_date]
     end_date = params[:end_date]
+
     if start_date and end_date
-      begin
-        start_date = Reservation.strip_date(start_date)
-        end_date = Reservation.strip_date(end_date)
+      start_date = Reservation.strip_date(start_date)
+      end_date = Reservation.strip_date(end_date)
 
-        params[:reservation] = update_params(reservation, params[:reservation], start_date, end_date)
-      rescue
-        raise "Invalid Date"
-      end
+      params[:reservation] = check_dates(start_date, end_date, reservation, params[:reservation])
 
-      if !Reservation.valid_reservation?(start_date, end_date, reservation.item, reservation.quantity, reservation, is_admin)
-        raise "Conflicting Reservation"
-      end
+      check_valid_reservation(start_date, end_date, reservation)
     end
 
     reservation.update_attributes(params[:reservation])
@@ -58,6 +53,20 @@ class ReservationsController < ApplicationController
   end
 
   private
+
+  def check_dates(start_date, end_date, reservation, res_params)
+    begin
+      update_params(reservation, res_params, start_date, end_date)
+    rescue
+      raise "Invalid Date"
+    end
+  end
+
+  def check_valid_reservation(start_date, end_date, reservation)
+    if not Reservation.valid_reservation?(start_date, end_date, reservation.item, reservation.quantity, reservation, is_admin)
+      raise "Conflicting Reservation"
+    end
+  end
 
   def update_params(reservation, res_params, start_date, end_date)
     res_params ||= Hash.new

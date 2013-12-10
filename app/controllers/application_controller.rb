@@ -13,11 +13,11 @@ class ApplicationController < ActionController::Base
   end
 
   def is_admin?
-    !current_user || !current_user.admin?
+    current_user && current_user.admin?
   end
 
   def is_admin
-    if is_admin?
+    if not is_admin?
       flash[:error] = "Error: Not an admin"
       redirect_to root_path
       return

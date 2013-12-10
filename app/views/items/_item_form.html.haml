@@ -16,13 +16,14 @@
       = f.text_field :quantity, :class => "form-control"
 
   #tags.form-group
-    = f.label :tag_list, 'Tags'
-    = f.text_field :tag_list, :data => {all: @all_tags}
+    = f.label :tag_list, 'Tags', :class => "control-label reserve-label"
+    .tag-input
+      = f.text_field :tag_list, :data => {all: @all_tags}
 
-  #category.form-group
-    = f.label :category, 'Category', :class => "control-label reserve-label"
-    .reserve-input
-      = f.select :category, @all_categories, {}, :class => "form-control"
+  / #category.form-group
+  /   = f.label :category, 'Category', :class => "control-label reserve-label"
+  /   .reserve-input
+  /     = f.select :category, @all_categories, {}, :class => "form-control"
 
   #due_date_category.form-group
     = f.label :due_date_category, 'Due Date Category', :class => "control-label reserve-label"

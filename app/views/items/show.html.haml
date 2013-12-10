@@ -10,10 +10,9 @@
         .item-right
           %h2#name= @item.name
           #description= @item.description
-          #category{:class => "label label-info"}= @item.category
           #tags
             - @item.tag_list.each do |tag|
-              .label.label-info
+              .label.label-default.tag
                 = tag
           %br
           = render :partial => 'reserve_item_form'

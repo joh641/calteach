@@ -76,6 +76,8 @@ describe ReservationsController do
     it 'should save properly' do
       reservation = Reservation.new({:user_id => 1, :item_id => 1, :quantity => 1, :notes => nil})
       reservation.save
+      request.env["HTTP_REFERER"] = "/admin/reservations"
+
       put :cancel, {:id => reservation.id}
       assert Reservation.find(reservation.id).canceled == true
       reservation.destroy

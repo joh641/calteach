@@ -60,7 +60,8 @@ describe Admin::ReservationsController, :type => :controller  do
       due_date = r1.item.get_due_date.business_days.after(DateTime.now).to_date
       num_res = Reservation.all.length
       put :checkout, {:id => 3, :item => item.id, :email => "jon@gmail.com", :quantity => 1}
-      assert Reservation.all.last.date_out == Date.today
+      r1 = Reservation.find(r1.id)
+      assert r1.date_out == Date.today
       assert r1.reservation_in == Date.today + 4
       assert Reservation.all.length == num_res
       item.delete()

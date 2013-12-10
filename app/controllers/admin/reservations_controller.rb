@@ -50,19 +50,23 @@ class Admin::ReservationsController < ApplicationController
   def checkout
     reservation = get_reservation(params)
     checkout_helper(reservation, reservation.user)
+    if params[:reserved]
+      redirect_to :back
+    else
+      redirect_to item_path(Item.find_by_id(params[:item]))
+    end
   end
 
   def get_reservation(parameters)
     if parameters[:reserved]
       reservation = Reservation.find_by_id(parameters[:id])
-      redirect_to :back
     else
       user = User.find_by_email(parameters[:email])
       item = Item.find_by_id(parameters[:item])
 
       if user
         Reservation.where(["user_id = ? and item_id = ?", user.id, item.id]).each do |r|
-          if r.reserved? and r.reservation_out <= Date.today and r.reservation_in >= Date.today
+          if r.reserved? and r.quantity.to_i == parameters[:quantity].to_i and r.reservation_out <= Date.today and r.reservation_in >= Date.today
             reservation = r
           end
         end
@@ -73,7 +77,6 @@ class Admin::ReservationsController < ApplicationController
         reservation.item = item
         reservation.user = user
       end
-      redirect_to item_path(item)
     end
     reservation
   end

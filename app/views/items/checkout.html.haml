@@ -4,17 +4,20 @@
     .right-column-container.column
       .item-detail
         .item-left
-          %h2#name= @item.name
           #image= image_tag @item.image.url(:medium), :class => "img-rounded"
-
-        .item-right
-          = form_tag checkout_admin_reservation_path do
-            = label_tag :quantity, "Quantity"
-            = select_tag :quantity, options_for_select(1..@item.quantity_available)
-            %br
-            = label_tag :email, "User's Email"
-            = text_field_tag :email
-            = hidden_field_tag :item, @item.id
-            = submit_tag 'Checkout Item'
           #backlink
             = link_to 'Back to Description', item_path(@item)
+        .item-right.checkout
+          %h2 Checkout Item
+          = form_tag checkout_admin_reservation_path, :class => "form-horizontal checkout-form" do
+            .form-group#quantity
+              = label_tag :quantity, "Quantity", :class => "control-label reserve-label"
+              .reserve-input
+                = select_tag :quantity, options_for_select(1..@item.quantity_available), :class => "form-control"
+            .form-group#email
+              = label_tag :email, "User's Email", :class => "control-label reserve-label"
+              .reserve-input
+                = text_field_tag :email, nil, :class => "form-control"
+              = hidden_field_tag :item, @item.id
+
+            = submit_tag 'Checkout Item', :class => "btn btn-primary"

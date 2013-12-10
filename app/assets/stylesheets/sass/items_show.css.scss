@@ -2,10 +2,10 @@
 
 .item-left {
     float: left;
-    max-width: 250px;
-    max-height: 250px;
     margin: auto;
     #image {
+        max-width: 250px;
+        max-height: 250px;
         text-align: center;
         background-color: white;
         border: 1px solid #ccc;
@@ -87,4 +87,23 @@
 }
 .bold {
     font-weight: bold;
+}
+
+.checkout-form {
+    max-width: 400px;
+    padding-top: 20px;
+    .form-group {
+      .reserve-label {
+        @include make-sm-column(4);
+      }
+      .reserve-input {
+        @include make-sm-column(8);
+      }
+    }
+    .form-group#quantity {
+        height: 40px;
+    }
+    .form-group#email {
+        height: 50px;
+    }
 }

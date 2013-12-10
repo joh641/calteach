@@ -15,13 +15,13 @@ class ItemsController < ApplicationController
 
     #TODO (Yuxin) Is this even safe?
     if session[:search_query] != ""
-      @items = @items.where("lower(name) = ?", session[:search_query].downcase)
+      @items = @items.where("name like ?", "%#{session[:search_query]}%")
     end
 
     if session[:tag_query] != ""
       @items = @items.tagged_with(session[:tag_query])
     end
-    
+
     if !(params[:search_query] or params[:tag_query])
       session.delete(:search_query)
       session.delete(:tag_query)

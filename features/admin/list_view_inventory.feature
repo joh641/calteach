@@ -23,7 +23,7 @@ Scenario: Admin can delete, edit and checkout items from inventory page
   When I follow "Archive"
   Then I should see "was successfully archived"
 
-  When I follow "Show Archived Items"
+  When I follow "Show Archived"
   Then I should see "Globe"
   Then I should see "Unarchive"
 

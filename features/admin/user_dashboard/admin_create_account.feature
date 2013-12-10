@@ -11,8 +11,8 @@ Background:
 Scenario: Admin can create other admins
   Given I am logged into the admin panel
   When I visit the User Dashboard
-  Then I should see "Create New User"
-  When I follow "Create New User"
+  Then I should see "Add User"
+  When I follow "Add User"
   Then I should see "Name"
   And I should see "Email"
   Then I should see "User Type"
@@ -29,8 +29,8 @@ Scenario: Admin can create other admins
 Scenario: Admin can create faculty users
   Given I am logged into the admin panel
   When I visit the User Dashboard
-  Then I should see "Create New User"
-  When I follow "Create New User"
+  Then I should see "Add User"
+  When I follow "Add User"
   Then I should see "Name"
   And I should see "Email"
   Then I should see "User Type"
@@ -47,8 +47,8 @@ Scenario: Admin can create faculty users
 Scenario: Admin can create basic users
   Given I am logged into the admin panel
   When I visit the User Dashboard
-  Then I should see "Create New User"
-  When I follow "Create New User"
+  Then I should see "Add User"
+  When I follow "Add User"
   Then I should see "Name"
   And I should see "Email"
   Then I should see "User Type"
@@ -74,4 +74,4 @@ Scenario: Admin can create basic users
 
 Scenario: Non-admin cannot create users
   Given I am logged into the user panel
-  Then I should not see "Create New User"
+  Then I should not see "Add User"

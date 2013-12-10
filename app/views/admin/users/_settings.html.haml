@@ -1,0 +1,19 @@
+.dropdown
+  = link_to 'Add User', new_admin_user_path, :class => 'btn btn-primary create-btn'
+  .settings.btn.btn-default{"data-toggle" => "dropdown"}
+    %i.fa.fa-gear.gear-icon
+    %i.fa.fa-caret-down
+  %ul.dropdown-menu{"role"=>"menu", "aria-labelledby"=>"dLabel"}
+    %li
+      = link_to admin_users_path() do
+        - if @inactive
+          %i.fa.fa-check.icon.trans
+        - else
+          %i.fa.fa-check.icon
+        Show Active
+      =link_to admin_users_path(:inactive => true) do
+        - if @inactive
+          %i.fa.fa-check.icon
+        - else
+          %i.fa.fa-check.icon.trans
+        Show Inactive

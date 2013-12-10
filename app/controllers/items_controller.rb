@@ -98,15 +98,15 @@ class ItemsController < ApplicationController
       Item.update_due_date_categories(params[:category], params[:days])
     else 
       @due_date_categories.each do |category|
-        Item.update_due_date_categories(category, params[:#{category}-days])
+        Item.update_due_date_categories(category, params["#{category}-days"])
       end
     end
-    redirect_to :back, notice: "Due date categories successfully updated."
+    redirect_to items_path, notice: "Due date categories successfully updated."
   end
 
   def delete_due_date_category
     Item.delete_due_date_category(params[:category])
-    redirect_to :back, notice: "Due date category was successfully deleted."
+    redirect_to items_path, notice: "Due date category was successfully deleted."
   end
 
 end

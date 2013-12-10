@@ -31,8 +31,9 @@ class ItemsController < ApplicationController
     end
   end
 
-  def is_valid_query(input):
-    return not [nil, ""].include?(input)
+  def is_valid_query(input)
+    return ! [nil, ""].include?(input)
+  end
 
   def show
     @item = Item.find_by_id(params[:id])

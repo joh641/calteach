@@ -93,7 +93,7 @@ class ItemsController < ApplicationController
     @item = find_item_by_id(params[:id])
   end
 
-  def find_item_by_id(id):
+  def find_item_by_id(id)
     return Item.find_by_id(id)
   end
 

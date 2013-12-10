@@ -25,7 +25,7 @@ class ItemsController < ApplicationController
       @items = @items.tagged_with(session[:tag_query])
     end
 
-    if ! (params[:search_query] or params[:tag_query])
+    if not (session[:search_query] or session[:tag_query])
       session.delete(:search_query)
       session.delete(:tag_query)
     end

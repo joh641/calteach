@@ -78,7 +78,7 @@ class Admin::ReservationsController < ApplicationController
   end
 
   def checkout_helper(reservation, user)
-    if user and Reservation.checkout(reservation)
+    if user and Reservation.checkout(reservation, user)
       flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}."
     else
       flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation."

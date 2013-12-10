@@ -31,9 +31,8 @@ class ReservationsController < ApplicationController
       check_valid_reservation(start_date, end_date, reservation)
     end
 
-    reservation.update_attributes(params[:reservation])
+    make_updates(reservation, params)
 
-    get_response(reservation, params[:return_address])
   end
 
   def cancel
@@ -42,6 +41,12 @@ class ReservationsController < ApplicationController
   end
 
   private
+
+  def make_updates(reservation, params)
+    reservation.update_attributes(params[:reservation])
+
+    get_response(reservation, params[:return_address])
+  end
 
   def get_response(reservation, return_address)
     if return_address

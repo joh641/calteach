@@ -22,9 +22,10 @@
           %span.icon-bar
           %span.icon-bar
 
-        = link_to "/" do
+        = link_to "/", :class => "home-link" do
           =image_tag "calteach-logo-white.png"
-          [inventory]
+          %span.inventory-menu-text
+            INVENTORY
 
       .navbar-collapse.collapse
         %ul{:class => "nav navbar-nav navbar-right main-navigation"}

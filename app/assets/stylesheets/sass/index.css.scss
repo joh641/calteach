@@ -1,11 +1,25 @@
 @import "base";
 
+$calteach-background-color: #fafafa;
+
 html, body {
   height: 100%;
 }
 
-#container.inventory {
-  background-color: #f0f0f0;
+//override bootstrap, makes even columns a certain color, instead of transparent
+.table-striped tbody > tr:nth-child(even) > td, .table-striped tbody > tr:nth-child(even) > th {
+    background-color: white;
+}
+.table-striped tbody > tr:nth-child(odd) > td, .table-striped tbody > tr:nth-child(odd) > th {
+    background-color: #f4f4f4;
+}
+
+body {
+  background-color: $calteach-background-color;
+}
+
+#container.grey {
+  background-color:$calteach-background-color;
 }
 
 h1, h2, h3, h4, h5, h6, p, div {
@@ -31,7 +45,7 @@ $page-width: 960px;
 
 .left-container {
   background-color: white;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   box-sizing: border-box;
 
   &.tags-container {
@@ -49,7 +63,7 @@ $page-width: 960px;
 $left-column-container-width: 294px;
 .left-column-container {
 	&.inventory {
-		background-color: #f0f0f0;
+		background-color: $calteach-background-color;
 	}
 	width: $left-column-container-width;
 	padding-left: 20px;
@@ -78,7 +92,7 @@ $left-column-container-width: 294px;
     .item-container {
       @include border-radius(2px, 2px, 2px, 2px);
       text-align: center;
-      border: 1px #ccc solid;
+      border: 1px #ddd solid;
       background-color: white;
       .item-info {
         .img-wrapper {
@@ -296,5 +310,14 @@ $category-width: ($left-column-container-width - 44)/$grid-units;
   }
 }
 
+.account-form-button {
+  margin-top: 10px;
+}
 
+// Fixes Bootstrap Shifting Container Issue
+// https://github.com/jschr/bootstrap-modal/issues/64
+body.modal-open {
+  margin-left: auto;
+  margin-right: auto;
+}
 

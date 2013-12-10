@@ -10,43 +10,6 @@ $calteach-yellow: #f5cd38;
 $calteach-dark-blue: #0076b7;
 $main-font: 'Open Sans', sans-serif;
 
-.calteach-button {
-    text-decoration: none;
-    display: inline-block;
-    margin: 0px 20px;
-    margin-top: 20px;
-    font-family: $main-font;
-    padding: 0 20px;
-    background-color: $calteach-blue;
-    color: white;
-    text-align: center;
-    @include height(35px, 15px);
-    overflow: hidden;
-    border: none;
-    &:hover {
-            background-color: darken($calteach-blue, 20%);
-    }
-    cursor: pointer;
-}
-
-.button-blue {
-    background-color: $calteach-blue;
-    &:hover {
-            background-color: darken($calteach-blue, 20%);
-    }
-}
-
-.button-green {
-    background-color: $calteach-green;
-    &:hover {
-            background-color: darken($calteach-green, 20%);
-    }
-}
-
-.input-group .calteach-button {
-    margin-left: 0;
-}
-
 textarea:focus, input:focus{
     outline: 0;
 }

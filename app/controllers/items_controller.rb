@@ -29,8 +29,6 @@ class ItemsController < ApplicationController
   end
 
   def show
-    puts "yoyoyo"
-    puts params[:id]
     @item = Item.find_by_id(params[:id])
     @reservations = @item.reservations
 

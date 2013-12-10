@@ -146,10 +146,10 @@ class Reservation < ActiveRecord::Base
     end
   end
 
-  def self.make_reservation(user, item, start_date, end_date, quantity_desired)
+  def self.make_reservation(user, item, start_date, end_date, quantity_desired, current_user_admin= false)
     start_date = Date.strptime(start_date, "%m/%d/%Y")
     end_date = Date.strptime(end_date, "%m/%d/%Y")
-    create(:user_id => user.id, :item_id => item.id, :reservation_out => start_date, :reservation_in => end_date, :quantity => quantity_desired) if valid_reservation?(start_date, end_date, item, quantity_desired)
+    create(:user_id => user.id, :item_id => item.id, :reservation_out => start_date, :reservation_in => end_date, :quantity => quantity_desired) if valid_reservation?(start_date, end_date, item, quantity_desired, current_user_admin)
   end
 
   def self.checkout(reservation, user)

@@ -1,16 +1,27 @@
-.btn.btn-default.btn-sm{"data-toggle" => "modal", "data-target" => "#notes#{reservation.id}"}
-  %i.fa.fa-book.book-icon
-  Notes
+.dropdown
+  .btn.btn-default.btn-sm{"data-toggle" => "dropdown"}
+    Actions
+    %i.fa.fa-caret-down#down-arrow
 
-- if reservation.get_status == "Reserved"
-  = link_to 'Check Out', checkout_admin_reservation_path(reservation, :reserved => true), :method => :put, :class => 'btn btn-default btn-sm'
-  = link_to 'Cancel', cancel_reservation_path(reservation), :method => :put, :confirm => 'Are you sure?', :class => 'btn btn-default btn-sm'
-- if reservation.get_status == "Checked Out" || reservation.get_status == "Overdue"
-  = link_to 'Check In', checkin_admin_reservation_path(reservation), :method => :put, :class => 'btn btn-default btn-sm'
-/ - if reservation.get_status == "Checked In" || reservation.get_status == "Canceled"
-/   = link_to 'Archive', archive_admin_reservation_path(reservation), :method => :put, :class => 'btn btn-default btn-sm'
+  %ul.dropdown-menu#action-menu{"role"=>"menu", "aria-labelledby"=>"dLabel"}
+    %li
+      %a.notes-link{"data-toggle" => "modal", "data-target" => "#notes#{reservation.id}"}
+        %i.fa.fa-book.book-icon
+        Notes
+    %li
+      - if reservation.get_status == "Reserved"
+        = link_to checkout_admin_reservation_path(reservation, :reserved => true), :method => :put do
+          %i.fa.fa-arrow-circle-o-up
+          Check Out
+        = link_to cancel_reservation_path(reservation), :method => :put, :confirm => 'Are you sure?' do
+          %i.fa.fa-times-circle
+          Cancel
+      - if reservation.get_status == "Checked Out" || reservation.get_status == "Overdue"
+        = link_to checkin_admin_reservation_path(reservation), :method => :put do
+          %i.fa.fa-arrow-circle-o-down
+          Check In
 
-
+/Notes Modal
 .modal.fade{"aria-hidden" => "true", "aria-labelledby" => "Notes", role: "dialog", tabindex: "-1", id: "notes#{reservation.id}"}
   .modal-dialog
     .modal-content

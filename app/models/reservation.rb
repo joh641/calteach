@@ -108,6 +108,10 @@ class Reservation < ActiveRecord::Base
   #   where(:archived => false)
   # end
 
+  def get_due_date
+    self.item.get_due_date_business_days(DateTime.now)
+  end
+
   def self.hide_canceled
     where(:canceled => false)
   end
@@ -145,7 +149,7 @@ class Reservation < ActiveRecord::Base
   def self.checkout(reservation, user)
     number_available = reservation.get_max_item_quantity(Date.today, Date.today)
     reservation.date_out = Date.today
-    due_date = reservation.item.get_due_date.business_days.after(DateTime.now).to_date
+    due_date = reservation.get_due_date
 
     begin
       reservation.reservation_in = due_date if reservation.reservation_in > due_date

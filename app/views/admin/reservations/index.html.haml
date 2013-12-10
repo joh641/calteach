@@ -28,9 +28,9 @@
           %td
           %td= select_tag :status, options_for_select(["All"] + Reservation::STATUSES, @default_status), :class => 'form-control'
           %td.input-daterange
-            =text_field_tag :date_out, @default_date_out, :placeholder => "After This Date", :class => "form-control"
+            =text_field_tag :date_out, @default_date_out, :placeholder => "Start Date", :class => "form-control"
           %td.input-daterange
-            =text_field_tag :date_in, @default_date_in, :placeholder => "Before This Date", :class => "form-control"
+            =text_field_tag :date_in, @default_date_in, :placeholder => "End Date", :class => "form-control"
           %td
             = submit_tag 'Filter', :class => "btn btn-primary btn-sm"
       - @reservations.to_a.each do |reservation|
@@ -43,8 +43,7 @@
           %td= link_to "#{reservation.item.name}", item_path(reservation.item)
           %td= reservation.quantity
           %td= reservation.get_status
-          %td{:class => "reservation_out", :'data-id' => reservation.id}= date_out(reservation)
-          %td{:class => "reservation_in", :'data-id' => reservation.id}= date_in(reservation)
+          = render "/reservations/date_cells", :reservation => reservation
           %td= render "actions", :reservation => reservation
 
   %div{:id => "reservation_error", :visible => "false"}

@@ -50,32 +50,47 @@ class Admin::ReservationsController < ApplicationController
   def checkout
     reservation = get_reservation(params)
     checkout_helper(reservation, reservation.user)
-    redirect_to :back
   end
 
   def get_reservation(parameters)
     if parameters[:reserved]
       reservation = Reservation.find_by_id(parameters[:id])
+      redirect_to :back
     else
       user = User.find_by_email(parameters[:email])
       item = Item.find_by_id(parameters[:item])
-      reservation = user ? Reservation.find_by_user_id_and_item_id(user.id, item.id) : nil
+
+      if user
+        Reservation.where(["user_id = ? and item_id = ?", user.id, item.id]).each do |r|
+          if r.reserved? and r.reservation_out <= Date.today and r.reservation_in >= Date.today
+            reservation = r
+          end
+        end
+      end
       if not reservation
         reservation = Reservation.new
         reservation.quantity = parameters[:quantity].to_i
         reservation.item = item
         reservation.user = user
       end
+      redirect_to item_path(item)
     end
     reservation
   end
 
   def checkout_helper(reservation, user)
-    if user and Reservation.checkout(reservation)
-      flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}."
+    if user
+      if reservation.quantity and reservation.quantity > 0
+        if Reservation.checkout(reservation, user)
+          flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}."
+        else
+          flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation."
+        end
+      else
+        flash[:warning] = "Reservation quantity cannot be zero"
+      end
     else
-      flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation."
-      flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out." if !user
+      flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out."
     end
   end
 

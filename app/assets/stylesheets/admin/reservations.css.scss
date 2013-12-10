@@ -29,12 +29,13 @@
     }
   }
 }
+
+
 .filter {
   margin-bottom: 15px;
   .caret-icon {
     margin-left: 3px;
   }
-
 }
 
 #filter-section {
@@ -43,7 +44,7 @@
     height: 30px;
     padding: 5px;
     &#status {
-      width: 120px;
+      width: 100px;
     }
   }
 }
@@ -98,4 +99,36 @@
   background-repeat: no-repeat;
   border-radius:.5em;
   visibility:hidden;
+}
+
+table {
+  #name {
+    max-width: 140px;
+  }
+  #item {
+    max-width: 200px;
+  }
+  #date_out, #date_in {
+    max-width: 90px;
+  }
+}
+
+
+#down-arrow {
+  margin-left: 2px;
+}
+#action-menu {
+  min-width: 80px;
+  li {
+    font-size: 12px;
+    font-weight: 400;
+    margin-left: 5px;
+    text-align: left;
+    a {
+      padding-left: 2px;
+    }
+    i {
+      margin-right: 5px;
+    }
+  }
 }

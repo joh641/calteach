@@ -13,10 +13,23 @@ class Reservation < ActiveRecord::Base
 
   STATUSES = ["Canceled", "Checked Out", "Checked In", "Reserved"]
 
+  # Supports faculty checkout dates up until the end of the summer session of 2016
+  # For additional support, add dates to the top of this list.
+  END_OF_SEMESTER_DATES = [Date.new(2016,  8, 12),
+                           Date.new(2016,  5,  9),
+                           Date.new(2015, 12, 14),
+                           Date.new(2015,  8, 14),
+                           Date.new(2015,  5, 11),
+                           Date.new(2014, 12, 15),
+                           Date.new(2014,  8, 15),
+                           Date.new(2014,  5, 12),
+                           Date.new(2013, 12, 16)]
+
   scope :canceled, -> { where(canceled: true) }
   scope :reserved, -> { where(:date_out => nil) }
   scope :checked_out, -> { where("date_out IS NOT NULL AND date_in IS NULL") }
   scope :checked_in, -> { where("date_out IS NOT NULL AND date_in IS NOT NULL") }
+  scope :reserved_or_checked_out, -> { where("(date_out IS NOT NULL AND date_in IS NULL) OR date_out IS NULL") }
 
   scope :within_dates, lambda { |start_date, end_date|
     where("reservation_out > ? AND reservation_in < ?", start_date, end_date) }
@@ -24,16 +37,14 @@ class Reservation < ActiveRecord::Base
   scope :for_user, lambda {|name| joins(:user).where("users.name = ?", name)}
   scope :for_item, lambda {|name| joins(:item).where("items.name = ?", name)}
 
-
-
   def get_status
     # if archived
     #   "Archived"
-    if canceled
+    if canceled?
       "Canceled"
-    elsif date_in and date_out
+    elsif checked_in?
       "Checked In"
-    elsif date_out and not date_in
+    elsif checked_out?
       Date.today > reservation_in ? "Overdue" : "Checked Out"
     else
       "Reserved"
@@ -56,10 +67,14 @@ class Reservation < ActiveRecord::Base
     not (canceled? or checked_in? or checked_out?)
   end
 
+  def reserved_or_checked_out?
+    reserved? or checked_out?
+  end
+
   def overlaps?(start_date, end_date)
-    (reservation_out >= start_date and reservation_out <= end_date) or
-    (reservation_in >= start_date and reservation_in <= end_date) or
-    (reservation_out <= start_date and reservation_in >= end_date) or
+    (reservation_out and reservation_out >= start_date and reservation_out <= end_date) or
+    (reservation_in and reservation_in >= start_date and reservation_in <= end_date) or
+    (reservation_out and reservation_in and reservation_out <= start_date and reservation_in >= end_date) or
     (date_out and date_out >= start_date and date_out <= end_date)
   end
 
@@ -83,6 +98,10 @@ class Reservation < ActiveRecord::Base
     update_attribute(:canceled, true)
   end
 
+  def self.on_weekend?(start_date, end_date)
+    start_date.wday == 0 or start_date.wday == 6 or end_date.wday == 0 or end_date.wday == 6
+  end
+
   def self.valid_reservation?(start_date, end_date, item, quantity_desired, exclude_reservation= nil, current_user_admin= false)
     if quantity_desired == 0
       false
@@ -91,6 +110,8 @@ class Reservation < ActiveRecord::Base
     elsif item.quantity_available(start_date, end_date, exclude_reservation) < quantity_desired
       false
     elsif not current_user_admin and end_date > item.get_due_date.business_days.after(start_date.to_datetime + 8.hours).to_date
+      false
+    elsif not current_user_admin and on_weekend?(start_date, end_date)
       false
     else
       true
@@ -108,15 +129,33 @@ class Reservation < ActiveRecord::Base
     end
   end
 
-  def self.checkout(reservation)
+  def self.checkout(reservation, user)
     number_available = reservation.item.quantity_available(Date.today, Date.today, reservation)
     checkout_date = Date.today
     due_date = reservation.item.get_due_date.business_days.after(DateTime.now).to_date
-    reservation.reservation_out = checkout_date
-    reservation.reservation_in = due_date if !reservation.reservation_in or (reservation.reservation_in and reservation.reservation_in > due_date)
+
+    if !reservation.reservation_in and number_available >= reservation.quantity
+      if user.category_str == "Faculty"
+        END_OF_SEMESTER_DATES.each do |date|
+          if Date.today < date
+            reservation.reservation_in = date
+          end
+        end
+      else
+        end_date = Date.today
+        while end_date + 1 <= due_date and reservation.quantity <= reservation.item.quantity_available(Date.today, end_date+1, reservation) do
+          end_date += 1
+        end
+        reservation.reservation_in = end_date
+      end
+    elsif reservation.reservation_in and reservation.reservation_in > due_date
+      reservation.reservation_in = due_date
+    end
     reservation.date_out = checkout_date
+
     if number_available >= reservation.quantity
-      reservation.save
+      reservation.save!
+      reservation
     else
       false
     end

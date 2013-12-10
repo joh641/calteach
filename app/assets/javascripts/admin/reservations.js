@@ -6,39 +6,34 @@ $(document).ready(function() {
     var last_clicked_field = null;
     var last_entered_date = null;
 
-    $('.best_in_place').best_in_place()
-        .on('ajax:error', function(evt, data, status, xhr) {
-            var response = ($('<p />').html(data['responseText'])).find('pre');
-            var error = response.first().text();
+    $(".res_date").each(function(index, date){
+        $(date).parent().append('<span class="btn-link", data-type="date-edit"><i class="fa fa-pencil pencil-icon"></i></span>');
+    });
 
-            $('#reservation_error').text(response.first().text()).css("visibility", "visible");
-            if (error != "Invalid Date") {
-                if (response.text().indexOf(date_out_key) != -1) {
-                    var date = new Date(findValInHashText(response, date_out_key));
-                    var date_string = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
-                    var id = findValInHashText(response, id_key);
-                    var s = $("[data-inner_class=reservation_out_" + id + "]")
-                }
-            }
-        })
-        .on('ajax:success', function(evt, data, status, xhr) {
-            $('#reservation_error').css("visibility", "hidden");
-        });
+    $('.best_in_place').best_in_place()
 
     $(document).click(function (event) {
         if (last_clicked_field != null) {
             if (!last_clicked_field.is(event.target) && last_clicked_field.has(event.target).length == 0) {
-                convertTextBoxToDiv(last_clicked_field);
+                convertTextBoxToDiv(last_clicked_field.children().first());
                 last_clicked_field = null;
                 last_entered_date = null;
             } else {
                 return;
             }
         }
-        if ($(event.target).hasClass("res_date")){
-            var last_clicked_cell = $(event.target).parent();
-            convertDivToTextBox($(event.target));
-            last_clicked_field = last_clicked_cell.children().first();
+
+        var cell = null;
+        if ($(event.target).parent().attr('class') == "btn-link" && $(event.target).parent().parent().children().first().attr('class') == 'res_date') {
+            cell = $(event.target).parent().parent();
+        } else if ($(event.target).attr('class') == "res_date") {
+            cell = $(event.target).parent()
+        }
+
+        if (cell != null) {
+            var last_clicked_cell = cell;
+            convertDivToTextBox(cell.children().first());
+            last_clicked_field = last_clicked_cell;
             last_entered_date = last_clicked_field.val();
         }
     });
@@ -83,7 +78,7 @@ $(document).ready(function() {
         }
 
         reservation_out = reservation_out.replace(/(\r\n|\n|\r)/gm,"");
-        reservation_out = reservation_out.trim()
+        reservation_out = reservation_out.trim();
 
         $.ajax({
             type: "POST",
@@ -108,7 +103,7 @@ $(document).ready(function() {
     }
 
     function replaceWithDate(element, date) {
-        element.parent().prepend('<div class="res_date">' + date + "</div>");
+        element.parent().prepend('<span class="res_date">' + date + "</span>");
         element.remove();
     }
 

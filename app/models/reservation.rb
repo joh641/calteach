@@ -143,10 +143,10 @@ class Reservation < ActiveRecord::Base
     reservation.date_out = Date.today
     due_date = reservation.item.get_due_date.business_days.after(DateTime.now).to_date
 
-    if !reservation.reservation_in and number_available >= reservation.quantity
-      Reservation.find_valid_end_date(reservation, due_date)
-    elsif reservation.reservation_in and reservation.reservation_in > due_date
-      reservation.reservation_in = due_date
+    begin
+      reservation.reservation_in = due_date if reservation.reservation_in > due_date
+    rescue NoMethodError
+      Reservation.find_valid_end_date(reservation, due_date) if number_available >= reservation.quantity
     end
 
     number_available >= reservation.quantity ? reservation.save! : false
@@ -173,7 +173,7 @@ class Reservation < ActiveRecord::Base
     else
       end_month = 12
     end
-    return Date.new(Date.today.year, end_month, 8)
+    return Date.new(Date.today.year, end_month, 20)
   end
 
   def self.to_csv(options = {})

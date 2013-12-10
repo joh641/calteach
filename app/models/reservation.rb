@@ -40,7 +40,7 @@ class Reservation < ActiveRecord::Base
   scope :for_user, lambda {|name| joins(:user).where("users.name = ?", name)}
   scope :for_item, lambda {|name| joins(:item).where("items.name = ?", name)}
 
-  scope :checkout_reservation, lambda {where("reservation_out <= ? AND reservation_in >= ?", Date.today, Date.today)}
+  scope :checkout_reservation, lambda {where("reservation_out <= ? AND reservation_in >= ?", Date.today, Date.today).readonly(false)}
   scope :has_quantity, lambda {|q| where("reservations.quantity = ?", q)}
 
   def get_status

@@ -85,3 +85,37 @@
 #backlink {
   margin-top: 10px
 }
+
+
+.tag {
+  font-weight: 300;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 12px;
+  margin-bottom: 5px; //if there's multiple lines of tags
+  border-radius: 0.75em;
+  margin-right: 5px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.checkout-form {
+  max-width: 400px;
+  padding-top: 20px;
+  .form-group {
+  .reserve-label {
+      @include make-sm-column(4);
+    }
+    .reserve-input {
+      @include make-sm-column(8);
+    }
+  }
+  .form-group#quantity {
+    height: 40px;
+  }
+  .form-group#email {
+     height: 50px;
+  }
+}

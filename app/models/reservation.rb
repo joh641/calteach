@@ -15,15 +15,15 @@ class Reservation < ActiveRecord::Base
 
   # Supports faculty checkout dates up until the end of the summer session of 2016
   # For additional support, add dates to the top of this list.
-  END_OF_SEMESTER_DATES = [DateTime.new(2016,  8, 12),
-                           DateTime.new(2016,  5,  9),
-                           DateTime.new(2015, 12, 14),
-                           DateTime.new(2015,  8, 14),
-                           DateTime.new(2015,  5, 11),
-                           DateTime.new(2014, 12, 15),
-                           DateTime.new(2014,  8, 15),
-                           DateTime.new(2014,  5, 12),
-                           DateTime.new(2013, 12, 16)]
+  END_OF_SEMESTER_DATES = [Date.new(2016,  8, 12),
+                           Date.new(2016,  5,  9),
+                           Date.new(2015, 12, 14),
+                           Date.new(2015,  8, 14),
+                           Date.new(2015,  5, 11),
+                           Date.new(2014, 12, 15),
+                           Date.new(2014,  8, 15),
+                           Date.new(2014,  5, 12),
+                           Date.new(2013, 12, 16)]
 
   scope :canceled, -> { where(canceled: true) }
   scope :reserved, -> { where(:date_out => nil) }

@@ -24,7 +24,7 @@
           %td
             = link_to 'Edit', edit_admin_user_path(user), :class => 'btn btn-default btn-sm', :id => "edit#{user.id}"
             - if user.can_deactivate?
-              = link_to 'Deactivate', admin_user_path(user), :method => :delete, :class => 'btn btn-danger btn-sm', :id => "destroy#{user.id}"
+              = link_to 'Deactivate', admin_user_path(user), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-danger btn-sm', :id => "destroy#{user.id}"
             - elsif user.inactive
-              = link_to 'Activate', activate_admin_user_path(user), :method => :put, :class => 'btn btn-danger btn-sm', :id => "activate#{user.id}"
+              = link_to 'Activate', activate_admin_user_path(user), :method => :put, :confirm => 'Are you sure?', :class => 'btn btn-danger btn-sm', :id => "activate#{user.id}"
             / :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }

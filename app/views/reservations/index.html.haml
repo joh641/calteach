@@ -1,6 +1,6 @@
 .container
   %h1 My Reservations
-  %table.table.table-striped
+  %table.table
     %thead
       %tr
         %th Item
@@ -11,7 +11,7 @@
         %th Actions
     .body
       - @reservations.each do |reservation|
-        %tr
+        %tr{:class => reservation.get_status.sub(" ", "_")}
           %td= link_to "#{reservation.item.name}", item_path(reservation.item)
           %td= reservation.quantity
           %td= reservation.get_status

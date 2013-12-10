@@ -17,6 +17,8 @@ $(document).ready(function(){
     $('#toolbar a').toggleClass('active');
   });
 
+  $("#item_tag_list").select2({tags:$('#item_tag_list').data('all')});
+
   var availability = $.parseJSON($('#reservation form').attr('avail_hash'));
   var datepickerSettings = {
       startDate: new Date(),
@@ -38,7 +40,11 @@ $(document).ready(function(){
     $('#reservation_start_date').val('');
     $('#reservation_end_date').val('');
     $('#reservation .input-daterange').datepicker(datepickerSettings);
-  })
+  });
+
+  $.datepicker.setDefaults({
+    dateFormat: 'yyyy/mm/dd'
+  });
 })
 
 

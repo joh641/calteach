@@ -5,13 +5,7 @@ class ItemsController < ApplicationController
   def index
     @items = params[:inactive] ? Item.inactive.order(:name) : Item.active.order(:name)
     @inactive = params[:inactive]
-    # if params[:inactive]
-    #   @items = Item.inactive.order(:name)
-    #   @inactive = true
-    # else
-    #   @items = Item.active.order(:name)
-    # end
-
+    
     session[:tag_query] = params[:tag_query]
     session[:search_query] = params[:search_query]
 
@@ -93,7 +87,7 @@ class ItemsController < ApplicationController
     status = un ? "unarchived" : "archived"
     redirect_to :back, notice: "Item #{name} was successfully #{status}."
   end
-  
+
   def checkout
     @item = Item.find_by_id(params[:id])
   end

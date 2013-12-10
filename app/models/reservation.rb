@@ -83,7 +83,7 @@ class Reservation < ActiveRecord::Base
 
     start_date_overlap = date_within_range?(res_start, start_date, end_date)
     end_date_overlap = date_within_range?(res_end, start_date, end_date)
-    
+
     begin
       date_within_res = reservation_out <= start_date and reservation_in >= end_date
     rescue NoMethodError
@@ -252,7 +252,7 @@ class Reservation < ActiveRecord::Base
   end
 
   def self.strip_date date
-    if not date.empty?
+    if not date.to_s.empty?
       Date.strptime(date, "%m/%d/%Y")
     end
   end

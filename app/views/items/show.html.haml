@@ -15,4 +15,27 @@
           = render :partial => 'reserve_item_form'
           / #backlink= link_to 'Back to Items', '/'
       - if is_admin?
-        = render :partial => 'reservation_history'
+        #reservation-table.col-sm-12.form-horizontal
+          %h4 Reservations on this item
+          %table.table.sortable
+            %thead
+              %tr
+                %th Name
+                %th #
+                %th Status
+                %th Date Out
+                %th Date In
+                %th.sorttable_nosort Actions
+            .body
+              - @reservations.reserved_or_checked_out.to_a.reverse_each do |reservation|
+                - user = reservation.user
+                %tr{:class => reservation.get_status.sub(" ", "_")}
+                  %td
+                    =user.name
+                    %a{:href => "mailto:" + user.email}
+                      %i.fa.fa-envelope-o.envelope-icon
+                  %td= reservation.quantity
+                  %td= reservation.get_status
+                  %td{:class => "reservation_out", :'data-id' => reservation.id}= date_out(reservation)
+                  %td{:class => "reservation_in", :'data-id' => reservation.id}= date_in(reservation)
+                  %td= render partial: '/admin/reservations/actions', locals: {reservation: reservation}

@@ -19,5 +19,5 @@ Scenario: I should be able to sort reservations on the Date Out column
   Given this is pending
   When I follow "Date Out"
   Then I should see the reservations in this order:
-   | Globe |
+   | Globe  |
    | Pencil |

@@ -27,3 +27,11 @@ Scenario: Create an item using invalid inputs, negative quantity (sad path)
   And I press "Submit"
   Then I should see "Add Item"
   And I should see "Invalid quantity specified."
+
+Scenario: Mass Add Items
+  When I follow "Import Items"
+  When I attach the file "features/support/test.csv" to "file"
+  And I press "Import"
+  Then I should be on the Calteach inventory page
+  And I should see "Items imported!"
+  And I should see "Absolute Ethynol"

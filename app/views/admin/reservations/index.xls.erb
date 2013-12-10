@@ -12,7 +12,7 @@
         <Cell><Data ss:Type="String">User Email</Data></Cell>
         <Cell><Data ss:Type="String">Item ID</Data></Cell>
         <Cell><Data ss:Type="String">Item Name</Data></Cell>
-        <Cell><Data ss:Type="String">Item Category</Data></Cell>
+        <Cell><Data ss:Type="String">Item Tags</Data></Cell>
         <Cell><Data ss:Type="String">Date Checked Out</Data></Cell>
         <Cell><Data ss:Type="String">Date Returned</Data></Cell>
       </Row>
@@ -25,7 +25,7 @@
           <Cell><Data ss:Type="String"><%= user.email %></Data></Cell>
           <Cell><Data ss:Type="Number"><%= item.id %></Data></Cell>
           <Cell><Data ss:Type="String"><%= item.name %></Data></Cell>
-          <Cell><Data ss:Type="String"><%= item.category %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= item.tag_list %></Data></Cell>
           <Cell><Data ss:Type="String"><%= reservation.date_out %></Data></Cell>
           <Cell><Data ss:Type="String"><%= reservation.date_in %></Data></Cell>
         </Row>

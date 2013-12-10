@@ -47,7 +47,6 @@ describe ItemsController do
           legacy_id: "1",
           quantity: 5,
           description: "A round object you can use to view countries of the world!",
-          category: "Science"
         }
       )
 
@@ -67,10 +66,9 @@ describe ItemsController do
           legacy_id: "1",
           quantity: 5,
           description: "A round object you can use to view countries of the world!",
-          category: "Science"
         }
       )
-      get :index, :query => 'globe'
+      get :index, :search_query => 'globe'
       assigns(:items).length.should == 1
     end
   end

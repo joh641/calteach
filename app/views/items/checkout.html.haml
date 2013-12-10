@@ -18,6 +18,10 @@
               = label_tag :email, "User's Email", :class => "control-label reserve-label"
               .reserve-input
                 = text_field_tag :email, nil, :class => "form-control"
+            .form-group#notes
+              = label_tag :notes, "Notes", :class => "control-label reserve-label"
+              .reserve-input
+                = text_area_tag :notes, nil, :class => "form-control"
               = hidden_field_tag :item, @item.id
 
             = submit_tag 'Checkout Item', :class => "btn btn-primary"

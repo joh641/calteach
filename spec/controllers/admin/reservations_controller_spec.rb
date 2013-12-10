@@ -125,7 +125,29 @@ describe Admin::ReservationsController, :type => :controller  do
       item.delete()
       u1.delete()
     end
+
+    it 'should save notes properly if any exist' do
+      item = Item.create(:name => "Book", :quantity => 1)
+      u1 = User.create!(:name => "John", :email => "jon@gmail.com", :password => 'password')
+      put :checkout, {:id => 3, :item => item.id, :email => "jon@gmail.com", :quantity => 1, :notes => "asdf"}
+      assert Reservation.all.last.notes == "asdf"
+      item.delete()
+      u1.delete()
+      Reservation.all.last.delete()
+    end
+
+    it 'should tag on the notes to the existing notes of the reservation' do
+      item = Item.create(:name => "Book", :quantity => 1)
+      u1 = User.create!(:name => "John", :email => "jon@gmail.com", :password => 'password')
+      r1 = Reservation.create!({:user_id => u1.id, :item_id => item.id, :reservation_out => Date.today, :reservation_in => Date.today + 4, :quantity => 1, :notes => "blah."})
+      put :checkout, {:id => 3, :item => item.id, :email => "jon@gmail.com", :quantity => 1, :notes => "asdf"}
+      assert Reservation.find(r1.id).notes == "blah. asdf"
+      item.delete()
+      u1.delete()
+      r1.delete()
+    end
   end
+
 
   # describe 'archiving a reservation' do
   #   it 'should redirect to the index if done from dashboard' do

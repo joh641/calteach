@@ -69,11 +69,21 @@ class Reservation < ActiveRecord::Base
   end
 
   def overlaps?(start_date, end_date)
-    (reservation_out >= start_date and reservation_in <= end_date) or
-    (reservation_out <= end_date and reservation_in >= end_date) or
-    (reservation_out <= start_date and reservation_in >= end_date) or
-    (reservation_out <= start_date and reservation_in >= start_date) or
-    (date_out and date_out >= start_date and date_out <= end_date)
+    res_start = date_out || reservation_out
+    res_end = reservation_in
+
+    start_date_overlap = date_within_range?(res_start, start_date, end_date)
+    end_date_overlap = date_within_range?(res_end, start_date, end_date)
+
+    begin
+      date_within_res = (res_start <= start_date and res_end >= end_date)
+      date_including_res = (res_start >= start_date and res_end <= end_date)
+    rescue NoMethodError
+      date_within_res = false
+      date_including_res = false
+    end
+
+    return start_date_overlap || end_date_overlap || date_within_res || date_including_res
   end
 
   def date_within_range?(date, start_range, end_range)
@@ -117,18 +127,21 @@ class Reservation < ActiveRecord::Base
   end
 
   def self.valid_reservation?(start_date, end_date, item, quantity_desired, exclude_reservation= nil, current_user_admin= false)
-    if quantity_desired == 0
-      raise " the quantity requested must be greater than 0."
-    elsif end_date < start_date
-      raise " the reservation end date must be after the start date."
-    elsif item.quantity_available(start_date, end_date, exclude_reservation) < quantity_desired
-      raise " the quantity requested is not available."
-    elsif not current_user_admin and end_date > item.upper_limit(start_date)
-      raise " the requested length exceeds the max for this item: " + item.get_due_date.to_s + " business days."
-    elsif not current_user_admin and on_weekend?(start_date, end_date)
-      raise " reservations cannot start or end on weekends."
+    raise StandardError, " the quantity requested must be greater than 0." if quantity_desired == 0
+    Reservation.valid_dates?(start_date, end_date, item, current_user_admin)
+    if item.quantity_available(start_date, end_date, exclude_reservation) < quantity_desired
+      raise StandardError, " the quantity requested is not available."
     else
       true
+    end
+  end
+
+  def self.valid_dates?(start_date, end_date, item, current_user_admin)
+    return if current_user_admin
+    if end_date > item.upper_limit(start_date)
+      raise StandardError, " the requested length exceeds the max for this item: " + item.get_due_date.to_s + " business days."
+    elsif on_weekend?(start_date, end_date)
+      raise StandardError, " reservations cannot start or end on weekends."
     end
   end
 
@@ -248,5 +261,4 @@ class Reservation < ActiveRecord::Base
       Date.strptime(date, "%m/%d/%Y")
     end
   end
-
 end

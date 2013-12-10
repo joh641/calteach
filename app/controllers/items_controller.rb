@@ -17,11 +17,11 @@ class ItemsController < ApplicationController
     session[:search_query] = params[:search_query]
 
     #TODO (Yuxin) Is this even safe?
-    if not [nil, ""].include?(session[:search_query])
+    if is_valid_query(session[:search_query])
       @items = @items.where("name like ?", "%#{session[:search_query]}%")
     end
 
-    if not [nil, ""].include?(session[:tag_query])
+    if is_valid_query(session[:tag_query])
       @items = @items.tagged_with(session[:tag_query])
     end
 
@@ -30,6 +30,9 @@ class ItemsController < ApplicationController
       session.delete(:tag_query)
     end
   end
+
+  def is_valid_query(input):
+    return not [nil, ""].include?(input)
 
   def show
     @item = Item.find_by_id(params[:id])

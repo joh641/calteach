@@ -15,7 +15,7 @@ class Item < ActiveRecord::Base
   has_many :users, :through => :reservations
 
   validates :name, :presence => true
-  validates :quantity, :presence => true
+  validates :quantity, :presence => true, :numericality => {:greater_than_or_equal_to => 0}
 
   @@all_categories = ["Geography", "Math", "Science", "Social Studies"]
   @@due_dates = {"Video Equipment" => 2, "Books" => 10, "Other" => 5}

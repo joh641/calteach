@@ -1,5 +1,11 @@
 .admin
   %h5 Admin
+  .location
+    %b Location:
+    - if @item.location and @item.location != ""
+      = @item.location
+    - else
+      Unspecificied
   - if @item.quantity_available > 0 and @item.active
     = button_to 'Checkout item', checkout_item_path(@item), :method => :get, :class => "btn btn-primary btn-xs"
   = button_to 'Edit item', edit_item_path(@item), {:method => :get, :class => "btn btn-default btn-xs"}

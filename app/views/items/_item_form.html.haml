@@ -15,6 +15,11 @@
     .reserve-input
       = f.text_field :quantity, :class => "form-control"
 
+  #location.form-group
+    = f.label :location, 'Location', :class => "control-label reserve-label"
+    .reserve-input
+      = f.text_field :location, :class => "form-control"
+
   #due_date_category.form-group
     = f.label :due_date_category, 'Due Date Category', :class => "control-label reserve-label"
     .reserve-input
@@ -34,6 +39,6 @@
     = f.label :tag_list, 'Edit Tags', :class => "control-label reserve-label"
     .tag-input
       = f.text_field :tag_list, :data => {all: @all_tags}, :class => "tag-control"
-      
+
   #submit
     = f.submit 'Submit', :class => "btn btn-primary"

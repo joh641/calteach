@@ -6,13 +6,12 @@ class ReservationsController < ApplicationController
     if not current_user
       redirect_to items_path
     else
-      @reservations = current_user.reservations.where(:canceled => false)
+      @reservations = current_user.reservations.where(:canceled =>false)
     end
   end
 
   def new
     item = Item.find_by_id(params[:format])
-
     begin
       Reservation.make_reservation(current_user, item, params[:reservation][:start_date], params[:reservation][:end_date], params[:reservation][:quantity].to_i)
       flash[:notice] = "Item #{item.name} was successfully reserved."
@@ -25,14 +24,13 @@ class ReservationsController < ApplicationController
   def update
     start_date = Reservation.strip_date(params[:start_date])
     end_date = Reservation.strip_date(params[:end_date])
+    reservation = Reservation.find(params[:id])
 
     if start_date and end_date
       params[:reservation] = check_dates(start_date, end_date, reservation, params[:reservation])
       check_valid_reservation(start_date, end_date, reservation)
     end
-
     make_updates(reservation, params)
-
   end
 
   def cancel

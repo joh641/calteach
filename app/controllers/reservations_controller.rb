@@ -16,12 +16,12 @@ class ReservationsController < ApplicationController
     end_date = params[:reservation][:end_date]
     quantity_desired = params[:reservation][:quantity].to_i
 
-    if Reservation.make_reservation(current_user, item, start_date, end_date, quantity_desired)
+    begin 
+      Reservation.make_reservation(current_user, item, start_date, end_date, quantity_desired)
       flash[:notice] = "Item #{item.name} was successfully reserved."
-    else
-      flash[:warning] = "Your reservation attempt was unsuccessful."
+    rescue => e
+      flash[:warning] = "Reservation attempt was unsuccessful because" + e.message
     end
-
     redirect_to item_path(item)
   end
 

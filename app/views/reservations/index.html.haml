@@ -15,6 +15,6 @@
           %td= link_to "#{reservation.item.name}", item_path(reservation.item)
           %td= reservation.quantity
           %td= reservation.get_status
-          %td= date_out(reservation)
-          %td= date_in(reservation)
+          = render "date_cells", :reservation => reservation
           %td= render "actions", :reservation => reservation
+  %div{:id => "reservation_error", :visible => "false"}

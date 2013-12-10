@@ -4,8 +4,8 @@
       .image-wrapper
         =link_to image_tag(item.image.url(:medium)), item_path(item), :id => "#{item.name}"
       .content
-        =link_to item_path(item) do
-          .title= item.name
+        =link_to item_path(item), :class => "title" do
+          =item.name
         .actions
           -if is_admin?
             -if item.active
@@ -15,6 +15,15 @@
               = link_to 'Unarchive', unarchive_item_path(item), {:method => :put, :confirm => 'Are you sure?', :class => "btn btn-primary btn-xs"}
             - else
               = link_to 'Archive', item_path(item), {:method => :delete, :confirm => 'Are you sure?', :class => "btn btn-danger btn-xs"}
+            |
+            %b Available:
+            =item.quantity_available
+            |
+            %b Location:
+            - if item.location and item.location != ""
+              =item.location
+            - else
+              Unspecified
           -else
             = link_to 'Reserve', item_path(item), {:method => :get, :class => "btn btn-primary btn-xs"}
       .subtitle{:class => (item.is_available ? "available" : "unavailable")}= item.available

@@ -173,6 +173,9 @@ $left-column-container-width: 294px;
 			&.available { background-color: $calteach-green; }
 			&.unavailable { background-color: $calteach-red; }
 		}
+    .subtitle.location {
+      color: black;
+    }
 		.actions {
 			margin-top: 3px;
 			.button_to {

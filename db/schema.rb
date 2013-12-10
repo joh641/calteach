@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131205012337) do
+ActiveRecord::Schema.define(:version => 20131210051305) do
 
   create_table "items", :force => true do |t|
     t.string   "legacy_id"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20131205012337) do
     t.datetime "image_updated_at"
     t.boolean  "inactive",           :default => false
     t.string   "due_date_category"
+    t.string   "location"
   end
 
   create_table "reservations", :force => true do |t|

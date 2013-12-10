@@ -2,7 +2,7 @@ class Item < ActiveRecord::Base
 
   scope :active, -> { where(inactive: false) }
   scope :inactive, -> { where(inactive: true) }
-  attr_accessible :category, :description, :due_date_category, :image, :legacy_id, :name, :quantity, :tag_list
+  attr_accessible :category, :description, :due_date_category, :image, :legacy_id, :name, :quantity, :tag_list, :location
   acts_as_taggable
 
   has_attached_file :image,

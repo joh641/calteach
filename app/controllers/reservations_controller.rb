@@ -13,7 +13,7 @@ class ReservationsController < ApplicationController
   def new
     item = Item.find_by_id(params[:format])
     begin
-      Reservation.make_reservation(current_user, item, params[:reservation][:start_date], params[:reservation][:end_date], params[:reservation][:quantity].to_i)
+      Reservation.make_reservation(current_user, item, params[:reservation][:start_date], params[:reservation][:end_date], params[:reservation][:quantity].to_i, is_admin?)
       flash[:notice] = "Item #{item.name} was successfully reserved."
     rescue => e
       flash[:warning] = "Reservation attempt was unsuccessful because" + e.message
@@ -58,13 +58,13 @@ class ReservationsController < ApplicationController
     begin
       update_params(reservation, res_params, start_date, end_date)
     rescue
-      raise "Invalid Date"
+      raise " Invalid Date"
     end
   end
 
   def check_valid_reservation(start_date, end_date, reservation)
     if not Reservation.valid_reservation?(start_date, end_date, reservation.item, reservation.quantity, reservation, is_admin?)
-      raise "Conflicting Reservation"
+      raise " Conflicting Reservation"
     end
   end
 

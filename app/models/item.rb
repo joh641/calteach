@@ -2,7 +2,7 @@ class Item < ActiveRecord::Base
 
   scope :active, -> { where(inactive: false) }
   scope :inactive, -> { where(inactive: true) }
-  attr_accessible :category, :description, :due_date_category, :image, :legacy_id, :name, :quantity, :tag_list, :location
+  attr_accessible :description, :due_date_category, :image, :legacy_id, :name, :quantity, :tag_list, :location
   acts_as_taggable
 
   has_attached_file :image,
@@ -17,7 +17,6 @@ class Item < ActiveRecord::Base
   validates :name, :presence => true
   validates :quantity, :presence => true, :numericality => {:greater_than_or_equal_to => 0}
 
-  @@all_categories = ["Geography", "Math", "Science", "Social Studies"]
   @@due_dates = {"Video Equipment" => 2, "Books" => 10, "Other" => 5}
   @@due_dates.default = 5
 
@@ -47,10 +46,6 @@ class Item < ActiveRecord::Base
 
   def get_due_date_business_days(date)
     @@due_dates[due_date_category].business_days.after(date).to_date
-  end
-
-  def self.all_categories
-    @@all_categories
   end
 
   def self.import(file)

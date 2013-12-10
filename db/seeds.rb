@@ -11,28 +11,28 @@ Item.create([
 		legacy_id: "1",
 		quantity: 1,
 		description: "A round object you can use to view countries of the world!",
-		category: "Science"
+		tag_list: "Science"
 	},
 	{
 		name: "Crayon",
 		legacy_id: "2",
 		quantity: 1,
 		description: "A piece of oil on a stick you can color with",
-		category: "Art"
+		tag_list: "Art"
 	},
 	{
 		name: "Pencil",
 		legacy_id: "3",
 		quantity: 1,
 		description: "A stick of carbon",
-		category: "Art"
+		tag_list: "Art"
 	},
 	{
 		name: "Gold",
 		legacy_id: "4",
 		quantity: 1,
 		description: "Something really valuable that everyone stole",
-		category: "Art"
+		tag_list: "Art"
 	}
 ])
 

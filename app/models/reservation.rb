@@ -83,6 +83,10 @@ class Reservation < ActiveRecord::Base
     update_attribute(:canceled, true)
   end
 
+  def self.on_weekend?(start_date, end_date)
+    start_date.wday == 0 or start_date.wday == 6 or end_date.wday == 0 or end_date.wday == 6
+  end
+
   def self.valid_reservation?(start_date, end_date, item, quantity_desired, exclude_reservation= nil, current_user_admin= false)
     if quantity_desired == 0
       false
@@ -92,8 +96,8 @@ class Reservation < ActiveRecord::Base
       false
     elsif not current_user_admin and end_date > item.get_due_date.business_days.after(start_date.to_datetime + 8.hours).to_date
       false
-    #elsif not current_user_admin and (start_date#isweekend or end_date#isweekend)
-    #  false
+    elsif not current_user_admin and on_weekend?(start_date, end_date)
+      false
     else
       true
     end

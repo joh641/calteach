@@ -1,2 +1,2 @@
-%td{:label => "reservation", :class => "reservation_out", :'data-id' => reservation.id}= date_out(reservation)
-%td{:label => "reservation", :class => "reservation_in", :'data-id' => reservation.id}= date_in(reservation)
+%td{:label => "reservation", :class => "reservation_out", :'data-id' => reservation.id}= get_formatted_date(reservation.date_out, reservation.reservation_out)
+%td{:label => "reservation", :class => "reservation_in", :'data-id' => reservation.id}= get_formatted_date(reservation.date_in, reservation.reservation_in)

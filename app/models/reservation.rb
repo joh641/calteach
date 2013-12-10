@@ -149,11 +149,7 @@ class Reservation < ActiveRecord::Base
       reservation.reservation_in = due_date
     end
 
-    if number_available >= reservation.quantity
-      reservation.save!
-    else
-      false
-    end
+    number_available >= reservation.quantity ? reservation.save! : false
   end
 
   def self.find_valid_end_date(reservation, due_date)

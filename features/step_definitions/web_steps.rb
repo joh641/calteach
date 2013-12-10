@@ -67,7 +67,7 @@ When /^(.*) within Card View$/ do |step|
 end
 
 When /^(.*) within List View$/ do |step|
-  within("#list-view") { step(step) }
+  within("#list-view") { within("#{}image-wrapper") { step(step) } }
 end
 
 # Multi-line step scoper
@@ -93,6 +93,10 @@ end
 
 When /^(?:|I )click "([^"]*)"$/ do |link|
   click_link(link)
+end
+
+When /^(?:|I )switch to Card View$/ do
+  click_link('card-view-link')
 end
 
 When /^(?:|I )switch to List View$/ do

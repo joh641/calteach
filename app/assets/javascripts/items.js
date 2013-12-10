@@ -20,6 +20,7 @@ $(document).ready(function(){
   $("#item_tag_list").select2({tags:$('#item_tag_list').data('all')});
 
   var availability = $.parseJSON($('#reservation form').attr('avail_hash'));
+  var yesterday = new Date(new Date().setDate(new Date().getDate()-1));
   var datepickerSettings = {
       startDate: new Date(),
       endDate: moment(new Date()).add('days', 59).toDate(),
@@ -29,7 +30,7 @@ $(document).ready(function(){
         if (availability[thisDate] < $('#reservation_quantity').find(":selected").text()) {
           return 'crossed';
         } else {
-          if (moment(date) > moment(new Date()))
+          if (moment(date) > moment(yesterday))
           return 'bold';
         }
       }

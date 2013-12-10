@@ -78,10 +78,27 @@ class Reservation < ActiveRecord::Base
   end
 
   def overlaps?(start_date, end_date)
-    (reservation_out and reservation_out >= start_date and reservation_out <= end_date) or
-    (reservation_in and reservation_in >= start_date and reservation_in <= end_date) or
-    (reservation_out and reservation_in and reservation_out <= start_date and reservation_in >= end_date) or
-    (date_out and date_out >= start_date and date_out <= end_date)
+    res_start = date_out || reservation_out
+    res_end = reservation_in
+
+    start_date_overlap = date_within_range?(res_start, start_date, end_date)
+    end_date_overlap = date_within_range?(res_end, start_date, end_date)
+    
+    begin
+      date_within_res = reservation_out <= start_date and reservation_in >= end_date
+    rescue NoMethodError
+      return false
+    end
+
+    return start_date_overlap || end_date_overlap || date_within_res
+  end
+
+  def date_within_range?(date, start_range, end_range)
+    begin
+      date >= start_range and date <= end_range
+    rescue NoMethodError
+      return false
+    end
   end
 
   def check_in

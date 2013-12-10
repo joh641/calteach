@@ -48,18 +48,13 @@ class Admin::UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.soft_delete
-    redirect_and_flash(false, @user.name)
+    redirect_and_flash("User", @user.name, false)
   end
 
   def activate
     @user = User.find(params[:id])
     @user.activate
-    redirect_and_flash(true, @user.name)
-  end
-
-  def redirect_and_flash(activated, name)
-    status = activated ? "activated" : "deactivated"
-    redirect_to :back, notice: "User #{name} was successfully #{status}."
+    redirect_and_flash("User", @user.name, true)
   end
 
 end

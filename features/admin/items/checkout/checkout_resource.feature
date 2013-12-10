@@ -14,8 +14,8 @@ Background:
   And there is an admin
   And I am logged into the admin panel
   And I am on the home page
-  And I switch to List View
-  And I follow "Globe" within List View
+  And I switch to Card View
+  And I follow "Globe" within Card View
   And I press "Checkout item"
 
 Scenario: Checkout user exists and item not reserved
@@ -25,8 +25,8 @@ Scenario: Checkout user exists and item not reserved
   And I press "Checkout Item"
   Then I should see "Item Globe was successfully checked out"
   When I am on the home page
-  And I switch to List View
-  And I follow "Globe" within List View
+  And I switch to Card View
+  And I follow "Globe" within Card View
   And I follow "Check In"
   Then I should see "Item Globe was successfully checked in"
 

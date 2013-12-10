@@ -13,7 +13,7 @@ Background:
 Scenario: Create an item using valid inputs
   When I fill in "Name" with "Globe"
   And I fill in "Quantity" with "2"
-  And I select "Geography" from "Category"
+  And I fill in "Edit Tags" with "Geography"
   And I fill in "ID" with "F123"
   And I press "Submit"
   Then I should be on the Calteach inventory page
@@ -22,7 +22,7 @@ Scenario: Create an item using valid inputs
 Scenario: Create an item using invalid inputs, negative quantity (sad path)
   When I fill in "Name" with "Globe"
   And I fill in "Quantity" with "-2"
-  And I select "Geography" from "Category"
+  And I fill in "Edit Tags" with "Geography"
   And I fill in "ID" with "F123"
   And I press "Submit"
   Then I should see "Add Item"

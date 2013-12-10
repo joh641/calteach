@@ -10,7 +10,7 @@ class Item < ActiveRecord::Base
   :s3_credentials => S3_CREDENTIALS,
   :path => "/items/:style/:id/:filename",
   :styles => { :medium => "250x250>", :thumb => "100x100>" },
-  :default_url => "http://placekitten.com/165/165"
+  :default_url => "http://www.otis.edu/sites/default/files/books-readers-icon-small-16_0.png"
   has_many :reservations
   has_many :users, :through => :reservations
 

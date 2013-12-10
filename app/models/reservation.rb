@@ -151,7 +151,6 @@ class Reservation < ActiveRecord::Base
 
     if number_available >= reservation.quantity
       reservation.save!
-      reservation
     else
       false
     end

@@ -12,12 +12,9 @@ class ReservationsController < ApplicationController
 
   def new
     item = Item.find_by_id(params[:format])
-    start_date = params[:reservation][:start_date]
-    end_date = params[:reservation][:end_date]
-    quantity_desired = params[:reservation][:quantity].to_i
 
     begin
-      Reservation.make_reservation(current_user, item, start_date, end_date, quantity_desired)
+      Reservation.make_reservation(current_user, item, params[:reservation][:start_date], params[:reservation][:end_date], params[:reservation][:quantity].to_i)
       flash[:notice] = "Item #{item.name} was successfully reserved."
     rescue => e
       flash[:warning] = "Reservation attempt was unsuccessful because" + e.message
@@ -26,15 +23,11 @@ class ReservationsController < ApplicationController
   end
 
   def update
-    start_date = params[:start_date]
-    end_date = params[:end_date]
+    start_date = Reservation.strip_date(params[:start_date])
+    end_date = Reservation.strip_date(params[:end_date])
 
     if start_date and end_date
-      start_date = Reservation.strip_date(start_date)
-      end_date = Reservation.strip_date(end_date)
-
       params[:reservation] = check_dates(start_date, end_date, reservation, params[:reservation])
-
       check_valid_reservation(start_date, end_date, reservation)
     end
 

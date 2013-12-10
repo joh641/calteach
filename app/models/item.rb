@@ -48,10 +48,6 @@ class Item < ActiveRecord::Base
     @@due_dates[due_date_category].business_days.after(date).to_date
   end
 
-  def self.all_categories
-    @@all_categories
-  end
-
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       item = find_by_legacy_id(row["legacy_id"]) || new

@@ -13,8 +13,10 @@ Background:
   And I reserve Globe from today+0 to today+1
   And I am on the reservation dashboard
 
+@javascript
 Scenario: I should be able to cancel a reservation if it is reserved
   Given this is pending
-  When I press "Cancel"
+  When I click with id "#cancel"
+  And I confirm popup
   Then I should see "Reservation was successfully canceled."
   And I should not see "Reserved"

@@ -15,15 +15,6 @@ class Reservation < ActiveRecord::Base
 
   # Supports faculty checkout dates up until the end of the summer session of 2016
   # For additional support, add dates to the top of this list.
-  END_OF_SEMESTER_DATES = [Date.new(2016,  8, 12),
-                           Date.new(2016,  5,  9),
-                           Date.new(2015, 12, 14),
-                           Date.new(2015,  8, 14),
-                           Date.new(2015,  5, 11),
-                           Date.new(2014, 12, 15),
-                           Date.new(2014,  8, 15),
-                           Date.new(2014,  5, 12),
-                           Date.new(2013, 12, 16)]
 
   scope :canceled, -> { where(canceled: true) }
 
@@ -154,27 +145,14 @@ class Reservation < ActiveRecord::Base
 
   def self.checkout(reservation, user)
     number_available = reservation.item.quantity_available(Date.today, Date.today, reservation)
-    checkout_date = Date.today
+    reservation.date_out = Date.today
     due_date = reservation.item.get_due_date.business_days.after(DateTime.now).to_date
 
     if !reservation.reservation_in and number_available >= reservation.quantity
-      if user.category_str == "Faculty"
-        END_OF_SEMESTER_DATES.each do |date|
-          if Date.today < date
-            reservation.reservation_in = date
-          end
-        end
-      else
-        end_date = Date.today
-        while end_date + 1 <= due_date and reservation.quantity <= reservation.item.quantity_available(Date.today, end_date+1, reservation) do
-          end_date += 1
-        end
-        reservation.reservation_in = end_date
-      end
+      Reservation.find_valid_end_date(reservation, due_date)
     elsif reservation.reservation_in and reservation.reservation_in > due_date
       reservation.reservation_in = due_date
     end
-    reservation.date_out = checkout_date
 
     if number_available >= reservation.quantity
       reservation.save!
@@ -182,6 +160,30 @@ class Reservation < ActiveRecord::Base
     else
       false
     end
+  end
+
+  def self.find_valid_end_date(reservation, due_date)
+    if reservation.user.category_str == "Faculty"
+      reservation.reservation_in = Reservation.find_end_of_current_semester
+    else
+      end_date = Date.today
+      while end_date + 1 <= due_date and reservation.quantity <= reservation.item.quantity_available(Date.today, end_date+1, reservation) do
+        end_date += 1
+      end
+      reservation.reservation_in = end_date
+    end
+  end
+
+  def self.find_end_of_current_semester 
+    current_month = Date.today.month
+    if current_month.between?(1,5)
+      end_month = 5
+    elsif current_month.between?(6,8)
+      end_month = 8
+    else
+      end_month = 12
+    end
+    return Date.new(Date.today.year, end_month, 8)
   end
 
   def self.to_csv(options = {})

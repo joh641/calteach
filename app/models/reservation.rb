@@ -82,7 +82,7 @@ class Reservation < ActiveRecord::Base
     res_end = reservation_in
 
     start_date_overlap = date_within_range?(res_start, start_date, end_date)
-    end_date_overlap = date_within_range?(res_start, start_date, end_date)
+    end_date_overlap = date_within_range?(res_end, start_date, end_date)
     
     begin
       date_within_res = reservation_out <= start_date and reservation_in >= end_date

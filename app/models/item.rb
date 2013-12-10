@@ -91,5 +91,4 @@ class Item < ActiveRecord::Base
   def unarchive
     update_attribute(:inactive, false)
   end
-
 end

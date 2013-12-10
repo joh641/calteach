@@ -51,13 +51,21 @@ $(document).ready(function() {
       $('#filter-section .input-daterange').datepicker(datepickerSettings);
     });
 
+    var itemPateDatepickerSettings = {
+      startDate: new Date(),
+      endDate: moment(new Date()).add('days', 59).toDate(),
+      autoclose: true
+    };
     function convertDivToTextBox(div) {
+        div.hide();
         var date = div.text();
         var parent = div.parent();
-        parent.prepend('<input class="res_date">' + div.val() + "</input>");
-        parent.children().first().val(date);
-        parent.children().first().focus();
-        div.remove();
+        var $dateInput = $('<input class="res_date">' + div.val() + "</input>");
+        parent.prepend($dateInput);
+        // parent.prepend('<input class="res_date">' + div.val() + "</input>");
+        $dateInput.val(date);
+        $dateInput.datepicker(itemPateDatepickerSettings);
+        $dateInput.focus();
     }
 
     function convertTextBoxToDiv(textBox) {

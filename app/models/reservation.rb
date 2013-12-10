@@ -96,6 +96,10 @@ class Reservation < ActiveRecord::Base
     update_attribute(:date_in, Date.today)
   end
 
+  def get_max_item_quantity(start_date=Date.today, end_date=Date.today)
+    return item.quantity_available(start_date, end_date, self)
+  end
+
   # def archive
   #   update_attribute(:archived, true)
   # end
@@ -139,7 +143,7 @@ class Reservation < ActiveRecord::Base
   end
 
   def self.checkout(reservation, user)
-    number_available = reservation.item.quantity_available(Date.today, Date.today, reservation)
+    number_available = reservation.get_max_item_quantity(Date.today, Date.today)
     reservation.date_out = Date.today
     due_date = reservation.item.get_due_date.business_days.after(DateTime.now).to_date
 
@@ -157,7 +161,7 @@ class Reservation < ActiveRecord::Base
       reservation.reservation_in = Reservation.find_end_of_current_semester
     else
       end_date = Date.today
-      while end_date + 1 <= due_date and reservation.quantity <= reservation.item.quantity_available(Date.today, end_date+1, reservation) do
+      while end_date + 1 <= due_date and reservation.quantity <= reservation.get_max_item_quantity(Date.today, end_date+1) do
         end_date += 1
       end
       reservation.reservation_in = end_date

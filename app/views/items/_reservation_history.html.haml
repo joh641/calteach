@@ -19,7 +19,6 @@
               %i.fa.fa-envelope-o.envelope-icon
           %td= reservation.quantity
           %td= reservation.get_status
-          %td{:class => "reservation_out", :'data-id' => reservation.id}= date_out(reservation)
-          %td{:class => "reservation_in", :'data-id' => reservation.id}= date_in(reservation)
+          = render "/reservations/date_cells", :reservation => reservation 
           %td= render partial: '/admin/reservations/actions', locals: {reservation: reservation}
   %div{:id => "reservation_error", :visible => "false"}

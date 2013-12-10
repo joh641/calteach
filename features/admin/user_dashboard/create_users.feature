@@ -3,14 +3,14 @@ Feature: Admin create users
   So that I can create users myself,
   I want to allow for creating new users.
 
-  Background: 
+  Background:
     Given there is an admin
 
   Scenario:
     Given I am logged into the admin panel
     And I am on the user dashboard
     And I should see "admin"
-    And I follow "Create New User"
+    And I follow "Add User"
     And I fill in the following:
       | Name  | Bob           |
       | Email | bob@gmail.com |

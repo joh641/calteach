@@ -2,7 +2,6 @@
   .btn.btn-default.btn-sm{"data-toggle" => "dropdown"}
     Actions
     %i.fa.fa-caret-down#down-arrow
-
   %ul.dropdown-menu#action-menu{"role"=>"menu", "aria-labelledby"=>"dLabel"}
     %li
       %a.notes-link{"data-toggle" => "modal", "data-target" => "#notes#{reservation.id}"}
@@ -10,10 +9,9 @@
         Notes
     %li
       - if reservation.get_status == "Reserved"
-        = link_to cancel_reservation_path(reservation), :method => :put, :confirm => 'Are you sure?', :class => 'btn btn-default btn-sm' do
+        = link_to cancel_reservation_path(reservation), :method => :put, :confirm => 'Are you sure?' do
           %i.fa.fa-times-circle
-          Cancel 
-
+          Cancel
 
 .modal.fade{"aria-hidden" => "true", "aria-labelledby" => "Notes", role: "dialog", tabindex: "-1", id: "notes#{reservation.id}"}
   .modal-dialog

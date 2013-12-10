@@ -11,10 +11,26 @@
           - else
             %i.fa.fa-check.icon
           Show Active
-        =link_to items_path(:inactive => true) do
+        = link_to items_path(:inactive => true) do
           - if @inactive
             %i.fa.fa-check.icon
           - else
             %i.fa.fa-check.icon.trans
           Show Archived
+        %a.edit-due-date-categories-link{"data-toggle" => "modal", "data-target" => "#due-date-categories"}
+          %i.fa.fa-pencil
+          Edit Due Date Categories
   = link_to 'Add Item', new_item_path(), :class => "btn btn-danger add-item"
+    
+
+.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "Edit Due Date Categories", role: "dialog", tabindex: "-1", id: "due-date-categories"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
+        %h4#myModalLabel.modal-title Edit Due Date Categories
+      .modal-body
+        - @due_date_categories.each do |category|
+
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", type: "button"} Close

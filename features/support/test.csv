@@ -1,91 +1,91 @@
-name,legacy_id,quantity,tag_list,description
-Absolute Ethynol,10001,1,,
-Advanced miniDNA 22-layer model kit,10002,1,Biology and Life Sciences,
-Alchemy Card Decks: Create a Table,10003,8,Chemistry,"How to use: See Living by Chemistry textbook, Unit 1, Lesson 9 (pg. 38)"
-Alchemy Card Decks: Polyatomic Ions ,10004,8,Chemistry,
-Alchemy Card Decks: Salty Eights Game,10005,8,Chemistry,"How to use: See Living by Chemistry textbook, Unit 1, Lesson 21 (pg. 106)"
-Aluminum Foil/Tin Foil,10008,1,,
-"Aluminum Sheets, roll",10009,1,,
-"Baking soda, 450g container",10014,2,,
-"Ball, plastic",10016,1,,
-Balloon Pump,10017,1,,
-"Balloons, round, 9"", assorted colors",10018,100,,
-Baster,10023,1,,
-"Batteries, 6 volt",10024,3,General,
-"Batteries, AA",10368,8,,
-"Batteries, AAA",10025,8,General,
-"Batteries, alkaline, D-cells",10026,14,,
-Battery Cell Holders,10027,2,,
-"Battery, D-cell with holder",10028,1,,
-"Beads, large blue",10029,2,,
-"Beaker, plastic, 1 liter",10030,1,,
-"Beaker, pyrex, 2000 mL",10033,1,Chemistry,
-"Beakers, glass, 250 mL",10034,18,Chemistry,
-"Binder Clips, small",10036,36,Office Supplies,
-Blood Pressure Monitor,10037,1,,
-"Book, FOSS Science Resources, Grade 4",10038,3,,
-"Book, FOSS Science Resources, Grade 5",10039,3,,
-"Book, Science Resources - California Spanish Edition",10040,1,,
-"Bottles, clear plastic with caps, 120ml",10041,17,,
-"Boxes, cardboard",10042,8,,
-Bubbles,10044,1,,
-"Buckets, large plastic",10045,3,General,
-"Buckets, large round black plastic, 18 gallon",10046,2,,
-Burner,10048,1,General,
-"Calcium Chloride, 480g container",10049,2,,
-"Calculator (TI-82, TI-83)",10050,3,Math,
-"Candles, tealights",10366,64,,
-Cardboard Sheets,10051,17,,
-Centrifuge Tubes,10052,27,Chemistry,
-Ceramic Tiles,10053,40,,"How to use: See FOSS Solid Earth Binder, Investigation 4, Part 2 (pg. 157)"
-"Chalk, box of 12 pieces",10054,1,,
-Chlorine Remover Solution,10056,1,,
-"Citric Acid, Anhydrous, 480g container",10058,6,,
-"Clay, powdered white, 1lb bag",10059,3,,"How to use: See FOSS Solid Earth Binder, Investigation 5, Part 2 (pg. 190)"
-Clipboards,10060,6,General,
-Clothespins,10061,1000,General,
-"Compass, magnetic",10064,17,,
-"Container Lids for  1/4 or 1/2 liter container, plastic",10066,25,,
-Container Lids w/ Thermometer Slit for 1/4 or 1/2 liter container,10067,30,,
-"Containers, clear plastic, 1/2 liter",10068,84,General,
-"Containers, clear plastic, 1/4 liter",10069,10,,
-"Containers, white plastic, 1 liter",10070,16,,
-"Cords, mason line, 1 meter",10071,8,,
-Cork,10072,2,,
-Correction Tape,10074,3,Office Supplies,
-Cotton Balls,10075,500,General,
-Cotton Swabs,10076,500,General,
-Craft Sticks (popsicle sticks),10077,75,,
-Craft Sticks (Woodsies popsicle sticks),10078,1000,General,
-"Cup Lids, plastic dome for 9oz cups",10081,12,,
-"Cup Lids, plastic, for 9oz cups",10082,50,,
-"Cups, plastic",10083,200,General,
-"Dice, white, 5/8""",10086,34,General,
-Dispensing Bottle,10088,1,,
-Dominos,10090,1,,
-Dry Erase Board Eraser,10091,7,Office Supplies,
-Easel,10094,2,,
-Electricity Stoppers (black rubber plug),10095,30,,
-Evaporating Dishes (plastic lids),10098,104,,
-Filter Papers (round white coffee filter),10100,150,,
-Fish Food,10101,1,,
-Fish Net,10102,1,,
-"Fish scoop, small, green netting",10103,5,General,
-Foam Alphabet & Number Block Set,10104,1,Math,
-"Food Web Cards, Mono Lake (12/set)",10106,8,,"How to use: See FOSS Environments Binder, Investigation 4, Part 1 (pg. 173)"
-"Food Web Cards, Monterey Bay (20/set)",10107,8,,"How to use: See FOSS Environments Binder, Investigation 3, Part 4 (pg. 144)"
-"Food Web Cards, Woods Ecosystem (20/set)",10108,8,,"How to use: See FOSS Environments Binder, Investigation 3, Part 3 (pg. 136)"
-Funnels,10112,2,General,
-"Geometry Sets (6 inch ruler, triangle, protractor)",10114,5,Math,
-Glass jars,10115,5,General,
-"Globe, inflatable",10116,1,,
-"Gloves, cloth",10118,2,General,
-"Glow sticks (blue, orange, pink, yellow)",10119,400,General,
-Glue Stick,10120,30,Office Supplies,
-"Glue, Elmer's multi-purpose white",10121,7,Office Supplies,
-"Golf Tees, wooden",10122,20,,
-Graduated Cylinders,10124,9,Chemistry,
-"Gram Pieces, blue square",10125,800,,
-"Gravel, white aquarium rocks, 2 pound bag",10246,1,,
-Hammers,10128,2,General,
-Hydrion Microfine pH,10133,1,,
+name,legacy_id,quantity,tag_list,description,location
+Absolute Ethynol,10001,1,,,basement
+Advanced miniDNA 22-layer model kit,10002,1,Biology and Life Sciences,,basement
+Alchemy Card Decks: Create a Table,10003,8,Chemistry,"How to use: See Living by,basement Chemistry textbook, Unit 1, Lesson 9 (pg. 38)",basement
+Alchemy Card Decks: Polyatomic Ions ,10004,8,Chemistry,,basement
+Alchemy Card Decks: Salty Eights Game,10005,8,Chemistry,"How to use: See Living by,basement Chemistry textbook, Unit 1, Lesson 21 (pg. 106)",basement
+Aluminum Foil/Tin Foil,10008,1,,,basement
+"Aluminum Sheets, roll",10009,1,,,basement
+"Baking soda, 450g container",10014,2,,,basement
+"Ball, plastic",10016,1,,,basement
+Balloon Pump,10017,1,,,basement
+"Balloons, round, 9"", assorted colors",10018,100,,,basement
+Baster,10023,1,,,basement
+"Batteries, 6 volt",10024,3,General,,basement
+"Batteries, AA",10368,8,,,basement
+"Batteries, AAA",10025,8,General,,basement
+"Batteries, alkaline, D-cells",10026,14,,,basement
+Battery Cell Holders,10027,2,,,basement
+"Battery, D-cell with holder",10028,1,,,basement
+"Beads, large blue",10029,2,,,basement
+"Beaker, plastic, 1 liter",10030,1,,,basement
+"Beaker, pyrex, 2000 mL",10033,1,Chemistry,,basement
+"Beakers, glass, 250 mL",10034,18,Chemistry,,basement
+"Binder Clips, small",10036,36,Office Supplies,,basement
+Blood Pressure Monitor,10037,1,,,basement
+"Book, FOSS Science Resources, Grade 4",10038,3,,,basement
+"Book, FOSS Science Resources, Grade 5",10039,3,,,basement
+"Book, Science Resources - California Spanish Edition",10040,1,,,basement
+"Bottles, clear plastic with caps, 120ml",10041,17,,,basement
+"Boxes, cardboard",10042,8,,,basement
+Bubbles,10044,1,,,basement
+"Buckets, large plastic",10045,3,General,,basement
+"Buckets, large round black plastic, 18 gallon",10046,2,,,basement
+Burner,10048,1,General,,basement
+"Calcium Chloride, 480g container",10049,2,,,basement
+"Calculator (TI-82, TI-83)",10050,3,Math,,basement
+"Candles, tealights",10366,64,,,basement
+Cardboard Sheets,10051,17,,,basement
+Centrifuge Tubes,10052,27,Chemistry,,basement
+Ceramic Tiles,10053,40,,"How to use: See FOSS Solid Earth Binder, Investigation 4, Part,basement 2 (pg. 157)",basement
+"Chalk, box of 12 pieces",10054,1,,,basement
+Chlorine Remover Solution,10056,1,,,basement
+"Citric Acid, Anhydrous, 480g container",10058,6,,,basement
+"Clay, powdered white, 1lb bag",10059,3,,"How to use: See FOSS Solid Earth Binder,,basement Investigation 5, Part 2 (pg. 190)",basement
+Clipboards,10060,6,General,,basement
+Clothespins,10061,1000,General,,basement
+"Compass, magnetic",10064,17,,,basement
+"Container Lids for  1/4 or 1/2 liter container, plastic",10066,25,,,basement
+Container Lids w/ Thermometer Slit for 1/4 or 1/2 liter container,10067,30,,,basement
+"Containers, clear plastic, 1/2 liter",10068,84,General,,basement
+"Containers, clear plastic, 1/4 liter",10069,10,,,basement
+"Containers, white plastic, 1 liter",10070,16,,,basement
+"Cords, mason line, 1 meter",10071,8,,,basement
+Cork,10072,2,,,basement
+Correction Tape,10074,3,Office Supplies,,basement
+Cotton Balls,10075,500,General,,basement
+Cotton Swabs,10076,500,General,,basement
+Craft Sticks (popsicle sticks),10077,75,,,basement
+Craft Sticks (Woodsies popsicle sticks),10078,1000,General,,basement
+"Cup Lids, plastic dome for 9oz cups",10081,12,,,basement
+"Cup Lids, plastic, for 9oz cups",10082,50,,,basement
+"Cups, plastic",10083,200,General,,basement
+"Dice, white, 5/8""",10086,34,General,,basement
+Dispensing Bottle,10088,1,,,basement
+Dominos,10090,1,,,basement
+Dry Erase Board Eraser,10091,7,Office Supplies,,basement
+Easel,10094,2,,,basement
+Electricity Stoppers (black rubber plug),10095,30,,,basement
+Evaporating Dishes (plastic lids),10098,104,,,basement
+Filter Papers (round white coffee filter),10100,150,,,basement
+Fish Food,10101,1,,,basement
+Fish Net,10102,1,,,basement
+"Fish scoop, small, green netting",10103,5,General,,basement
+Foam Alphabet & Number Block Set,10104,1,Math,,basement
+"Food Web Cards, Mono Lake (12/set)",10106,8,,"How to use: See FOSS Environments,basement Binder, Investigation 4, Part 1 (pg. 173)",basement
+"Food Web Cards, Monterey Bay (20/set)",10107,8,,"How to use: See FOSS Environments,basement Binder, Investigation 3, Part 4 (pg. 144)",basement
+"Food Web Cards, Woods Ecosystem (20/set)",10108,8,,"How to use: See FOSS Environments,basement Binder, Investigation 3, Part 3 (pg. 136)",basement
+Funnels,10112,2,General,,basement
+"Geometry Sets (6 inch ruler, triangle, protractor)",10114,5,Math,,basement
+Glass jars,10115,5,General,,basement
+"Globe, inflatable",10116,1,,,basement
+"Gloves, cloth",10118,2,General,,basement
+"Glow sticks (blue, orange, pink, yellow)",10119,400,General,,basement
+Glue Stick,10120,30,Office Supplies,,basement
+"Glue, Elmer's multi-purpose white",10121,7,Office Supplies,,basement
+"Golf Tees, wooden",10122,20,,,basement
+Graduated Cylinders,10124,9,Chemistry,,basement
+"Gram Pieces, blue square",10125,800,,,basement
+"Gravel, white aquarium rocks, 2 pound bag",10246,1,,,basement
+Hammers,10128,2,General,,basement
+Hydrion Microfine pH,10133,1,,,basement

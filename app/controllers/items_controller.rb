@@ -64,11 +64,11 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    @item = find_item_by_id(params[:id])
+    @item = Item.find_by_id(params[:id])
   end
 
   def update
-    @item = find_item_by_id(params[:id])
+    @item = Item.find_by_id(params[:id])
     if @item.update_attributes(params[:item])
       redirect_to item_path(@item), notice: "Item #{@item.name} was successfully updated."
     else
@@ -78,23 +78,17 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item = find_item_by_id(params[:id])
-    @item.soft_delete
-    redirect_to :back, notice: "Item #{@item.name} was successfully archived."
+    Item.find_by_id(params[:id]).soft_delete
+    redirect_to :back, notice: "Item was successfully archived."
   end
 
   def unarchive
-    @item = find_item_by_id(params[:id])
-    @item.unarchive
-    redirect_to :back, notice: "Item #{@item.name} was successfully unarchived."
+    Item.find_by_id(params[:id]).unarchive
+    redirect_to :back, notice: "Item was successfully unarchived."
   end
 
   def checkout
-    @item = find_item_by_id(params[:id])
-  end
-
-  def find_item_by_id(id)
-    return Item.find_by_id(id)
+    @item = Item.find_by_id(params[:id])
   end
 
   def update_due_date_categories

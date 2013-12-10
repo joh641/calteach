@@ -21,4 +21,7 @@ class ApplicationController < ActionController::Base
     return true
   end
 
+  def redirect_and_flash(model, name, status)
+    redirect_to :back, notice: "#{model} #{name} was successfully #{status}."
+  end
 end

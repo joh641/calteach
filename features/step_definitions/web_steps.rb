@@ -95,6 +95,10 @@ When /^(?:|I )click "([^"]*)"$/ do |link|
   click_link(link)
 end
 
+When /^(?:|I )click with id "([^"]*)"$/ do |id|
+  find(:css, id).click
+end
+
 When /^(?:|I )switch to List View$/ do
   click_link('list-view-link')
 end

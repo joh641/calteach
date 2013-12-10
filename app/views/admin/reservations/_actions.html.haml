@@ -13,7 +13,7 @@
         = link_to checkout_admin_reservation_path(reservation, :reserved => true), :method => :put do
           %i.fa.fa-arrow-circle-o-up
           Check Out
-        = link_to cancel_reservation_path(reservation), :method => :put, :confirm => 'Are you sure?' do
+        = link_to cancel_reservation_path(reservation), :id => 'cancel', :method => :put, :confirm => 'Are you sure?' do
           %i.fa.fa-times-circle
           Cancel
       - if reservation.get_status == "Checked Out" || reservation.get_status == "Overdue"

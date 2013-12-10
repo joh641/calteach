@@ -74,18 +74,13 @@ class ItemsController < ApplicationController
   def destroy
     @item = Item.find_by_id(params[:id])
     @item.soft_delete
-    toggle_archive_and_flash(false, @item.name)
+    redirect_and_flash("Item", @item.name, "unarchived")
   end
 
   def unarchive
     @item = Item.find_by_id(params[:id])
     @item.unarchive
-    toggle_archive_and_flash(true, @item.name)
-  end
-
-  def toggle_archive_and_flash(un, name)
-    status = un ? "unarchived" : "archived"
-    redirect_to :back, notice: "Item #{name} was successfully #{status}."
+    redirect_and_flash("Item", @item.name, "archived")
   end
 
   def checkout

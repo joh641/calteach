@@ -1,6 +1,6 @@
 class Reservation < ActiveRecord::Base
 
-  attr_accessible :canceled, :date_in, :date_out, :item_id, :notes, :quantity, :reservation_in, :reservation_out, :user, :user_id
+  attr_accessible :canceled, :date_in, :date_out, :item_id, :item, :notes, :quantity, :reservation_in, :reservation_out, :user, :user_id
 
 
   # validates_date :date_in, :on_or_after => lambda{|m| m.date_out}, :allow_nil => true
@@ -39,6 +39,9 @@ class Reservation < ActiveRecord::Base
 
   scope :for_user, lambda {|name| joins(:user).where("users.name = ?", name)}
   scope :for_item, lambda {|name| joins(:item).where("items.name = ?", name)}
+
+  scope :checkout_reservation, lambda {where("reservation_out <= ? AND reservation_in >= ?", Date.today, Date.today).readonly(false)}
+  scope :has_quantity, lambda {|q| where("reservations.quantity = ?", q)}
 
   def get_status
     # if archived

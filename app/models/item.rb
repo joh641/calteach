@@ -25,6 +25,14 @@ class Item < ActiveRecord::Base
     @@due_dates.keys
   end
 
+  def self.update_due_date_categories(category_name, business_days)
+    @@due_dates[category_name] = business_days
+  end
+
+  def self.delete_due_date_category(category_name)
+    @@due_dates.delete(category_name)
+  end
+
   def get_due_date
     @@due_dates[due_date_category]
   end

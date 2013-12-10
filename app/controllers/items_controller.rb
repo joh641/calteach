@@ -9,14 +9,10 @@ class ItemsController < ApplicationController
     else
       @items = Item.active.order(:name)
     end
-    # # change nil request param to empty string
-    # session[:tag_query] = params[:tag_query] == nil ? "" : params[:tag_query]
-    # session[:search_query] = params[:search_query] == nil ? "" : params[:search_query]
 
     session[:tag_query] = params[:tag_query]
     session[:search_query] = params[:search_query]
 
-    #TODO (Yuxin) Is this even safe?
     if is_valid_query(session[:search_query])
       @items = @items.where("name like ?", "%#{session[:search_query]}%")
     end

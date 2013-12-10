@@ -10,7 +10,7 @@ class ItemsController < ApplicationController
     session[:search_query] = params[:search_query]
 
     if is_valid_query(session[:search_query])
-      @items = @items.where("upper(name) like ?", "%"+session[:search_query].upcase+"%")
+      @items = @items.where("upper(name) like ?", construct_query(session[:search_query]))
     end
 
     if is_valid_query(session[:tag_query])
@@ -20,6 +20,10 @@ class ItemsController < ApplicationController
 
   def is_valid_query(input)
     return ! [nil, ""].include?(input)
+  end
+
+  def construct_query(input)
+    return "%"+input.upcase+"%"
   end
 
   def show

@@ -50,12 +50,12 @@ class Admin::ReservationsController < ApplicationController
   def checkout
     reservation = get_reservation(params)
     checkout_helper(reservation, reservation.user)
-    redirect_to :back
   end
 
   def get_reservation(parameters)
     if parameters[:reserved]
       reservation = Reservation.find_by_id(parameters[:id])
+      redirect_to :back
     else
       user = User.find_by_email(parameters[:email])
       item = Item.find_by_id(parameters[:item])
@@ -73,16 +73,24 @@ class Admin::ReservationsController < ApplicationController
         reservation.item = item
         reservation.user = user
       end
+      redirect_to item_path(item)
     end
     reservation
   end
 
   def checkout_helper(reservation, user)
-    if user and Reservation.checkout(reservation, user)
-      flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}."
+    if user
+      if reservation.quantity and reservation.quantity > 0
+        if Reservation.checkout(reservation, user)
+          flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}."
+        else
+          flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation."
+        end
+      else
+        flash[:warning] = "Reservation quantity cannot be zero"
+      end
     else
-      flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation."
-      flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out." if !user
+      flash[:warning] = "User does not exist. Please create an account for the user via the User Dashboard before checking out."
     end
   end
 

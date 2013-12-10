@@ -76,9 +76,9 @@ class Reservation < ActiveRecord::Base
     end_date_overlap = date_within_range?(res_end, start_date, end_date)
 
     begin
-      date_within_res = reservation_out <= start_date and reservation_in >= end_date
+      date_within_res = reservation_out >= start_date and reservation_in <= end_date
     rescue NoMethodError
-      return false
+      date_within_res = false
     end
 
     return start_date_overlap || end_date_overlap || date_within_res
@@ -121,25 +121,28 @@ class Reservation < ActiveRecord::Base
   end
 
   def self.valid_reservation?(start_date, end_date, item, quantity_desired, exclude_reservation= nil, current_user_admin= false)
-    if quantity_desired == 0
-      raise StandardError, " the quantity requested must be greater than 0."
-    elsif end_date < start_date
-      raise StandardError, " the reservation end date must be after the start date."
-    elsif item.quantity_available(start_date, end_date, exclude_reservation) < quantity_desired
+    raise StandardError, " the quantity requested must be greater than 0." if quantity_desired == 0
+    self.valid_dates?(start_date, end_date, item, current_user_admin)
+    if item.quantity_available(start_date, end_date, exclude_reservation) < quantity_desired
       raise StandardError, " the quantity requested is not available."
-    elsif not current_user_admin and end_date > item.upper_limit(start_date)
-      raise StandardError, " the requested length exceeds the max for this item: " + item.get_due_date.to_s + " business days."
-    elsif not current_user_admin and on_weekend?(start_date, end_date)
-      raise StandardError, " reservations cannot start or end on weekends."
     else
       true
+    end
+  end
+
+  def self.valid_dates?(start_date, end_date, item, current_user_admin)
+    return if current_user_admin
+    if end_date > item.upper_limit(start_date)
+      raise StandardError, " the requested length exceeds the max for this item: " + item.get_due_date.to_s + " business days."
+    elsif on_weekend?(start_date, end_date)
+      raise StandardError, " reservations cannot start or end on weekends."
     end
   end
 
   def self.make_reservation(user, item, start_date, end_date, quantity_desired)
     start_date = Date.strptime(start_date, "%m/%d/%Y")
     end_date = Date.strptime(end_date, "%m/%d/%Y")
-    create(:user_id => user.id, :item_id => item.id, :reservation_out => start_date, :reservation_in => end_date, :quantity => quantity_desired) if valid_reservation?(start_date, end_date, item, quantity_desired)
+    Reservation.create!(:user_id => user.id, :item_id => item.id, :reservation_out => start_date, :reservation_in => end_date, :quantity => quantity_desired) if valid_reservation?(start_date, end_date, item, quantity_desired)
   end
 
   def self.checkout(reservation, user)

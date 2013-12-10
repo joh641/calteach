@@ -11,23 +11,6 @@ $(document).ready(function() {
     });
 
     $('.best_in_place').best_in_place()
-        .on('ajax:error', function(evt, data, status, xhr) {
-            var response = ($('<p />').html(data['responseText'])).find('pre');
-            var error = response.first().text();
-
-            $('#reservation_error').text(response.first().text()).css("visibility", "visible");
-            if (error != "Invalid Date") {
-                if (response.text().indexOf(date_out_key) != -1) {
-                    var date = new Date(findValInHashText(response, date_out_key));
-                    var date_string = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
-                    var id = findValInHashText(response, id_key);
-                    var s = $("[data-inner_class=reservation_out_" + id + "]")
-                }
-            }
-        })
-        .on('ajax:success', function(evt, data, status, xhr) {
-            $('#reservation_error').css("visibility", "hidden");
-        });
 
     $(document).click(function (event) {
         if (last_clicked_field != null) {

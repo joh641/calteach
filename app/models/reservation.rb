@@ -151,11 +151,11 @@ class Reservation < ActiveRecord::Base
     elsif reservation.reservation_in and reservation.reservation_in > due_date
       reservation.reservation_in = due_date
     end
-
     reservation.date_out = checkout_date
+
     if number_available >= reservation.quantity
       reservation.save!
-      true
+      reservation
     else
       false
     end

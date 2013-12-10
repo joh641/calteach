@@ -83,6 +83,16 @@ describe Admin::ReservationsController, :type => :controller  do
       r1.delete()
       r.delete()
     end
+
+    it 'should fail if reservation quantity is zero' do
+      item = Item.create(:name => "Book", :quantity => 1)
+      u1 = User.create!(:name => "John", :email => "jon@gmail.com", :password => 'password')
+      num_res = Reservation.all.length
+      put :checkout, {:id => 3, :item => item.id, :email => "jon@gmail.com", :quantity => 0}
+      assert num_res == Reservation.all.length
+      item.delete()
+      u1.delete()
+    end
   end
 
   # describe 'archiving a reservation' do

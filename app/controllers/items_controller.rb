@@ -92,7 +92,8 @@ class ItemsController < ApplicationController
   def toggle_archive_and_flash(un, name)
     status = un ? "unarchived" : "archived"
     redirect_to :back, notice: "Item #{name} was successfully #{status}."
-
+  end
+  
   def checkout
     @item = Item.find_by_id(params[:id])
   end

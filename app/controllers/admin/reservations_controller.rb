@@ -75,6 +75,7 @@ class Admin::ReservationsController < ApplicationController
     get_dates(@date_out, @date_in)
 
     @reservations = Reservation.filter(params, @date_out, @date_in)
+    # @reservations = Reservation.where(date_out: @date_out, date_in: @date_in)
     @default_status = status.to_s.empty? ? "All" : status
 
     respond_to do |format|

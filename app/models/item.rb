@@ -92,4 +92,8 @@ class Item < ActiveRecord::Base
     update_attribute(:inactive, false)
   end
 
+  def toggle_archive
+    update_attribute(:inactive, not inactive)
+  end
+
 end

@@ -16,7 +16,7 @@ class ReservationsController < ApplicationController
     end_date = params[:reservation][:end_date]
     quantity_desired = params[:reservation][:quantity].to_i
 
-    begin 
+    begin
       Reservation.make_reservation(current_user, item, start_date, end_date, quantity_desired)
       flash[:notice] = "Item #{item.name} was successfully reserved."
     rescue => e
@@ -30,27 +30,22 @@ class ReservationsController < ApplicationController
     end_date = params[:end_date]
     if start_date and end_date
       begin
-        start_date = start_date != "" ? Date.strptime(start_date, "%m/%d/%Y") : nil
-        end_date = end_date != "" ? Date.strptime(end_date, "%m/%d/%Y") : nil
-        params[:reservation] = Hash.new if !params[:reservation]
+        start_date = Reservation.strip_date(start_date)
+        end_date = Reservation.strip_date(end_date)
 
-        if reservation.checked_out?
-          params[:reservation][:date_out] = start_date
-        else
-          params[:reservation][:reservation_out] = start_date
-        end
-        params[:reservation][:reservation_in] = end_date
+        params[:reservation] = update_params(reservation, params[:reservation], start_date, end_date)
       rescue
         raise "Invalid Date"
       end
 
-      if !Reservation.valid_reservation?(start_date, end_date, Item.find_by_id(reservation.item_id), reservation.quantity, reservation, (current_user and current_user.admin?))
+      if !Reservation.valid_reservation?(start_date, end_date, reservation.item, reservation.quantity, reservation, is_admin)
         raise "Conflicting Reservation"
       end
     end
 
     reservation.update_attributes(params[:reservation])
-    if params[:return_address] != nil
+
+    if params[:return_address]
       respond_with reservation, :location => params[:return_address]
     else
       respond_with reservation
@@ -63,6 +58,24 @@ class ReservationsController < ApplicationController
   end
 
   private
+
+  # def format_dates(start_date, end_date)
+  #   start_date = start_date != "" ? Reservation.strip_date(start_date) : nil
+  #   end_date = end_date != "" ? Reservation.strip_date(end_date) : nil
+  # end
+
+  def update_params(reservation, res_params, start_date, end_date)
+    res_params ||= Hash.new
+
+    if reservation.checked_out?
+      res_params[:date_out] = start_date
+    else
+      res_params[:reservation_out] = start_date
+    end
+    res_params[:reservation_in] = end_date
+
+    res_params
+  end
 
   def reservation
     @reservation = Reservation.find(params[:id])

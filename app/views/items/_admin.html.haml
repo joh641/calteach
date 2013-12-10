@@ -1,5 +1,8 @@
 .admin
   %h5 Admin
+  .quantity
+    %b Quantity available:
+    #{@item.quantity_available} / #{@item.quantity}
   .location
     %b Location:
     - if @item.location and @item.location != ""

@@ -9,34 +9,20 @@ class ItemsController < ApplicationController
     else
       @items = Item.active.order(:name)
     end
+    # change nil request param to empty string
+    session[:tag_query] = params[:tag_query] == nil ? "" : params[:tag_query]
+    session[:search_query] = params[:search_query] == nil ? "" : params[:search_query]
 
-    if params[:search_query] or params[:tag_query]   
-      print "HEHEHEHEHE"
-      print params[:tag_query]
+    #TODO (Yuxin) Is this even safe?
+    if session[:search_query] != ""
+      @items = @items.where("lower(name) = ?", session[:search_query].downcase)
+    end
 
-      if params[:tag_query]
-        session[:tag_query] = params[:tag_query]
-      end
-
-      if params[:search_query]
-        session[:search_query] = params[:search_query]
-      end
-
-      @search_query = session[:search_query]
-      @tag_query = session[:tag_query]
-
-      print @search_query
-      #TODO (Yuxin) Is this even safe?
-      if @search_query != ""
-        @items = @items.where("lower(name) = ?", @search_query.downcase)
-      end
-
-      if @tag_query != ""
-        puts "HEY GUYS: " + session[:tag_query]
-        @items = @items.tagged_with(session[:tag_query])
-        print @items
-      end
-    elsif
+    if session[:tag_query] != ""
+      @items = @items.tagged_with(session[:tag_query])
+    end
+    
+    if !(params[:search_query] or params[:tag_query])
       session.delete(:search_query)
       session.delete(:tag_query)
     end

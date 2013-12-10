@@ -235,4 +235,28 @@ $left-column-container-width: 274px;
   margin-right: 10px;
 }
 
+// "No results" styles 
+.no-results-container {
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 125px;
+  .no-results-icon-container {
+    @include height(100px, 80px);
+  }
+  .no-results-title-container {
+    @include line-height(35px, 20px);
+  }
+  .no-results-description-container {
+    color: #ccc;
+    .no-results-search-tips {
+      @include line-height(28px, 18px);
+    }
+
+    ul {
+      @include line-height(24px, 13px);
+    }
+  }
+}
+
+
 

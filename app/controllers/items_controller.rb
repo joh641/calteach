@@ -80,13 +80,13 @@ class ItemsController < ApplicationController
   def destroy
     @item = Item.find_by_id(params[:id])
     @item.soft_delete
-    redirect_to :back, notice: "Item was successfully archived."
+    redirect_to :back, notice: "Item #{@item.name} was successfully archived."
   end
 
   def unarchive
     @item = Item.find_by_id(params[:id])
     @item.unarchive
-    redirect_to :back, notice: "Item was successfully unarchived."
+    redirect_to :back, notice: "Item #{@item.name} was successfully unarchived."
   end
 
   # def toggle_archive

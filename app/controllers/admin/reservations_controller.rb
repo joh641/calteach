@@ -32,18 +32,13 @@ class Admin::ReservationsController < ApplicationController
       user = User.find_by_email(parameters[:email])
       item = Item.find_by_id(parameters[:item])
 
-      if user
-        reservation = Reservation.for_user(user.name).for_item(item.name).reserved.checkout_reservation.has_quantity(parameters[:quantity].to_i).first
-      end
+      reservation = Reservation.for_user(user.name).for_item(item.name).reserved.checkout_reservation.has_quantity(parameters[:quantity].to_i).first if user
 
-      if not reservation
-        reservation = Reservation.new(quantity: parameters[:quantity].to_i, item: item, user: user)
-      end
+      reservation ||= Reservation.new(quantity: parameters[:quantity].to_i, item: item, user: user)
     end
 
-    if parameters[:notes]
-      reservation.notes = (!reservation.notes or reservation.notes == "") ? parameters[:notes] : reservation.notes + " " + parameters[:notes]
-    end
+    add_notes(reservation, parameters[:notes])
+
     reservation
   end
 
@@ -93,6 +88,10 @@ class Admin::ReservationsController < ApplicationController
   def get_dates(date_out, date_in)
     @date_out = Reservation.format_date date_out if not date_out.to_s.empty?
     @date_in = Reservation.format_date date_in if not date_in.to_s.empty?
+  end
+
+  def add_notes(reservation, notes)
+    reservation.notes = reservation.notes.to_s.empty? ? notes : reservation.notes + " " + notes if notes
   end
 
 end

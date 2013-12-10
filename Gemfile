@@ -41,6 +41,8 @@ gem 'bootstrap-sass-rails'
 gem 'font-awesome-sass'
 
 gem 'devise'
+gem 'acts-as-taggable-on'
+gem "select2-rails"
 
 gem "momentjs-rails", "~> 2.4.0"
 gem 'paperclip'

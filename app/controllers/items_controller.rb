@@ -9,14 +9,25 @@ class ItemsController < ApplicationController
     else
       @items = Item.active.order(:name)
     end
+    # change nil request param to empty string
+    session[:tag_query] = params[:tag_query] == nil ? "" : params[:tag_query]
+    session[:search_query] = params[:search_query] == nil ? "" : params[:search_query]
 
-    if params[:query]
-      #TODO (Yuxin) Is this even safe?
-      @query = params[:query]
-      @items = @items.where("lower(name) = ?", @query.downcase)
+    #TODO (Yuxin) Is this even safe?
+    if session[:search_query] != ""
+      @items = @items.where("lower(name) = ?", session[:search_query].downcase)
+    end
+
+    if session[:tag_query] != ""
+      @items = @items.tagged_with(session[:tag_query])
+    end
+    
+    if !(params[:search_query] or params[:tag_query])
+      session.delete(:search_query)
+      session.delete(:tag_query)
     end
   end
-  
+
   def show
     @item = Item.find_by_id(params[:id])
     @reservations = @item.reservations

@@ -93,4 +93,14 @@ class ItemsController < ApplicationController
     @item = Item.find_by_id(params[:id])
   end
 
+  def update_due_date_categories
+    Item.update_due_date_categories(params[:category], params[:days])
+    redirect_to :back, notice: "Due date categories successfully updated."
+  end
+
+  def delete_due_date_category
+    Item.delete_due_date_category(params[:category])
+    redirect_to :back, notice: "Due date category was successfully deleted."
+  end
+
 end

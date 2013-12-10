@@ -6,7 +6,11 @@ Calteach::Application.routes.draw do
       get 'checkout'
       put 'unarchive'
     end
-    collection { post :import }
+    collection do
+      post 'import'
+      put 'update_due_date_categories'
+      delete 'delete_due_date_category'
+    end
   end
 
   resources :reservations do

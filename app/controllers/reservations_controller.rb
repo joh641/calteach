@@ -6,7 +6,7 @@ class ReservationsController < ApplicationController
     if not current_user
       redirect_to items_path
     else
-      @reservations = current_user.reservations
+      @reservations = current_user.reservations.where(:canceled => false)
     end
   end
 

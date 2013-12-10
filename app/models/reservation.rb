@@ -28,8 +28,8 @@ class Reservation < ActiveRecord::Base
   scope :within_dates, lambda { |start_date, end_date|
     where("(date_out IS NULL AND reservation_out >= ? AND reservation_in <= ?) OR (date_out IS NOT NULL AND date_in IS NULL AND date_out >= ? AND reservation_in <= ?) OR (date_out IS NOT NULL AND date_in IS NOT NULL AND date_out >= ? AND date_in <= ?)", start_date, end_date, start_date, end_date, start_date, end_date) }
 
-  scope :for_user, lambda {|name| joins(:user).where("users.name = ?", name)}
-  scope :for_item, lambda {|name| joins(:item).where("items.name = ?", name)}
+  scope :for_user, lambda {|name| joins(:user).where("users.name like ?", "%"+name+"%")}
+  scope :for_item, lambda {|name| joins(:item).where("items.name like ?", "%"+name+"%")}
 
   scope :checkout_reservation, lambda {where("reservation_out <= ? AND reservation_in >= ?", Date.today, Date.today).readonly(false)}
   scope :has_quantity, lambda {|q| where("reservations.quantity = ?", q)}
@@ -108,6 +108,10 @@ class Reservation < ActiveRecord::Base
   #   where(:archived => false)
   # end
 
+  def get_due_date
+    self.item.get_due_date_business_days(DateTime.now)
+  end
+
   def self.hide_canceled
     where(:canceled => false)
   end
@@ -148,7 +152,7 @@ class Reservation < ActiveRecord::Base
   def self.checkout(reservation, user)
     number_available = reservation.get_max_item_quantity(Date.today, Date.today)
     reservation.date_out = Date.today
-    due_date = reservation.item.get_due_date.business_days.after(DateTime.now).to_date
+    due_date = reservation.get_due_date
 
     begin
       reservation.reservation_in = due_date if reservation.reservation_in > due_date

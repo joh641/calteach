@@ -3,14 +3,14 @@ class ItemsController < ApplicationController
   before_filter :is_admin, :except => [:index, :show]
 
   def index
-    # @items = params[:inactive] ? Item.inactive.order(:name) : Item.active.order(:name)
-    # @inactive = params[:inactive]
-    if params[:inactive]
-      @items = Item.inactive.order(:name)
-      @inactive = true
-    else
-      @items = Item.active.order(:name)
-    end
+    @items = params[:inactive] ? Item.inactive.order(:name) : Item.active.order(:name)
+    @inactive = params[:inactive]
+    # if params[:inactive]
+    #   @items = Item.inactive.order(:name)
+    #   @inactive = true
+    # else
+    #   @items = Item.active.order(:name)
+    # end
 
     session[:tag_query] = params[:tag_query]
     session[:search_query] = params[:search_query]

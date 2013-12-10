@@ -9,10 +9,10 @@ Background:
 Scenario:
   Given I am logged into the user panel
   When I am on the edit user page for "user"
-  Then I should see "Edit User"
+  Then I should see "Account settings"
   When I fill in "Name" with "Bob"
   And I fill in "Current password" with "password"
   And I press "Update"
   Then I should see "You updated your account successfully."
   When I am on the edit user page for "Bob"
-  Then I should see "Edit User"
+  Then I should see "Account settings"

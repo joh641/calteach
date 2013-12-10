@@ -95,10 +95,10 @@ class ItemsController < ApplicationController
 
   def update_due_date_categories
     if params[:add]
-      Item.update_due_date_categories(params[:category], params[:days])
+      Item.update_due_date_categories(params[:category], params[:days].to_i)
     else 
       @due_date_categories.each do |category|
-        Item.update_due_date_categories(category, params["#{category}-days"])
+        Item.update_due_date_categories(category, params["#{category}-days"].to_i)
       end
     end
     redirect_to items_path, notice: "Due date categories successfully updated."

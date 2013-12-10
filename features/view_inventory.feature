@@ -37,14 +37,14 @@ Scenario: User can see all items and their availabilities
 Scenario: User can search for items
     Given I am logged into the user panel
     When I search for "Globe"
-    And I press "Search"
+    And I press "Go"
     Then I should see "Globe" within Card View
     And I should not see "Gold" within Card View
 
 Scenario: User can search for items and see no results
     Given I am logged into the user panel
     When I search for "Silver"
-    And I press "Search"
+    And I press "Go"
     Then there should be no results
 
 Scenario: User can reserve item on item's individual page

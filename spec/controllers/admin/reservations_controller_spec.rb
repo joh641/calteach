@@ -17,6 +17,37 @@ describe Admin::ReservationsController, :type => :controller  do
     request.env["HTTP_REFERER"] = "/admin/reservations"
   end
 
+  describe 'looking at reservations list' do
+    it 'should show canceled reservations if flag is set' do
+      item = Item.create(:name => "Book", :quantity => 1)
+      r1 = Reservation.create({:user_id => @admin.id, :item_id => item.id, :reservation_out => Date.today + 2, :reservation_in => Date.today + 4, :quantity => 1, :canceled => true})
+      get :index, :canceled => true
+      assigns(:reservations).length.should == Reservation.all.length
+      item.delete()
+      r1.delete()
+    end
+  end
+
+  describe 'updating a reservation' do
+    it 'should go through' do
+      item = Item.create(:name => "Book", :quantity => 1)
+      r1 = Reservation.create({:user_id => @admin.id, :item_id => item.id, :reservation_out => Date.today + 2, :reservation_in => Date.today + 4, :quantity => 1})
+      put :update, :id => r1.id, :reservation => {:reservation_out => Date.today}
+      assigns(:reservation).reservation_out == Date.today
+      item.delete()
+      r1.delete()
+    end
+  end
+
+  describe 'checking in a reservation' do
+    it 'should work for a checked out item' do
+      item = Item.create(:name => "Book", :quantity => 1)
+      r1 = Reservation.create({:user_id => @admin.id, :item_id => item.id, :date_out => Date.today - 2, :reservation_in => Date.today + 4, :quantity => 1})
+      put :checkin, :id => r1.id
+      Reservation.find(r1.id).date_in == Date.today
+    end
+  end
+
   describe 'checking out an item' do
     it 'should redirect to the index if done from dashboard' do
       put :checkout, {:id => @reservation.id, :reserved => true}
@@ -94,7 +125,29 @@ describe Admin::ReservationsController, :type => :controller  do
       item.delete()
       u1.delete()
     end
+
+    it 'should save notes properly if any exist' do
+      item = Item.create(:name => "Book", :quantity => 1)
+      u1 = User.create!(:name => "John", :email => "jon@gmail.com", :password => 'password')
+      put :checkout, {:id => 3, :item => item.id, :email => "jon@gmail.com", :quantity => 1, :notes => "asdf"}
+      assert Reservation.all.last.notes == "asdf"
+      item.delete()
+      u1.delete()
+      Reservation.all.last.delete()
+    end
+
+    it 'should tag on the notes to the existing notes of the reservation' do
+      item = Item.create(:name => "Book", :quantity => 1)
+      u1 = User.create!(:name => "John", :email => "jon@gmail.com", :password => 'password')
+      r1 = Reservation.create!({:user_id => u1.id, :item_id => item.id, :reservation_out => Date.today, :reservation_in => Date.today + 4, :quantity => 1, :notes => "blah."})
+      put :checkout, {:id => 3, :item => item.id, :email => "jon@gmail.com", :quantity => 1, :notes => "asdf"}
+      assert Reservation.find(r1.id).notes == "blah. asdf"
+      item.delete()
+      u1.delete()
+      r1.delete()
+    end
   end
+
 
   # describe 'archiving a reservation' do
   #   it 'should redirect to the index if done from dashboard' do

@@ -15,8 +15,8 @@ Background:
 Scenario:
   Given I am logged into the admin panel
   And I am on the home page
-  And I switch to List View
-  When I follow "Math book" within List View
+  And I switch to Card View
+  When I follow "Math book" within Card View
   Then I should see "Admin"
 
   When I press "Archive item"

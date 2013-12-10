@@ -18,24 +18,24 @@ Background:
   And I am on the home page
 
 Scenario: Video Equipment can only be checked out for 2 days
-  Given I switch to List View
-  When I follow "Camera" within List View
+  Given I switch to Card View
+  When I follow "Camera" within Card View
   And I press "Checkout item"
   And I fill in "email" with "cucumberuser@gmail.com"
   And I press "Checkout Item"
   Then the reservation under "cucumberuser@gmail.com" should be for 2 days
 
 Scenario: Books can only be checked out for 10 days
-  Given I switch to List View
-  When I follow "Book" within List View
+  Given I switch to Card View
+  When I follow "Book" within Card View
   And I press "Checkout item"
   And I fill in "email" with "cucumberuser@gmail.com"
   And I press "Checkout Item"
   Then the reservation under "cucumberuser@gmail.com" should be for 10 days
   
 Scenario: Other items can only be checked out for 5 days
-  Given I switch to List View
-  When I follow "Globe" within List View
+  Given I switch to Card View
+  When I follow "Globe" within Card View
   And I press "Checkout item"
   And I fill in "email" with "cucumberuser@gmail.com"
   And I press "Checkout Item"

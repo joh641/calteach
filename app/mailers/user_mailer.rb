@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "lauraimai@calteach.com"
+  default from: "calteach@berkeley.edu"
 
   def return_reminder(user)
     @user = user

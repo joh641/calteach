@@ -18,9 +18,9 @@
               %input{:type=>"hidden", :name => 'search_query', :value=>session[:search_query]}
               %input{:type=>"hidden", :name => 'tag_query', :value=>category}
               - if session[:tag_query] == category
-                <input type="submit" class="label-danger tag" value=#{category} />
+                <input type="submit" class="label-danger tag" value="#{category}" />
               - else
-                <input type="submit" class="label-default tag" value=#{category} />
+                <input type="submit" class="label-default tag" value="#{category}" />
   - if session[:tag_query] or session[:search_query]
     .reset-container
       = link_to 'Reset Search', '/', :class => 'btn btn-default reset-search'

@@ -10,7 +10,8 @@ class ItemsController < ApplicationController
     session[:search_query] = params[:search_query]
 
     if is_valid_query(session[:search_query])
-      @items = @items.where("upper(name) like ?", construct_query(session[:search_query]))
+      query = construct_query(session[:search_query])
+      @items = @items.where("upper(name) like ? or upper(description) like ? or upper(legacy_id) like ?", query, query, query)
     end
 
     if is_valid_query(session[:tag_query])

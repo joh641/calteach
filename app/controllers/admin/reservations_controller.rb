@@ -76,6 +76,7 @@ class Admin::ReservationsController < ApplicationController
 
     @reservations = Reservation.filter(params, @date_out, @date_in)
     @default_status = status.to_s.empty? ? "All" : status
+    @reservations = @reservations.reverse
 
     respond_to do |format|
       format.html

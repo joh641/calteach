@@ -235,7 +235,7 @@ class Reservation < ActiveRecord::Base
     if STATUSES.include? status
       reservations.send(status.parameterize.underscore.to_sym)
     else
-      reservations
+      reservations.send(:reserved_or_checked_out)
     end
   end
 

@@ -11,11 +11,13 @@ class UserMailer < ActionMailer::Base
   end
 
   def overdue_reminder(user, items)
-    @url = 'http://calteach.berkeley.edu/cal-teach-program/advising-and-resources.php'
-    @user = user
-    @items = items
-    @greeting = "Dear "
+    if Time.now.sunday?
+      @url = 'http://calteach.berkeley.edu/cal-teach-program/advising-and-resources.php'
+      @user = user
+      @items = items
+      @greeting = "Dear "
 
-    mail to: @user.email, subject: "Cal Teach Resource Center Items Overdue"
+      mail to: @user.email, subject: "Cal Teach Resource Center Items Overdue"
+    end
   end
 end

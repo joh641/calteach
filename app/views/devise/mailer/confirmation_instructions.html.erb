@@ -2,7 +2,7 @@
 
 <p>You are receiving this email because an account has been created for you to access the UC Berkeley Cal Teach Materials Inventory. You can confirm your account email through the link below:</p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @token) %></p>
 
 <% if @user.admin_created %>
     <p>After confirming above, use the following login information to change your password:</p>

@@ -210,17 +210,48 @@ class Reservation < ActiveRecord::Base
   def self.email_reminders
     current_date = Date.today
     reminder_days = 1 # Time in seconds before due date
-    checked_out = where("date_out IS NOT NULL", :date_in => nil)
+    checked_out = where("date_out IS NOT NULL and date_in IS NULL")
+    reminder_hash = {}
+
+    # Get the reservations due in one day and populate the reminder_hash
     checked_out.each do |current_reservation|
       if (current_reservation.reservation_in  \
           and (current_reservation.reservation_in - current_date) > 0 \
           and (current_reservation.reservation_in - current_date) == reminder_days)
         user = User.find(current_reservation.user_id)
-        UserMailer.return_reminder(user).deliver
+        item = Item.find(current_reservation.item_id)
+
+        if not reminder_hash.has_key?(user)
+          reminder_hash[user] = []
+        end
+        reminder_hash[user] << item
       end
+    end
+
+    reminder_hash.each do |user, items|
+      UserMailer.return_reminder(user, items).deliver
     end
   end
 
+  def self.overdue_reminders
+    current_date = Date.today
+    checked_out = where("date_out IS NOT NULL and date_in IS NULL")
+    checked_out.each do |current_reservation|
+      if (current_reservation.reservation_in  \
+          and (current_reservation.reservation_in - current_date) < 0)
+        user = User.find(current_reservation.user_id)
+        item = Item.find(current_reservation.item_id)
+
+        if not reminder_hash.has_key?(user)
+          reminder_hash[user] = []
+        end
+        reminder_hash[user] << item
+      end
+    end
+    reminder_hash.each do |user, items|
+      UserMailer.overdue_reminder(user, items).deliver
+    end
+  end
 
   def self.filter(params, date_out, date_in)
     reservations = canceled_res(reservations, params[:canceled])

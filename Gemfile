@@ -53,5 +53,4 @@ gem 'rmagick'
 gem 'bootstrap-datepicker-rails'
 gem 'best_in_place'
 gem 'validates_timeliness', '~> 3.0'
-gem 'whenever', require: false
 gem 'business_time'

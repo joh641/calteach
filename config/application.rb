@@ -30,7 +30,10 @@ module Calteach
     config.assets.initialize_on_precompile = false
 
     # # TODO Remove this in Rails 4.1
-    # # config.secret_key_base = YAML.load(File.open("#{Rails.root}/config/secrets.yml"))[Rails.env]['secret_key_base']
-    # config.secret_key_base = YAML.load(File.read("config/secrets.yml"))
+    if Rails.env.production?
+      config.secret_key_base = ENV['SECRET_TOKEN']
+    else
+      config.secret_key_base = YAML.load(File.open("#{Rails.root}/config/secrets.yml"))[Rails.env]['secret_key_base']
+    end
   end
 end

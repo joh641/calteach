@@ -23,7 +23,7 @@ Calteach::Application.configure do
   config.assets.digest = true
 
   # Log error messages when you accidentally call methods on nil
-  config.whiny_nils = true
+  # config.whiny_nils = true
 
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH

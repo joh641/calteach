@@ -1,13 +1,19 @@
 = @greeting + @user.name + ','
-
+%br
+%br
 Our records indicate that you have checked out the following item(s) from the Cal Teach Resource Center which are now overdue:
-
+%br
+%br
 - @items.each do |item|
   = item.name + '--' + item.quantity.to_s
-
+  %br
+%br
 Please return the items as soon as possible.
-
+%br
+%br
 = 'Please note that the Advising & Resource Center is open Monday-Thursday. Check open hours here: ' + @url + '.'
-
+%br
+%br
 Best,
+%br
 Cal Teach

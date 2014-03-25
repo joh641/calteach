@@ -4,10 +4,10 @@ class Admin::UsersController < ApplicationController
 
   def index
     if params[:inactive]
-      @users = User.inactive.find(:all, :order => "name ASC")
+      @users = User.inactive
       @inactive = true
     else
-      @users = User.active.find(:all, :order => "name ASC")
+      @users = User.active
     end
   end
 
@@ -17,12 +17,12 @@ class Admin::UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = User.find_by id: params[:id]
     @disabled = true
   end
 
   def create
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
     poss_characters =  [('a'..'z'),('A'..'Z')].map{|i| i.to_a}.flatten
     random_password  =  (0...8).map{ poss_characters[rand(poss_characters.length)] }.join
     @user.password = random_password
@@ -36,8 +36,8 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
-    if @user.update_attributes(params[:user])
+    @user = User.find_by id: params[:id]
+    if @user.update_attributes(user_params)
       redirect_to admin_users_path, notice: 'User was successfully updated.'
     else
       flash[:warning] = "User could not be updated."
@@ -46,15 +46,20 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
+    @user = User.find_by id: params[:id]
     @user.soft_delete
     redirect_and_flash("User", @user.name, "deactivated")
   end
 
   def activate
-    @user = User.find(params[:id])
+    @user = User.find_by id: params[:id]
     @user.activate
     redirect_and_flash("User", @user.name, "activated")
+  end
+
+  def user_params
+    params.require(:user)
+          .permit(:name, :email, :phone, :category)
   end
 
 end

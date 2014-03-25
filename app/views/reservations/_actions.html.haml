@@ -11,7 +11,7 @@
             Notes
       - if reservation.get_status == "Reserved" 
         %li
-          = link_to cancel_reservation_path(reservation), :method => :put, :confirm => 'Are you sure?' do
+          = link_to cancel_reservation_path(reservation), :method => :put, data: { confirm: 'Are you sure?' } do
             %i.fa.fa-times-circle
             Cancel
 

@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_filter :configure_permitted_parameters, if: :devise_controller?
 
   protect_from_forgery
 
@@ -28,4 +29,12 @@ class ApplicationController < ActionController::Base
   def redirect_and_flash(model, name, status)
     redirect_to :back, notice: "#{model} #{name} was successfully #{status}."
   end
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:name, :phone, :email, :password, :password_confirmation, :category) }
+    devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :remember_me) }
+  end
+
 end

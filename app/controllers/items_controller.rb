@@ -50,7 +50,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(params[:item])
+    @item = Item.new(item_params)
     if @item.quantity and @item.quantity < 1
       flash[:warning] = "Invalid quantity specified."
       render action: "/new"
@@ -68,7 +68,7 @@ class ItemsController < ApplicationController
 
   def update
     @item = Item.find_by_id(params[:id])
-    if @item.update_attributes(params[:item])
+    if @item.update_attributes(item_params)
       redirect_to item_path(@item), notice: "Item #{@item.name} was successfully updated."
     else
       flash[:warning] = "Item update was unsuccessful."
@@ -106,6 +106,11 @@ class ItemsController < ApplicationController
   def delete_due_date_category
     Item.delete_due_date_category(params[:category])
     redirect_to items_path, notice: "Due date category was successfully deleted."
+  end
+
+  def item_params
+    params.require(:item)
+          .permit(:name, :quantity, :due_date_category, :description, :image, :legacy_id, :tag_list, :location)
   end
 
 end

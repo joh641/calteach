@@ -22,6 +22,7 @@ class ReservationsController < ApplicationController
   end
 
   def update
+    update_reservation_params
     start_date = Reservation.strip_date(params[:start_date])
     end_date = Reservation.strip_date(params[:end_date])
     reservation = Reservation.find(params[:id])
@@ -31,7 +32,6 @@ class ReservationsController < ApplicationController
       check_valid_reservation(start_date, end_date, reservation)
     end
     make_updates(reservation, params)
-
   end
 
   def cancel
@@ -42,7 +42,7 @@ class ReservationsController < ApplicationController
   private
 
   def make_updates(reservation, params)
-    reservation.update_attributes(params[:reservation])
+    reservation.update_attributes(reservation_params)
     get_response(reservation, params[:return_address])
   end
 
@@ -92,6 +92,15 @@ class ReservationsController < ApplicationController
       flash[:error] = "Error: Not owner or admin"
       redirect_to root_path
     end
+  end
+
+  def reservation_params
+    params.require(:reservation)
+          .permit(:reservation_out, :reservation_in, :notes)
+  end
+
+  def update_reservation_params
+    params.permit(:start_date, :end_date, :return_address, :id, :reservation)
   end
 
 end

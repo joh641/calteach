@@ -41,7 +41,7 @@ describe ItemsController do
   describe 'viewing all items' do
     it "assigns @items" do
 
-      Item.create(
+      item = Item.create(
         {
           name: "Globe",
           legacy_id: "1",
@@ -51,7 +51,7 @@ describe ItemsController do
       )
 
       get :index
-      expect(assigns(:items)).to eq(Item.all)
+      expect(assigns(:items)).to eq([item])
     end
     it "renders to :index" do
       get :index

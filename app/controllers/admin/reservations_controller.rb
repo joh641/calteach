@@ -11,7 +11,7 @@ class Admin::ReservationsController < ApplicationController
 
   def update
     @reservation = Reservation.find(params[:id])
-    @reservation.update_attributes(params[:reservation])
+    @reservation.update_attributes(udpate_admin_reservation_params)
     respond_with @reservation
   end
 
@@ -95,4 +95,8 @@ class Admin::ReservationsController < ApplicationController
     reservation.notes = reservation.notes.to_s.empty? ? notes : reservation.notes + " " + notes if notes
   end
 
+  def udpate_admin_reservation_params
+    params.require(:reservation)
+          .permit(:reservation_out, :reservation_in, :notes)
+  end
 end

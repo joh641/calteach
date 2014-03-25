@@ -1,11 +1,13 @@
 = @greeting + @user.name + ','
-
+%br
+%br
 Our records indicate that you have checked out the following item(s) from the Cal Teach Advising & Resource Center which are due in 1 business day:
-
+%br
 - @items.each do |item|
-  = item.name + '--' + item.quantity.to_s
-
+  = item.name + ' -- ' + item.quantity.to_s
+  %br
+%br
 = 'Please note that the Advising & Resource Center is open Monday-Thursday. Check open hours here: ' + @url + '.'
-
+%br
 Best,
 Cal Teach

@@ -1,9 +1,11 @@
 = @greeting + @user.name + ','
 
-Our records indicate that you have checked out the following item(s) from the Cal Teach Advising & Resource Center which are due in 1 business day:
+Our records indicate that you have checked out the following item(s) from the Cal Teach Resource Center which are now overdue:
 
 - @items.each do |item|
   = item.name + '--' + item.quantity.to_s
+
+Please return the items as soon as possible.
 
 = 'Please note that the Advising & Resource Center is open Monday-Thursday. Check open hours here: ' + @url + '.'
 

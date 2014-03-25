@@ -51,3 +51,5 @@ gem 'best_in_place', github: 'bernat/best_in_place'
 gem 'validates_timeliness', '~> 3.0'
 gem 'whenever', require: false
 gem 'business_time'
+
+gem 'rails_12factor', group: :production

@@ -5,6 +5,6 @@ class UserMailer < ActionMailer::Base
     @user = user
     @greeting = "Hi "
 
-    mail to: user.email, subject: "Reservation Reminder"
+    mail to: @user.email, subject: "Reservation Reminder"
   end
 end

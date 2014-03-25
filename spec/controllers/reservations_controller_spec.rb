@@ -26,7 +26,7 @@ describe ReservationsController do
       reservation = Reservation.new({:user_id => 1, :item_id => 1, :quantity => 1, :notes => nil})
       reservation.save
       put :update, {:id => reservation.id, :reservation => {:notes => "Testing Notes"}}
-      assert Reservation.find(reservation.id).notes == "Testing Notes"
+      assert_equal Reservation.find(reservation.id).notes, "Testing Notes"
       reservation.destroy
     end
   end
@@ -35,7 +35,7 @@ describe ReservationsController do
       reservation = Reservation.new({:user_id => 1, :item_id => 1, :quantity => 1, :date_out => Date.today, :reservation_in => Date.today + 1, :notes => nil})
       reservation.save
       put :update, {:id => reservation.id, :start_date => reservation.date_out, :end_date => (Date.today + 3).strftime("%m/%d/%Y")}
-      assert Reservation.find(reservation.id).reservation_in == Date.today + 3
+      assert_equal Reservation.find(reservation.id).reservation_in, Date.today + 3
       reservation.destroy
     end
   end
@@ -46,7 +46,7 @@ describe ReservationsController do
       reservation1.save
       reservation2.save
       expect { put :update, {:id => reservation1.id, :start_date => reservation1.date_out, :end_date => (Date.today + 3).strftime("%m/%d/%Y")}}.to raise_error 
-      assert Reservation.find(reservation1.id).reservation_in == Date.today + 1
+      assert_equal Reservation.find(reservation1.id).reservation_in, Date.today + 1
       reservation1.destroy
       reservation2.destroy
     end
@@ -58,7 +58,7 @@ describe ReservationsController do
       reservation1.save
       reservation2.save
       put :update, {:id => reservation1.id, :start_date => reservation1.date_out, :end_date => (Date.today + 1).strftime("%m/%d/%Y")}
-      assert Reservation.find(reservation1.id).reservation_in == Date.today + 1
+      assert_equal Reservation.find(reservation1.id).reservation_in, Date.today + 1
       reservation1.destroy
       reservation2.destroy
     end
@@ -68,7 +68,7 @@ describe ReservationsController do
       reservation = Reservation.new({:user_id => 1, :item_id => 1, :quantity => 1, :date_out => Date.today, :reservation_in => Date.today + 1, :notes => nil})
       reservation.save
       expect { put :update, {:id => reservation.id, :start_date =>reservation.date_out, :end_date => "asdf"}}.to raise_error 
-      assert Reservation.find(reservation.id).reservation_in == Date.today + 1
+      assert_equal Reservation.find(reservation.id).reservation_in, Date.today + 1
       reservation.destroy
     end
   end
@@ -79,7 +79,7 @@ describe ReservationsController do
       request.env["HTTP_REFERER"] = "/admin/reservations"
 
       put :cancel, {:id => reservation.id}
-      assert Reservation.find(reservation.id).canceled == true
+      assert Reservation.find(reservation.id).canceled
       reservation.destroy
     end
   end

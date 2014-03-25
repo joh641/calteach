@@ -2,7 +2,7 @@ class Item < ActiveRecord::Base
 
   scope :active, -> { where(inactive: false) }
   scope :inactive, -> { where(inactive: true) }
-  attr_accessible :description, :due_date_category, :image, :legacy_id, :name, :quantity, :tag_list, :location
+  # attr_accessible :description, :due_date_category, :image, :legacy_id, :name, :quantity, :tag_list, :location
   acts_as_taggable
 
   has_attached_file :image,
@@ -14,6 +14,7 @@ class Item < ActiveRecord::Base
   has_many :reservations
   has_many :users, :through => :reservations
 
+  validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png"] }
   validates :name, :presence => true
   validates :quantity, :presence => true, :numericality => {:greater_than_or_equal_to => 0}
 
@@ -49,9 +50,10 @@ class Item < ActiveRecord::Base
   end
 
   def self.import(file)
+    allowed_attributes = ["name", "quantity", "due_date_category", "description", "legacy_id", "tag_list", "location"]
     CSV.foreach(file.path, headers: true) do |row|
       item = find_by_legacy_id(row["legacy_id"]) || new
-      item.attributes = row.to_hash.slice(*accessible_attributes)
+      item.attributes = row.to_hash.select { |k,v| allowed_attributes.include? k }
       item.save!
     end
   end

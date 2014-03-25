@@ -18,5 +18,6 @@
 /coverage
 
 /config/environment_variables.rb
+/config/secrets.yml
 
 .DS_Store

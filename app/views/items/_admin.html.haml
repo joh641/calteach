@@ -13,6 +13,6 @@
     = button_to 'Checkout item', checkout_item_path(@item), :method => :get, :class => "btn btn-primary btn-xs"
   = button_to 'Edit item', edit_item_path(@item), {:method => :get, :class => "btn btn-default btn-xs"}
   - if @item.active
-    = button_to 'Archive item', item_path(@item), {:method => :delete, :confirm => 'Are you sure?', :class => "btn btn-danger btn-xs"}
+    = button_to 'Archive item', item_path(@item), {:method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-xs"}
   - else
-    = button_to 'Unarchive item', unarchive_item_path(@item), {:method => :put, :confirm => 'Are you sure?', :class => "btn btn-primary btn-xs"}
+    = button_to 'Unarchive item', unarchive_item_path(@item), {:method => :put, data: { confirm: 'Are you sure?' }, :class => "btn btn-primary btn-xs"}

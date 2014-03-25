@@ -18,12 +18,13 @@ describe Admin::UsersController, :type => :controller do
     end
 
     it 'should be able to update user' do
+      new_phone = "1234567890"
       old_count = User.count
       User.stub(:find).and_return(@user)
-      put :update, {:id => @user.id, :user => {:phone => 'new_phone'}}
+      put :update, {:id => @user.id, :user => {:phone => new_phone}}
       new_count = User.count
       new_count.should == old_count
-      @user.phone.should == 'new_phone'
+      @user.phone.should == new_phone
     end
     it 'should be able to create user' do
       old_count = User.count
@@ -49,12 +50,13 @@ describe Admin::UsersController, :type => :controller do
     end
 
     it 'should not be able to update user' do
+      new_phone = "1234567899"
       old_count = User.count
       User.stub(:find).and_return(@user)
-      put :update, {:id => @user.id, :user => {:phone => 'new_phone'}}
+      put :update, {:id => @user.id, :user => {:phone => new_phone}}
       new_count = User.count
       new_count.should == old_count
-      @user.phone.should_not == 'new_phone'
+      @user.phone.should_not == new_phone
     end
     it 'should not be able to create user' do
       old_count = User.count

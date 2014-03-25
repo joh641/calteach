@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
-
-gem 'rails', '3.2.14'
+ruby '2.1.1'
+gem 'rails', '4.0.4'
 
 group :development, :test do
   gem 'sqlite3'
-  gem 'ruby-debug19'
+  gem 'debugger'
   gem 'database_cleaner', '1.0.1'
   gem 'capybara-webkit'
   gem 'launchy'
@@ -23,24 +23,20 @@ group :production do
   gem 'pg'
 end
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'therubyracer'
-  gem 'sass-rails'
-  gem 'sass', '3.2.10'
-  gem 'coffee-rails'
-  gem 'uglifier'
-end
+gem 'rails4_upgrade'
+gem 'therubyracer'
+gem 'sass-rails', '~> 4.0.0'
+gem 'sass', '3.2.10'
+gem 'coffee-rails'
+gem 'uglifier'
 
 gem 'jquery-rails'
 gem 'haml'
 gem 'haml-rails'
-# gem 'bootstrap-sass'
 gem 'bootstrap-sass-rails'
 gem 'font-awesome-sass'
 
-gem 'devise'
+gem "devise", "~> 3.1.0"
 gem 'acts-as-taggable-on'
 gem "select2-rails"
 
@@ -51,7 +47,7 @@ gem 'aws-s3'
 gem 'aws-sdk'
 gem 'rmagick'
 gem 'bootstrap-datepicker-rails'
-gem 'best_in_place'
+gem 'best_in_place', github: 'bernat/best_in_place'
 gem 'validates_timeliness', '~> 3.0'
 gem 'whenever', require: false
 gem 'business_time'

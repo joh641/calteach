@@ -7,10 +7,10 @@ Feature: Limit checkout length based on category
 Background:
 
   Given the following items exist:
-  | name   | quantity | due_date_category        |
-  | Globe  | 1        | Other                    |
-  | Book   | 1        | Books                    |
-  | Camera | 1        | Video Equipment          |
+  | name       | quantity | due_date_category        |
+  | Globe      | 1        | Other                    |
+  | Big Book   | 1        | Books                    |
+  | Camera     | 1        | Video Equipment          |
 
   And there is a user
   And there is an admin
@@ -27,7 +27,7 @@ Scenario: Video Equipment can only be checked out for 2 days
 
 Scenario: Books can only be checked out for 10 days
   Given I switch to Card View
-  When I follow "Book" within Card View
+  When I follow "Big Book" within Card View
   And I press "Checkout item"
   And I fill in "email" with "cucumberuser@gmail.com"
   And I press "Checkout Item"

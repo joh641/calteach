@@ -7,10 +7,10 @@ class User < ActiveRecord::Base
 
   scope :active, -> { where(inactive: false) }
   scope :inactive, -> { where(inactive: true) }
+  default_scope { order('name ASC') }
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :category, :course, :name, :phone 
+  # attr_accessible :name, :phone, :email, :password, :password_confirmation, :remember_me, :category, :course
 
   has_many :reservations
   has_many :items, :through => :reservations

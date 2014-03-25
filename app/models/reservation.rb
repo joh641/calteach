@@ -1,6 +1,6 @@
 class Reservation < ActiveRecord::Base
 
-  attr_accessible :canceled, :date_in, :date_out, :item_id, :item, :notes, :quantity, :reservation_in, :reservation_out, :user, :user_id
+  # attr_accessible :canceled, :date_in, :date_out, :item_id, :item, :notes, :quantity, :reservation_in, :reservation_out, :user, :user_id
 
 
   # validates_date :date_in, :on_or_after => lambda{|m| m.date_out}, :allow_nil => true

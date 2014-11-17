@@ -71,6 +71,16 @@ class Item < ActiveRecord::Base
     [number_available , 0].max
   end
 
+  def in_inventory(start_date= Date.today, end_date= Date.today)
+    number_available = quantity
+    reservations.each do |reservation|
+      if reservation.get_status == "Checked Out" || reservation.get_status == "Overdue"
+        number_available -= reservation.quantity
+      end
+    end
+    number_available
+  end
+
   def is_available
     quantity_available > 0
   end

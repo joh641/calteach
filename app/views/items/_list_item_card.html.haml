@@ -17,7 +17,7 @@
               = link_to 'Archive', item_path(item), {:method => :delete, :confirm => 'Are you sure?', :class => "btn btn-danger btn-xs"}
             |
             %b Available:
-            =item.quantity_available
+            =item.in_inventory
             |
             %b Location:
             - if item.location and item.location != ""

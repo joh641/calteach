@@ -1,7 +1,10 @@
 .admin
   %h5 Admin
-  .quantity
+  .inventory
     %b Available:
+    #{@item.in_inventory} / #{@item.quantity}
+  .quantity
+    %b Reservable:
     #{@item.quantity_available} / #{@item.quantity}
   .location
     %b Location:

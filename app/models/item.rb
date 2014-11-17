@@ -68,7 +68,7 @@ class Item < ActiveRecord::Base
         number_available -= reservation.quantity
       end
     end
-    number_available
+    [number_available , 0].max
   end
 
   def is_available

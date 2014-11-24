@@ -17,6 +17,7 @@ class Reservation < ActiveRecord::Base
   # For additional support, add dates to the top of this list.
 
   scope :canceled, -> { where(canceled: true) }
+  scope :not_canceled, -> { where(canceled: false) }
 
   scope :reserved, -> { where(:date_out => nil) }
   scope :checked_out, -> { where("date_out IS NOT NULL AND date_in IS NULL") }

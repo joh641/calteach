@@ -24,7 +24,7 @@ class Reservation < ActiveRecord::Base
   scope :checked_in, -> { where("date_out IS NOT NULL AND date_in IS NOT NULL") }
 
 
-  scope :reserved_or_checked_out, -> { where("(date_out IS NOT NULL AND date_in IS NULL) OR date_out IS NULL") }
+  scope :reserved_or_checked_out, -> { where("(date_out IS NOT NULL AND date_in IS NULL) OR (date_out IS NULL AND reservation_in >= ?)", Date.today) }
 
   scope :within_dates, lambda { |start_date, end_date|
     where("(date_out IS NULL AND reservation_out >= ? AND reservation_in <= ?) OR (date_out IS NOT NULL AND date_in IS NULL AND date_out >= ? AND reservation_in <= ?) OR (date_out IS NOT NULL AND date_in IS NOT NULL AND date_out >= ? AND date_in <= ?)", start_date, end_date, start_date, end_date, start_date, end_date) }

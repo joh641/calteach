@@ -4,7 +4,7 @@ gem 'rails', '3.2.14'
 
 group :development, :test do
   gem 'sqlite3'
-  gem 'ruby-debug19'
+  gem 'byebug'
   gem 'database_cleaner', '1.0.1'
   gem 'capybara-webkit'
   gem 'launchy'

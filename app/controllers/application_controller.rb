@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
 
   before_filter :all_tags, :due_date_categories
 
+  def after_sign_in_path_for(resource)
+    session.delete(:return_to) || stored_location_for(resource) || signed_in_root_path(resource)
+  end
+
   def all_tags
     @all_tags = ActsAsTaggableOn::Tag.all.map { |tag| tag.name }
   end

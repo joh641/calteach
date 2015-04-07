@@ -4,7 +4,8 @@ class ReservationsController < ApplicationController
 
   def index
     if not current_user
-      redirect_to items_path
+      session[:return_to] = reservations_path
+      redirect_to new_user_session_path
     else
       @reservations = current_user.reservations.where(:canceled =>false)
     end

@@ -1,0 +1,18 @@
+= @greeting + @user.name + ','
+%br
+%br
+The following check-out has been processed:
+%br
+%br
+= @item.name + ' -- ' + @item.quantity.to_s
+%br
+%br
+= 'This check-out is due for return on ' + @date_in + ' . Please save this date in your calendar.'
+%br
+%br
+To end this check-out, all items must be returned to the Advising & Resource Center at 30 Evans Hall during
+%a{:href => @url} open hours
+or otherwise be dropped off at 475 Evans Hall between 9:00 AM and 5:00 PM on campus workdays.
+%br
+%br
+Thanks for using the Cal Teach Inventory!

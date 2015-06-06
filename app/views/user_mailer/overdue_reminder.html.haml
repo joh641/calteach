@@ -1,19 +1,19 @@
 = @greeting + @user.name + ','
 %br
 %br
-Our records indicate that you have checked out the following item(s) from the Cal Teach Resource Center which are now overdue:
+This is an alert that the check-out below is currently overdue:
 %br
 %br
 - @items.each do |item|
-  = item.name + '--' + item.quantity.to_s
+  = item.name + ' -- ' + item.quantity.to_s
   %br
 %br
-Please return the items as soon as possible.
+Please respond at your soonest convenience to detail the status of this check-out and when you will be able to complete its return.
 %br
 %br
-= 'Please note that the Advising & Resource Center is open Monday-Thursday. Check open hours here: ' + @url + '.'
+All items must be returned to the Advising & Resource Center at 30 Evans Hall during
+%a{:href => @url} open hours
+or otherwise be dropped off at 475 Evans Hall between 9:00 AM and 5:00 PM on campus workdays.
 %br
 %br
-Best,
-%br
-Cal Teach
+Thanks for using the Cal Teach Inventory!

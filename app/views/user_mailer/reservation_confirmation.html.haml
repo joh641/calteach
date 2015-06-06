@@ -1,14 +1,13 @@
 = @greeting + @user.name + ','
 %br
 %br
-This is a reminder that the check-out below is due tomorrow:
+This is an alert that the check-out below is currently overdue:
 %br
 %br
-- @items.each do |item|
-  = item.name + ' -- ' + item.quantity.to_s
-  %br
+= @item.name + ' -- ' + @item.quantity.to_s
 %br
-If you want more time, we may be able to extend your return date. Reply to this email and we will process your request.
+%br
+Please respond at your soonest convenience to detail the status of this check-out and when you will be able to complete its return.
 %br
 %br
 All items must be returned to the Advising & Resource Center at 30 Evans Hall during

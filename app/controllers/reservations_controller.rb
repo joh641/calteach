@@ -14,7 +14,8 @@ class ReservationsController < ApplicationController
   def new
     item = Item.find_by_id(params[:format])
     begin
-      Reservation.make_reservation(current_user, item, params[:reservation][:start_date], params[:reservation][:end_date], params[:reservation][:quantity].to_i, is_admin?)
+      reservation = Reservation.make_reservation(current_user, item, params[:reservation][:start_date], params[:reservation][:end_date], params[:reservation][:quantity].to_i, is_admin?)
+      UserMailer.reservation_confirmation(reservation).deliver
       flash[:notice] = "Item #{item.name} was successfully reserved."
     rescue => e
       flash[:warning] = "Reservation attempt was unsuccessful because" + e.message

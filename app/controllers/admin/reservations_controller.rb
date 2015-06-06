@@ -50,6 +50,7 @@ class Admin::ReservationsController < ApplicationController
     if user
       if reservation.quantity and reservation.quantity > 0
         if Reservation.checkout(reservation, user, reserved)
+          UserMailer.checkout_confirmation(reservation).deliver
           flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}."
         else
           flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation."

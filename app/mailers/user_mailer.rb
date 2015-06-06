@@ -32,13 +32,11 @@ class UserMailer < ActionMailer::Base
   end
 
   def overdue_reminder(user, items)
-    if Time.now.sunday?
-      @url = 'http://calteach.berkeley.edu/cal-teach-program/advising-and-resources.php'
-      @user = user
-      @items = items
-      @greeting = "Hi "
+    @url = 'http://calteach.berkeley.edu/cal-teach-program/advising-and-resources.php'
+    @user = user
+    @items = items
+    @greeting = "Hi "
 
-      mail to: @user.email, subject: "Your check-out is now overdue"
-    end
+    mail to: @user.email, subject: "Your check-out is now overdue"
   end
 end

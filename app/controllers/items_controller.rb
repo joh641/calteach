@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
   def index
     @items = params[:inactive] ? Item.inactive.order(:name) : Item.active.order(:name)
     @inactive = params[:inactive]
-    
+
     session[:tag_query] = params[:tag_query]
     session[:search_query] = params[:search_query]
 
@@ -27,17 +27,22 @@ class ItemsController < ApplicationController
     return "%"+input.upcase+"%"
   end
 
+  def get_availability(item)
+    availability = {}
+    d = Date.today
+    60.times do
+      availability[d] = item.quantity_available(d, d)
+      d = d + 1
+    end
+
+    availability
+  end
+
   def show
     @item = Item.find_by_id(params[:id])
     @reservations = @item.reservations
 
-    @availability = {}
-    d = Date.today
-    60.times do
-      @availability[d] = @item.quantity_available(d, d)
-      d = d + 1
-    end
-
+    @availability = get_availability(@item)
   end
 
   def import
@@ -90,12 +95,13 @@ class ItemsController < ApplicationController
 
   def checkout
     @item = Item.find_by_id(params[:id])
+    @availability = get_availability(@item)
   end
 
   def update_due_date_categories
     if params[:add]
       Item.update_due_date_categories(params[:category], params[:days].to_i)
-    else 
+    else
       @due_date_categories.each do |category|
         Item.update_due_date_categories(category, params["#{category}-days"].to_i)
       end

@@ -1,3 +1,8 @@
+:javascript
+  $(document).ready( function() {
+    calteach.initItemCheckoutDatePicker();
+  });
+
 #container
   .content
     = render partial: 'left_column'
@@ -7,13 +12,21 @@
           #image= image_tag @item.image.url(:medium), :class => "img-rounded"
           #backlink
             = link_to 'Back to Description', item_path(@item)
-        .item-right.checkout
+        .item-right.checkout#reservation
           %h2 Checkout Item
-          = form_tag checkout_admin_reservation_path, :class => "form-horizontal checkout-form" do
-            .form-group#quantity
+          = form_tag checkout_admin_reservation_path, :avail_hash => @availability.to_json, :class => "form-horizontal checkout-form" do
+            .form-group
               = label_tag :quantity, "Quantity", :class => "control-label reserve-label"
               .reserve-input
                 = select_tag :quantity, options_for_select(1..@item.quantity_available), :class => "form-control"
+            .input-daterange.form-group
+              = label_tag :date_out, "Date Out", :class => "control-label reserve-label"
+              .reserve-input
+                = text_field_tag :reservation_out, nil, :class => "form-control"
+            .input-daterange.form-group
+              = label_tag :date_in, "Date In", :class => "control-label reserve-label"
+              .reserve-input
+                = text_field_tag :reservation_in, nil, :class => "form-control"
             .form-group#email
               = label_tag :email, "User's Email", :class => "control-label reserve-label"
               .reserve-input

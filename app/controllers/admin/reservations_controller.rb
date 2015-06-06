@@ -17,7 +17,7 @@ class Admin::ReservationsController < ApplicationController
 
   def checkout
     reservation = get_reservation(params)
-    checkout_helper(reservation, reservation.user)
+    checkout_helper(reservation, reservation.user, params[:reserved])
     if params[:reserved]
       redirect_to :back
     else
@@ -34,18 +34,22 @@ class Admin::ReservationsController < ApplicationController
 
       reservation = Reservation.for_user(user.name).for_item(item.name).reserved.checkout_reservation.has_quantity(parameters[:quantity].to_i).first if user
 
-      reservation ||= Reservation.new(quantity: parameters[:quantity].to_i, item: item, user: user)
-    end
+      unless reservation
+        reservation_out = Date.strptime(parameters[:reservation_out], "%m/%d/%Y")
+        reservation_in = Date.strptime(parameters[:reservation_in], "%m/%d/%Y")
 
+        reservation = Reservation.new(quantity: parameters[:quantity].to_i, reservation_out: reservation_out, reservation_in: reservation_in, item: item, user: user)
+      end
+    end
     add_notes(reservation, parameters[:notes])
 
     reservation
   end
 
-  def checkout_helper(reservation, user)
+  def checkout_helper(reservation, user, reserved)
     if user
       if reservation.quantity and reservation.quantity > 0
-        if Reservation.checkout(reservation, user)
+        if Reservation.checkout(reservation, user, reserved)
           flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}."
         else
           flash[:warning] = "Item #{reservation.item.name} could not be checked out due to an existing reservation."

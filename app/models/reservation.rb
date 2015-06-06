@@ -111,8 +111,8 @@ class Reservation < ActiveRecord::Base
   #   where(:archived => false)
   # end
 
-  def get_due_date
-    self.item.get_due_date_business_days(DateTime.now)
+  def get_due_date(start_date=DateTime.now)
+    self.item.get_due_date_business_days(start_date.to_datetime)
   end
 
   def self.hide_canceled
@@ -153,10 +153,17 @@ class Reservation < ActiveRecord::Base
     create(:user_id => user.id, :item_id => item.id, :reservation_out => start_date, :reservation_in => end_date, :quantity => quantity_desired) if valid_reservation?(start_date, end_date, item, quantity_desired, current_user_admin)
   end
 
-  def self.checkout(reservation, user)
-    number_available = reservation.get_max_item_quantity(Date.today, Date.today)
-    reservation.date_out = Date.today
-    due_date = reservation.get_due_date
+  def self.checkout(reservation, user, reserved)
+    if reserved
+      start_date = end_date = Date.today
+    else
+      start_date = reservation.reservation_out
+      end_date = reservation.reservation_in
+    end
+
+    number_available = reservation.get_max_item_quantity(start_date, end_date)
+    reservation.date_out ||= start_date
+    due_date = reservation.get_due_date(start_date)
 
     begin
       reservation.reservation_in = due_date if reservation.reservation_in > due_date
@@ -254,11 +261,11 @@ class Reservation < ActiveRecord::Base
     end
   end
 
-  def self.format_date date
+  def self.format_date(date)
     self.strip_date(date).strftime("%Y-%m-%d")
   end
 
-  def self.strip_date date
+  def self.strip_date(date)
     if not date.to_s.empty?
       Date.strptime(date, "%m/%d/%Y")
     end

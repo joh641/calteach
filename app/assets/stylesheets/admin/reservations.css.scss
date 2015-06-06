@@ -101,6 +101,12 @@
   visibility:hidden;
 }
 
+#reservation {
+  .form-group {
+    height: 30px;
+  }
+}
+
 table {
   #name {
     max-width: 140px;

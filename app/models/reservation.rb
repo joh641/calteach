@@ -209,47 +209,39 @@ class Reservation < ActiveRecord::Base
 
   def self.email_reminders
     current_date = Date.today
-    reminder_days = 1 # Time in seconds before due date
+    reminder_days = 1
     checked_out = where("date_out IS NOT NULL and date_in IS NULL")
-    reminder_hash = {}
+    reminder_hash = Hash.new([])
 
     # Get the reservations due in one day and populate the reminder_hash
     checked_out.each do |current_reservation|
       if (current_reservation.reservation_in  \
-          and (current_reservation.reservation_in - current_date) > 0 \
-          and (current_reservation.reservation_in - current_date) == reminder_days)
-        user = User.find(current_reservation.user_id)
-        item = Item.find(current_reservation.item_id)
+          and (current_reservation.reservation_in - current_date).round == reminder_days)
 
-        if not reminder_hash.has_key?(user)
-          reminder_hash[user] = []
-        end
-        reminder_hash[user] << item
+        reminder_hash[current_reservation.user] << current_reservation
       end
     end
 
-    reminder_hash.each do |user, items|
-      UserMailer.return_reminder(user, items).deliver
+    reminder_hash.each do |user, reservations|
+      UserMailer.return_reminder(user, reservations).deliver
     end
   end
 
   def self.overdue_reminders
     current_date = Date.today
     checked_out = where("date_out IS NOT NULL and date_in IS NULL")
+    reminder_hash = Hash.new([])
+
     checked_out.each do |current_reservation|
       if (current_reservation.reservation_in  \
           and (current_reservation.reservation_in - current_date) < 0)
-        user = User.find(current_reservation.user_id)
-        item = Item.find(current_reservation.item_id)
 
-        if not reminder_hash.has_key?(user)
-          reminder_hash[user] = []
-        end
-        reminder_hash[user] << item
+        reminder_hash[current_reservation.user] << current_reservation
       end
     end
-    reminder_hash.each do |user, items|
-      UserMailer.overdue_reminder(user, items).deliver
+
+    reminder_hash.each do |user, reservations|
+      UserMailer.overdue_reminder(user, reservations).deliver
     end
   end
 

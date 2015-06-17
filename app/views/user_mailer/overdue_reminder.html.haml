@@ -4,8 +4,8 @@
 This is an alert that the check-out below is currently overdue:
 %br
 %br
-- @items.each do |item|
-  = item.name + ' -- ' + item.quantity.to_s
+- @reservations.each do |reservation|
+  = reservation.item.name + ' -- ' + reservation.quantity.to_s
   %br
 %br
 Please respond at your soonest convenience to detail the status of this check-out and when you will be able to complete its return.

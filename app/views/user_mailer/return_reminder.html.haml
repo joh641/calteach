@@ -4,8 +4,8 @@
 This is a reminder that the check-out below is due tomorrow:
 %br
 %br
-- @items.each do |item|
-  = item.name + ' -- ' + item.quantity.to_s
+- @reservations.each do |reservation|
+  = reservation.item.name + ' -- ' + reservation.quantity.to_s
   %br
 %br
 If you want more time, we may be able to extend your return date. Reply to this email and we will process your request.

@@ -211,14 +211,18 @@ class Reservation < ActiveRecord::Base
     current_date = Date.today
     reminder_days = 1
     checked_out = where("date_out IS NOT NULL and date_in IS NULL")
-    reminder_hash = Hash.new([])
+    reminder_hash = {}
 
     # Get the reservations due in one day and populate the reminder_hash
     checked_out.each do |current_reservation|
       if (current_reservation.reservation_in  \
           and (current_reservation.reservation_in - current_date).round == reminder_days)
 
-        reminder_hash[current_reservation.user] << current_reservation
+        if reminder_hash[current_reservation.user]
+          reminder_hash[current_reservation.user] << current_reservation
+        else
+          reminder_hash[current_reservation.user] = [current_reservation]
+        end
       end
     end
 
@@ -230,13 +234,17 @@ class Reservation < ActiveRecord::Base
   def self.overdue_reminders
     current_date = Date.today
     checked_out = where("date_out IS NOT NULL and date_in IS NULL")
-    reminder_hash = Hash.new([])
+    reminder_hash = {}
 
     checked_out.each do |current_reservation|
       if (current_reservation.reservation_in  \
           and (current_reservation.reservation_in - current_date) < 0)
 
-        reminder_hash[current_reservation.user] << current_reservation
+        if reminder_hash[current_reservation.user]
+          reminder_hash[current_reservation.user] << current_reservation
+        else
+          reminder_hash[current_reservation.user] = [current_reservation]
+        end
       end
     end
 

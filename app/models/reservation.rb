@@ -210,7 +210,7 @@ class Reservation < ActiveRecord::Base
   def self.email_reminders
     current_date = Date.today
     reminder_days = 1
-    checked_out = where("date_out IS NOT NULL and date_in IS NULL")
+    checked_out = checked_out.not_canceled
     reminder_hash = {}
 
     # Get the reservations due in one day and populate the reminder_hash
@@ -233,7 +233,7 @@ class Reservation < ActiveRecord::Base
 
   def self.overdue_reminders
     current_date = Date.today
-    checked_out = where("date_out IS NOT NULL and date_in IS NULL")
+    checked_out = checked_out.not_canceled
     reminder_hash = {}
 
     checked_out.each do |current_reservation|

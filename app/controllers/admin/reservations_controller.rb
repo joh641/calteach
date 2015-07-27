@@ -17,7 +17,7 @@ class Admin::ReservationsController < ApplicationController
 
   def checkout
     reservation = get_reservation(params)
-    checkout_helper(reservation, reservation.user, params[:reserved])
+    checkout_helper(reservation, reservation.user, params[:reserved], current_user)
     if params[:reserved]
       redirect_to :back
     else
@@ -46,10 +46,10 @@ class Admin::ReservationsController < ApplicationController
     reservation
   end
 
-  def checkout_helper(reservation, user, reserved)
+  def checkout_helper(reservation, user, reserved, current_user)
     if user
       if reservation.quantity and reservation.quantity > 0
-        if Reservation.checkout(reservation, user, reserved)
+        if Reservation.checkout(reservation, user, reserved, current_user.admin?)
           UserMailer.checkout_confirmation(reservation).deliver
           flash[:notice] = "Item #{reservation.item.name} was successfully checked out to #{reservation.user.name}."
         else

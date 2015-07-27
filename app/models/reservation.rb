@@ -153,7 +153,7 @@ class Reservation < ActiveRecord::Base
     create(:user_id => user.id, :item_id => item.id, :reservation_out => start_date, :reservation_in => end_date, :quantity => quantity_desired) if valid_reservation?(start_date, end_date, item, quantity_desired, current_user_admin)
   end
 
-  def self.checkout(reservation, user, reserved)
+  def self.checkout(reservation, user, reserved, current_user_admin= false)
     if reserved
       start_date = end_date = Date.today
     else
@@ -166,7 +166,7 @@ class Reservation < ActiveRecord::Base
     due_date = reservation.get_due_date(start_date)
 
     begin
-      reservation.reservation_in = due_date if reservation.reservation_in > due_date
+      reservation.reservation_in = due_date if reservation.reservation_in > due_date && !current_user_admin
     rescue NoMethodError
       Reservation.find_valid_end_date(reservation, due_date) if number_available >= reservation.quantity
     end

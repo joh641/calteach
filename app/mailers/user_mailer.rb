@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "calteach@berkeley.edu"
+  default from: "calteach_peers@berkeley.edu"
 
   def reservation_confirmation(reservation)
     @url = 'http://calteach.herokuapp.com/reservations'

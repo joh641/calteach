@@ -8,7 +8,7 @@ describe UserMailer do
     it "renders the headers" do
       mail.subject.should eq("Reservation Reminder")
       mail.to.should eq(["john@gmail.com"])
-      mail.from.should eq(["calteach@berkeley.edu"])
+      mail.from.should eq(["calteach_peers@berkeley.edu"])
     end
 
     it "renders the body" do

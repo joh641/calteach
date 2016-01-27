@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby "2.0.0"
 
 gem 'rails', '3.2.14'
 
@@ -45,10 +46,8 @@ gem 'acts-as-taggable-on'
 gem "select2-rails"
 
 gem "momentjs-rails", "~> 2.4.0"
-gem 'paperclip'
-gem 'cocaine'
-gem 'aws-s3'
-gem 'aws-sdk'
+gem 'paperclip', :git => 'https://github.com/thoughtbot/paperclip.git', :ref => '850a1'
+gem 'aws-sdk', '~> 2'
 gem 'rmagick'
 gem 'bootstrap-datepicker-rails'
 gem 'best_in_place'

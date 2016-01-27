@@ -7,6 +7,7 @@ class Item < ActiveRecord::Base
 
   has_attached_file :image,
   :storage => :s3,
+  :s3_region => 'us-west-1',
   :s3_credentials => S3_CREDENTIALS,
   :path => "/items/:style/:id/:filename",
   :styles => { :medium => "250x250>", :thumb => "100x100>" },
@@ -16,6 +17,8 @@ class Item < ActiveRecord::Base
 
   validates :name, :presence => true
   validates :quantity, :presence => true, :numericality => {:greater_than_or_equal_to => 0}
+
+  do_not_validate_attachment_file_type :image
 
   @@due_dates = {"Video Equipment" => 2, "Books" => 10, "Other" => 5}
   @@due_dates.default = 5

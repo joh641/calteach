@@ -39,6 +39,7 @@ $page-width: 960px;
 	width: calc(100% - 298px);
 	overflow-y: scroll;
 	&.inventory {
+		max-height: 600px;
 		padding-left: 10px;
 	}
 }

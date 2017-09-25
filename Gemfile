@@ -12,6 +12,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'simplecov'
   gem 'email_spec'
+  gem 'newrelic_rpm'
 end
 
 group :test do
